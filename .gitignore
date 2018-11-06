@@ -1,0 +1,12 @@
+*.d
+*.vo
+*.vio
+*.cm*
+*~
+*.glob
+*.aux
+*.a
+*.o
+Make*.coq
+Make*.coq.bak
+Make*.coq.conf
