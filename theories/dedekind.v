@@ -113,7 +113,7 @@ Notation "x == y" := (eqR x y) : cut_scope.
 Notation "x != y" := (~ (x == y)) : cut_scope.
 
 Lemma leRR x : x <= x. Proof. by []. Qed.
-Implicit Arguments leRR [].
+Arguments leRR x : clear implicits.
 
 Lemma eqRR x : x == x. Proof. by split. Qed.
 Hint Resolve leRR eqRR.
@@ -400,7 +400,7 @@ have{a ltxa d_gt0} []: exists n, x < b + d *+ n.
   rewrite pmulrn gez0_abs -?ge_rat0 // -mulrzl numqE mulrAC.
   by rewrite divfK ?gtr_eqF ?ler_pmulr // ler1z -gtz0_ge1 denq_gt0.
 elim=> [|n IHn]; rewrite ?addr0 // mulrSr => /open[a ltxa lt_a_dnd].
-have{IHn} [/IHn//| le_bdn_x] := classical (x < b + d *+ n).
+have [/IHn//| le_bdn_x] := classical (x < b + d *+ n).
 by exists a => //; exists (b + d *+ n)%R; rewrite // opprB ltr_subl_addr -addrA.
 Qed.
 
@@ -642,5 +642,3 @@ End Construction.
 Theorem real : excluded_middle -> Real.model. Proof. exact: model. Qed.
 
 End Dedekind.
-
-

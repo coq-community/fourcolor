@@ -335,7 +335,7 @@ apply/idP/eqP=> [/connectP[_ /fpathP[k ->] ->] | /same_end0g/trajectP[k]].
   rewrite last_traject; elim: k => //= k IHk in u *.
   by rewrite !val_insubd !(fun_if end0g) !end0g_node !if_same.
 without loss: k u v / k \in iota 2 2.
-  case: k => [|[|k]] IHk ltk Dv; first by rewrite (val_inj _ _ Dv).
+  case: k => [|[|k]] IHk ltk Dv; first by have ->: v = u by apply/val_inj.
     by rewrite cfaceC (IHk 3) // Dv /= gnode4.
   by rewrite (IHk k.+2) ?mem_iota.
 have Gv := valP v; rewrite !inE => /pred2P[]-> _ /= Dv; rewrite /= Dv in Gv.
@@ -573,12 +573,11 @@ have{cycNr kN} k_r i: {in r i &, forall x y, k x = k y}.
 pose kn x := Ordinal (index_size (k x) [:: Color0; Color1; Color2] : _ < 4)%N.
 exists (fun i => oapp kn ord0 [pick x in r i]) => e /ab_cmP/hasP[d].
 rewrite !inE eqE /= -!val_gmring => /mapP[u r2u {d}->] /mapP[eu r1eu Deu].
-rewrite -{eu Deu}(val_inj (edge u) eu Deu) -!{}Dr !mem_rev in r2u r1eu.
+have{Deu} Deu: edge u = eu by apply/val_inj.
+rewrite -{eu}Deu -!{}Dr !mem_rev in r2u r1eu.
 case/mapP: r2u r1eu => x r2x ->; rewrite -hE mem_map // => r1ex.
 apply: contraFN (kE x); have [y /= /k_r <- | /(_ (edge x))/idP] // := pickP.
 by have [z /(k_r _ x)-> | /(_ x)/idP] //= := pickP; do 2!case: (k _).
 Qed.
 
 End GridMap.
-
-
