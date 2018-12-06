@@ -194,16 +194,11 @@ Notation "6 ? 8" := Pr68 (at level 0, format "6 ? 8") : prange_scope.
 Notation "7 ? 8" := Pr78 (at level 0, format "7 ? 8") : prange_scope.
 
 Bind Scope part_scope with part.
-Delimit Scope part_scope with part.
-Delimit Scope prange_scope with prange.
 
-Arguments Pcons (spk hat)%prange _%part.
-Arguments Pcons6 (hat fan1)%prange _%part.
-Arguments Pcons7 (hat fan1 fan2)%prange _%part.
-Arguments Pcons8 (hat fan1 fan2 fan3)%prange _%part.
-
-Undelimit Scope part_scope.
-Undelimit Scope prange_scope.
+Arguments Pcons (spk hat)%prange_scope p%part_scope.
+Arguments Pcons6 (hat fan1)%prange_scope p%part_scope.
+Arguments Pcons7 (hat fan1 fan2)%prange_scope p%part_scope.
+Arguments Pcons8 (hat fan1 fan2 fan3)%prange_scope p%part_scope.
 
 Definition Part (p : part) := p.
 
