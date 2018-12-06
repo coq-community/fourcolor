@@ -119,8 +119,8 @@ Local Notation Ir := 'I_Nr.
 Local Notation Er := (adj_index Nr).
 Implicit Types (i j : Ir) (e f : Er).
 
-Definition ab_mr_proper (b : srect) e i (m0i := m0 (mr i)) :=
-    gr_proper b.2 ->
+Definition ab_mr_proper (b : srect) e i :=
+  gr_proper b.2 -> let m0i := m0 (mr i) in
   [/\ i \in e -> meet (inset_srect b) m0i & meet b m0i -> i \in e].
 
 Lemma ab_mr_proper_refine s b e i :
@@ -213,7 +213,7 @@ split=> [e f p | | e [adj_e lte]]; last 1 first.
   rewrite (ar_inj a b) //; exists (scale_point R s.+1 p); split; apply/ar_ab.
     by rewrite (Ds a) -addSn; apply/mem_approx_scale.
   by rewrite (Ds b) -addSn; apply/mem_approx_scale.
-exists s.+1 => e i; case: insubP => // a _ Da m0i  _; rewrite (Ds a) -addSn.
+exists s.+1 => e i; case: insubP => //= a _ Da _; rewrite /= (Ds a) -addSn.
 split=> [e_i | [z [/ar_ab-a_z m0i_z]]]; last first.
   by rewrite -Da; apply/ar_a; exists z; split; last exists z.
 have{e_i} cli_a: cl i (ap a).
