@@ -11,10 +11,10 @@ env:
   - CONTRIB_NAME="fourcolor"
   - OPAM_SWITCH="4.07.0+flambda"
   matrix:
-  - COQ_VERSION="8.6"
+  # - COQ_VERSION="8.6"
   - COQ_VERSION="8.7"
   - COQ_VERSION="8.8"
-  - COQ_VERSION="8.9"
+  - COQ_VERSION="8.9+beta1"
   - COQ_VERSION="dev"
 
 install: |
