@@ -229,7 +229,7 @@ split=> [|sz [ctu_lt_sz ctr_closed]].
   have{gtr_et} sz_et: size et == h.+1.
     by case/match_countP: gtr_et => w /Dgtr[_ /andP[sz_w _]] /matchpg_size <-.
   split=> [P1 closedP1 P1et0|]; last by rewrite -(eqP sz_et) size_map.
-  have{P1et0} /closedP1[_ [w etMw wP1]]: P1 (ctrace et).
+  have{P1et0}-/closedP1[_ [w etMw wP1]]: P1 (ctrace et).
     by rewrite ctrace_permt; case/closedP1: P1et0.
   have w_bal: gram_balanced 0 false w.
     by have [_] := matchg_balanced etMw; rewrite sumt_ctrace.
