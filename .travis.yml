@@ -10,17 +10,20 @@ env:
   - NJOBS="2"
   - CONTRIB_NAME="fourcolor"
   - OPAM_SWITCH="4.07.0+flambda"
+  - MATHCOMP_VERSION=":1.7.0-"
   matrix:
   # - COQ_VERSION="8.6"
   - COQ_VERSION="8.7"
   - COQ_VERSION="8.8"
-  # - COQ_VERSION="8.9"
+  - COQ_VERSION="8.9"
   - COQ_VERSION="dev"
+  - COQ_VERSION="dev" MATHCOMP_VERSION="-dev:"
 
 install: |
   # Prepare the COQ container
-  docker pull "coqorg/coq:${COQ_VERSION}"
-  docker run -d -i --init --name=COQ -v ${TRAVIS_BUILD_DIR}:/home/coq/${CONTRIB_NAME} -w /home/coq/${CONTRIB_NAME} "coqorg/coq:${COQ_VERSION}"
+  export _DOCKER_IMAGE="mathcomp/mathcomp${MATHCOMP_VERSION}coq-${COQ_VERSION}"
+  docker pull $_DOCKER_IMAGE
+  docker run -d -i --init --name=COQ -v ${TRAVIS_BUILD_DIR}:/home/coq/${CONTRIB_NAME} -w /home/coq/${CONTRIB_NAME} $_DOCKER_IMAGE
   docker exec COQ /bin/bash --login -c "
     # This bash script is double-quoted to interpolate Travis CI env vars:
     echo \"Build triggered by ${TRAVIS_EVENT_TYPE}\"
@@ -31,7 +34,6 @@ install: |
     opam switch set "$OPAM_SWITCH"
     eval $(opam env)
     opam update -y
-    opam install -y -j ${NJOBS} coq-mathcomp-ssreflect coq-mathcomp-algebra
     opam config list
     opam repo list
     opam list
