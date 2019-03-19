@@ -58,7 +58,7 @@ Open Scope cut_scope.
 
 Notation "{ x | E }" := (fun x => E) : cut_scope.
 
-CoInductive is_cut (X : rat -> Prop) : Prop :=
+Variant is_cut (X : rat -> Prop) : Prop :=
   IsCut (ub : exists a, X a)
         (lb : exists a, ~ X a)
         (filter : forall a b, X a -> (a < b)%R -> X b)
@@ -248,7 +248,7 @@ Variables (P : Prop) (x1 x2 : cut).
 
 Definition ifR := sup (fun x => IF P then x == x1 else x == x2).
 
-CoInductive ifR_spec : cut -> Prop :=
+Variant ifR_spec : cut -> Prop :=
   | IfR_true of  P & ifR == x1 : ifR_spec ifR
   | IfR_not of ~ P & ifR == x2 : ifR_spec ifR.
 

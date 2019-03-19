@@ -58,7 +58,7 @@ Unset Printing Implicit Defensive.
 (* We are only interested in arities between 5 and 11 (in fact 9, 10, and 11 *)
 (* only occur at the hub).                                                   *)
 
-CoInductive qarity := Qa5 | Qa6 | Qa7 | Qa8 | Qa9 | Qa10 | Qa11.
+Variant qarity := Qa5 | Qa6 | Qa7 | Qa8 | Qa9 | Qa10 | Qa11.
 
 Definition nat_of_qarity qa :=
   match qa with
@@ -128,7 +128,7 @@ Fixpoint flipq q :=
 Definition qstepL (G : hypermap) (x : G) := node (edge (node x)).
 Definition qstepR (G : hypermap) (x : G) := node (edge x).
 
-CoInductive quiz := Quiz of question & question.
+Variant quiz := Quiz of question & question.
 
 Definition isQuizR qz := let: Quiz q0 q1 := qz in isQaskR q0 && isQaskR q1.
 
