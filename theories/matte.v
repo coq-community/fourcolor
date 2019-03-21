@@ -520,7 +520,7 @@ elim: xm / => [|d xm0 xm _ IHxm _ Dxm] p m_p //.
 by rewrite Dxm mem_behead /= ?IHxm.
 Qed.
 
-CoInductive extends_in (r : grect) (p : gpoint) :=
+Variant extends_in (r : grect) (p : gpoint) :=
   ExtendsIn xm of matte_extension xm & {subset xm <= predU r m} & p \in xm.
 
 Lemma extends_in_sub (r1 r2 : grect) :

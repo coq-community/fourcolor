@@ -143,7 +143,7 @@ Definition halfg d := let: Gpoint x y := d in Gpoint (x %/ 2)%Z (y %/ 2)%Z.
 
 Definition oddg d := let: Gpoint x y := d in Gpoint (x %% 2)%Z (y %% 2)%Z.
 
-CoInductive is_oddg : gpoint -> Type :=
+Variant is_oddg : gpoint -> Type :=
   | Gpoint00 : is_oddg 0
   | Gpoint01 : is_oddg (Gpoint 0 1)
   | Gpoint11 : is_oddg (Gpoint 1 1)
