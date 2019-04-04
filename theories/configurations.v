@@ -2075,7 +2075,7 @@ Definition cf632 := Config 35
 Definition cf633 := Config* 6
   H 2 H 11 Y 9 H 1 Y 9 H 9 H 9 H 9 H 9 H 9 H 9 Y 7 Y Y Y Y Y Y Y.
 
-Definition the_configs := seqn config 633
+Definition the_configs := @seqn config 633
       cf001 cf002 cf003 cf004 cf005 cf006 cf007 cf008 cf009 cf010 cf011 cf012
       cf013 cf014 cf015 cf016 cf017 cf018 cf019 cf020 cf021 cf022 cf023 cf024
       cf025 cf026 cf027 cf028 cf029 cf030 cf031 cf032 cf033 cf034 cf035 cf036
