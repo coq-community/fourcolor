@@ -143,7 +143,7 @@ Definition drule32 := Part $ 5 $ 6 $[5] 7 $ 7+ $ 6 $ 5 $ 5 $ 5 $.
 
 End DischargeRules.
 
-Definition base_drules : drules := seqn _ 38
+Definition base_drules : drules := @seqn part 38
  drule1  drule1  drule2  drule2' drule3  drule3'  drule4  drule4' drule5
  drule6  drule7  drule8  drule9  drule10 drule10'
  drule11 drule12 drule13 drule14 drule15 drule16 drule17 drule18 drule19
