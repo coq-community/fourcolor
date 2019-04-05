@@ -351,8 +351,8 @@ Qed.
 Lemma simple_perm p q :
   fband p =i fband q -> size p = size q -> simple p = simple q.
 Proof.
-move=> eq_fband eq_sz; apply: perm_uniq; last by rewrite !size_map.
-move=> x; apply/mapP/mapP=> [] [y Hy -> {x}].
+move=> eq_fband eq_sz; apply/eq_uniq=> [|x]; first by rewrite !size_map.
+apply/mapP/mapP=> [] [y pq_y -> {x}].
   have: (y \in fband q) by rewrite -eq_fband (subsetP (ring_fband _)).
   by case/hasP=> z qz yFz; exists z; last by rewrite (rootP cfaceC yFz).
 have: (y \in fband p) by rewrite eq_fband (subsetP (ring_fband _)).
