@@ -9,7 +9,6 @@ env:
   global:
   - NJOBS="2"
   - CONTRIB_NAME="fourcolor"
-  - OPAM_SWITCH="4.07.0+flambda"
   - MATHCOMP_VERSION=":1.7.0-"
   matrix:
   # - COQ_VERSION="8.6"
@@ -31,8 +30,8 @@ install: |
     set -ex  # -e = exit on failure; -x = trace for debug
     # Using flambda makes sense here as we usually get ~10% faster
     # builds in math-comp.
-    opam switch set "$OPAM_SWITCH"
-    eval $(opam env)
+    opam switch \$COMPILER_EDGE
+    eval \$(opam env)
     opam update -y
     opam config list
     opam repo list
@@ -45,7 +44,7 @@ script:
     export PS4='+ \e[33;1m(\$0 @ line \$LINENO) \$\e[0m '
     set -ex
     sudo chown -R coq:coq /home/coq/${CONTRIB_NAME}
-    eval $(opam env)
+    eval \$(opam env)
     make -j "$NJOBS"
     make install
     "
