@@ -1,6 +1,0 @@
-Proof of the Four Color Theorem
-
-This library contains a formalized proof of the Four Color Theorem, along
-with the theories needed to support stating and then proving the Theorem.
-  This includes an axiomatization of the setoid of classical real numbers,
-basic plane topology definitions, and a theory of combinatorial hypermaps.
