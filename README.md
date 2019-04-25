@@ -2,7 +2,7 @@
 
 # The Four Color Theorem
 The repository contains a [mechanization](http://www.ams.org/notices/200811/tx081101382p.pdf) of 
-the [Four ColorTheorem](https://en.wikipedia.org/wiki/Four_color_theorem)(Appel & Haken, 1976), 
+the [Four Color Theorem](https://en.wikipedia.org/wiki/Four_color_theorem)(Appel & Haken, 1976), 
 a landmark result of graph theory.
 
 The formal proof is based on the [Mathematical Components](https://github.com/math-comp/math-comp)
