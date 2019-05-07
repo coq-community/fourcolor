@@ -377,7 +377,7 @@ elim: cp2 => [|s cp2 IHcp] in cp2ok (cp1) cp1ok (qs) * => [[] | rqs_ok qsR].
   exists (h false); do !split.
   - rewrite /fitqz /qz /= eqseq_cons fitq_cat /qstepR -!hE /= eqseq_cons.
     by rewrite Eqa1 Eqa2 !eqxx fit_q2.
-  - rewrite (simple_perm Eqz).
+  - rewrite (eq_simple Eqz).
       by move: Uq; rewrite simple_cat => /and3P[].
     by rewrite Dqs /= cats0 !size_cat /= !addnS addnC /qstepR -!hE.
   move=> u; rewrite Eqz; apply/idP/idP => [qFu | /negPf/= r0F'u].
@@ -453,7 +453,7 @@ case: s scp2ok (config_prog_cubic scp2ok) => // [n||] cp2ok cp2Q;
     rewrite /order -(cardID (mem bu0)); congr (_ + _).
       rewrite predI_cface_simple.
         by rewrite Ebu0 unfold_in has_map (eq_has (cface_icpY _ _)).
-      rewrite (simple_perm Ebu0); last by rewrite /bu0 !size_map size_orbit.
+      rewrite (eq_simple Ebu0); last by rewrite /bu0 !size_map size_orbit.
       rewrite (simple_map (cface_icpY G)).
       rewrite /r (head_proper_cpring ntG) (@simple_cat _ au0) in Ur.
       by case/andP: Ur.
@@ -543,7 +543,7 @@ case: s scp2ok (config_prog_cubic scp2ok) => // [n||] cp2ok cp2Q;
       rewrite /r head_proper_cpring // -/r -DcqY /= Ea1 Ea3 q3iG q_r1 !andbT.
       rewrite /h1 /= -/v1 /fitq Eq1 Eq1v1 /= eqseq_cons fitq_cat.
       by rewrite -arity_face -enn_v1 nodeK in Ea2; rewrite Ea2 q2nu0.
-    rewrite (simple_perm Eq12F) // /rY1 /pY /rY cpring_ecpY.
+    rewrite (eq_simple Eq12F) // /rY1 /pY /rY cpring_ecpY.
     rewrite /r /behead head_proper_cpring // -/r -/r1 !map_cons.
     rewrite -DcqY -/u0 -/nu0 Dqs Dk2 /rqs_Y !rqs_walk_cons {1 2}/h1 -/v1.
     rewrite -map_comp !size_cat Eq1v1 /= !size_cat !addnA; do 4!congr (_ + _).
@@ -559,7 +559,7 @@ case: s scp2ok (config_prog_cubic scp2ok) => // [n||] cp2ok cp2Q;
         by rewrite (fband_nseq nu0FnG).
       split=> [|||u]; rewrite // -/r -/rY1 -/r0; last by rewrite EqsF EpY1.
         by rewrite /r head_proper_cpring // -/r -DcqY /=; apply/and4P.
-      rewrite (simple_perm EqsF) // /rY1 /pY /rY cpring_ecpY.
+      rewrite (eq_simple EqsF) // /rY1 /pY /rY cpring_ecpY.
       rewrite /r /behead head_proper_cpring // -/r -/r1 !map_cons.
       rewrite -DcqY -/u0 -/nu0 Dqs Dk2 /rqs_Y !rqs_walk_cons {1 2}/h1 /= -/v1.
       by rewrite -map_comp !size_cat /= !addnA !size_nseq.
@@ -574,7 +574,7 @@ case: s scp2ok (config_prog_cubic scp2ok) => // [n||] cp2ok cp2Q;
       rewrite /r head_proper_cpring // -/r -DcqY /=; apply/and5P; split=> //.
       move: q2nu0; rewrite /fitq /= !eqseq_cons /h1 /= -/v1 /qstepL enn_v1.
       by rewrite -{1}[node (h u0)]nodeK arity_face.
-    rewrite (simple_perm EqsF) // /rY1 /pY /rY cpring_ecpY.
+    rewrite (eq_simple EqsF) // /rY1 /pY /rY cpring_ecpY.
     rewrite /r /behead head_proper_cpring // -/r -/r1 !map_cons.
     rewrite -DcqY -/u0 -/nu0 Dqs Dk2 /rqs_Y !rqs_walk_cons {1 2}/h1 -/v1.
     rewrite -map_comp !size_cat /= !addnA; do 4!congr (_ + _).
@@ -589,7 +589,7 @@ case: s scp2ok (config_prog_cubic scp2ok) => // [n||] cp2ok cp2Q;
   split=> [|||u]; rewrite // -/r -/rY1 -/r0; last by rewrite EqsF EpY1.
     rewrite /r head_proper_cpring // -/r -DcqY /=; apply/and5P; split=> //.
     by move: q1nu0; rewrite /fitq /= !eqseq_cons /qstepR en_v1.
-  rewrite (simple_perm EqsF) // /rY1 /pY /rY cpring_ecpY.
+  rewrite (eq_simple EqsF) // /rY1 /pY /rY cpring_ecpY.
   rewrite /r /behead head_proper_cpring // -/r -/r1 !map_cons.
   rewrite -DcqY -/u0 -/nu0 Dqs Dk2 /rqs_Y !rqs_walk_cons.
   rewrite -map_comp !size_cat /= !addnA; do 4!congr (_ + _).
@@ -624,7 +624,7 @@ have nFiG x: arity (icpH G x) = (x \in fband au0) + arity x.
   rewrite /order -(cardID (mem bu0)); congr (_ + _).
     rewrite predI_cface_simple.
       by rewrite Ebu0 unfold_in has_map (eq_has (cface_icpH _ _)).
-    rewrite (simple_perm Ebu0); last by rewrite !size_map size_orbit.
+    rewrite (eq_simple Ebu0); last by rewrite !size_map size_orbit.
     by move: Ur; rewrite (simple_map (cface_icpH G)) Dr simple_cat => /and3P[].
   rewrite -(card_image (@icpH_inj G G)); apply: eq_card => u.
   rewrite /bu0 /orbit nFu0 !inE andbC.
@@ -730,7 +730,7 @@ move: qsR; rewrite -DqsH; case Dk2: k2.
     split=> [|||u]; rewrite // -/r -/r0 -/rH1; last by rewrite EqsF EpH1.
       rewrite Dr -DcqH Dq2 /= Ea1 Ea3 q3v3 nFv2 eqxx q_r1 !andbT.
       by rewrite /fitq Eq Eqv1 /= eqseq_cons (arity_cface nv1Fu0) Eqa2.
-    rewrite (simple_perm EqsF) // DrH1 /pH DrH Dqs Dq2 Dk2 -DcqH /=.
+    rewrite (eq_simple EqsF) // DrH1 /pH DrH Dqs Dq2 Dk2 -DcqH /=.
     rewrite !size_cat /= !size_cat !size_nseq Eqv1 /=.
     by nat_norm; do !nat_congr.
   have q21ok q:
@@ -745,7 +745,7 @@ move: qsR; rewrite -DqsH; case Dk2: k2.
       rewrite Dr -DcqH Dq1 /= q3v3 Ea1 Ea3 nFv2 eqxx q_r1 !andbT.
       rewrite /fitq Eq Eqv2 /= eqseq_cons -[node (h v2)]nodeK enn_v2.
       by rewrite arity_face Eqa2.
-    rewrite (simple_perm EqsF) // DrH1 /pH DrH Dqs Dq1 Dk2 -DcqH /=.
+    rewrite (eq_simple EqsF) // DrH1 /pH DrH Dqs Dq1 Dk2 -DcqH /=.
     rewrite !size_cat /= !size_cat !size_nseq Eqv2 /=.
     by nat_norm; do !nat_congr.
   have simq_id q (u : G0): simq q q u by [].
@@ -759,7 +759,7 @@ have EqsF: fband (rqs_walk (cqH Qask0 Qask0) rH1 ++ r0) =i fband (h v2 :: pH).
   by rewrite (fband_nseq nu0Fv1) orbC.
 split=> [|||u]; rewrite // -/r -/r0 -/rH1; last by rewrite EqsF EpH1.
   by rewrite Dr -DcqH /= Ea1 Ea3 q3v3 nFv2 eqxx.
-rewrite (simple_perm EqsF) // DrH1 /pH DrH Dqs Dq1 Dq2 Dk2 -DcqH /=.
+rewrite (eq_simple EqsF) // DrH1 /pH DrH Dqs Dq1 Dq2 Dk2 -DcqH /=.
 by rewrite !size_cat /= !size_cat !size_nseq /=; nat_norm; do !nat_congr.
 Qed.
 

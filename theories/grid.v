@@ -405,7 +405,7 @@ Lemma ltn_garea_subrect p (r s : grect) :
   subpred r s -> predD s r p -> (garea r < garea s)%N.
 Proof.
 move=> srs; rewrite /= -!size_enum_grect -!mem_enum_grect ltnNge.
-apply: contraL => /leq_size_perm[|q|->]; rewrite ?andNb ?enum_grect_uniq //.
+apply: contraL => /uniq_min_size[|q|_ ->]; rewrite ?andNb ?enum_grect_uniq //.
 by rewrite !mem_enum_grect => /srs.
 Qed.
 

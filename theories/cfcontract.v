@@ -716,7 +716,7 @@ case: s Dcpc => // [n||] Dcpc; rewrite !implyTb => cp_ok Emr Emc;
   rewrite [cpmap (_ :: _)]/=; set G := cpmap cp => IHcp plainG cubicG ntG.
 - rewrite cpring_ecpR /= -(rotrK n mr).
   rewrite -(size_rotr n mr) in Emr; move: Dcpc (IHcp _ _ Emr Emc).
-  case: (cfctr _ mc cp) => //= _ _ {cpc}; apply: etrans; apply: simple_perm.
+  case: (cfctr _ mc cp) => //= _ _ {cpc}; apply: etrans; apply: eq_simple.
     move=> y; congr (_ || _).
       by rewrite !(cfaceC y); apply/esym/(@same_cnode G)/fconnect_iter.
     apply: eq_has_r => x {y}; rewrite !mem_cat; congr (_ || _).

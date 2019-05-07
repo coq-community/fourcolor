@@ -9,14 +9,12 @@ env:
   global:
   - NJOBS="2"
   - CONTRIB_NAME="fourcolor"
-  - MATHCOMP_VERSION=":1.8.0-"
+  - MATHCOMP_VERSION="-dev:"
   matrix:
-  # - COQ_VERSION="8.6"
   - COQ_VERSION="8.7"
   - COQ_VERSION="8.8"
   - COQ_VERSION="8.9"
   - COQ_VERSION="dev"
-  - COQ_VERSION="dev" MATHCOMP_VERSION="-dev:"
 
 install: |
   # Prepare the COQ container
