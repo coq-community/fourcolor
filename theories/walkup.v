@@ -435,7 +435,7 @@ rewrite -addSn -fcard_skip_edge -(fcard_skip faceI) -(fcard_skip nodeI).
 rewrite [t in _ + _ + t]addnACA addnACA /n_comp_z z_barb_z; congr (_ + _).
 rewrite /glink /=; case ez_z: (ez == z).
   by rewrite (canF_eq nodeK) (eqP ez_z) eq_sym andbb addnn.
-have [nz_z | _] /= := nz =P z; last by case: ifP.
+  have [nz_z | _] /= := nz =P z; last by rewrite addnC; case: ifP.
 by rewrite (canF_eq faceK) eq_sym nz_z ez_z.
 Qed.
 

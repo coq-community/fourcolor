@@ -617,9 +617,9 @@ Definition mirror_part p := mirror_part_rec (get_hat p) Pnil p.
 
 Lemma size_mirror_part p : size_part (mirror_part p) = size_part p.
 Proof.
-rewrite /mirror_part -[size_part p]/(size_part Pnil + size_part p).
+rewrite /mirror_part -[RHS]addn0 -[0]/(size_part Pnil).
 elim: p Pnil (get_hat p) => //= [s h|h f1|h f1 f2|h f1 f2 f3] p IHp q h0;
-  by rewrite ?addn0 ?addnS ?IHp.
+  by rewrite IHp !addnS.
 Qed.
 
 Lemma mirror_mirror_part p : mirror_part (mirror_part p) = p.
