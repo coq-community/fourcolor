@@ -404,9 +404,9 @@ Qed.
 Lemma ltn_garea_subrect p (r s : grect) :
   subpred r s -> predD s r p -> (garea r < garea s)%N.
 Proof.
-move=> srs; rewrite /= -!size_enum_grect -!mem_enum_grect ltnNge.
+move=> sub_r_s; rewrite /= -!size_enum_grect -!mem_enum_grect ltnNge.
 apply: contraL => /uniq_min_size[|q|_ ->]; rewrite ?andNb ?enum_grect_uniq //.
-by rewrite !mem_enum_grect => /srs.
+by rewrite !mem_enum_grect => /sub_r_s.
 Qed.
 
 (* The 3x3 rectangle of pixels that surround a central pixel. *)

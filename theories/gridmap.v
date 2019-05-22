@@ -300,8 +300,8 @@ pose bbl c := if ~~ odd c then bbw else bbh.
 pose side c := [seq bbd c z | z <- iota 0 (bbl c)].
 have <-: size (flatten [seq side c | c <- iota 0 4]) = (bbw + bbh).*2.
   by rewrite !size_cat !size_map !size_iota addn0 addnA addnn.
-rewrite cardE -(size_map (val \o gmedge)); apply/perm_eq_size.
-apply/uniq_perm_eq; first exact/dinjectiveP/(in2W (inj_comp val_inj _))/edgeI.
+rewrite cardE -(size_map (val \o gmedge)); apply/perm_size.
+apply/uniq_perm; first exact/dinjectiveP/(in2W (inj_comp val_inj _))/edgeI.
   have bbd_inj c: injective (bbd c).
     move=> e1 e2 /(congr1 halfg); rewrite !halfg_add2 => /addIr/addrI.
     by do 4!case: c => [[]// | c]; case.
