@@ -320,7 +320,7 @@ move=> d; apply/imageP/flatten_mapP=> [[/= u G'u ->] | [c ltc /mapP[z ltz ->]]].
   rewrite {}/c /bbd /bbp; congr ((p0 + _) *+ 2 + _); last by case: oddgP.
   by case: oddgP G'u; rewrite bbE ?addr0 ?ubx ?uby /= ?andbT /h1 /w1;
      do [ rewrite andbC -lez_addr1 subrK ltrW // subr_ge0 -eqn0Ngt => /eqP->
-        | case: ltrgtP => [/idPn||->]; rewrite ?addrK // -lerNgt lez_addr1].
+        | have [/idPn||->] := ltrgtP _%:Z; rewrite ?addrK // -lerNgt lez_addr1].
 rewrite -[bbd c z]gedge2; set ed := gedge (bbd c z).
 suffices /andP[Ged]: (ed \in gmgrid) && ~~ bb (halfg ed) by exists (Gmdart Ged).
 rewrite mem_iota /= -ltz_nat in ltz; rewrite !inE in ltc.
