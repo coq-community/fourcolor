@@ -2,7 +2,7 @@
 (* Distributed under the terms of CeCILL-B.                                  *)
 Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq ssralg ssrnum ssrint rat.
+Require Import ssrfun ssrbool eqtype ssrnat seq order ssralg ssrnum ssrint rat.
 From fourcolor
 Require Import real.
 Require Import Setoid Morphisms.
@@ -35,7 +35,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 
 Module Dedekind.
 
@@ -90,7 +90,7 @@ Lemma open x a : x < a -> exists2 b, x < b & (b < a)%R.
 Proof. by case: x a => x []. Qed.
 
 Lemma ltc_le_trans x a b : x < a -> (a <= b)%R -> x < b.
-Proof. by rewrite ler_eqVlt => ltxa /predU1P[<-//| /(ltc_trans ltxa)]. Qed.
+Proof. by rewrite le_eqVlt => ltxa /predU1P[<-//| /(ltc_trans ltxa)]. Qed.
 
 Lemma gec_lt_trans a x b : x >= a -> x < b -> (a < b)%R.
 Proof. by case: ltrP => // /ltc_le_trans-leba leax /leba. Qed.
@@ -99,7 +99,7 @@ Lemma le_gec_trans a b x : (a <= b)%R -> x >= b -> x >= a.
 Proof. by move=> leab lebx ltxa; apply: lebx (ltc_le_trans ltxa leab). Qed.
 
 Lemma lt_gec_trans a b x : (a < b)%R -> x >= b -> x >= a.
-Proof. by move/ltrW; apply: le_gec_trans. Qed.
+Proof. by move/ltW; apply: le_gec_trans. Qed.
 
 (* The preorder on cuts. *)
 
@@ -150,9 +150,9 @@ Qed.
 
 Fact lt_is_cut a : is_cut {b | a < b}%R.
 Proof.
-split=> [||b c /ltr_trans| b /midf_lt[ltac ltcb]]; last 2 [exact].
+split=> [||b c /lt_trans| b /midf_lt[ltac ltcb]]; last 2 [exact].
 - by exists (a + 1)%R; rewrite ltr_addl.
-- by exists a; rewrite ltrr.
+- by exists a; rewrite ltxx.
 by exists ((a + b) / 2%:R)%R.
 Qed.
 
@@ -161,7 +161,7 @@ Notation "0" := (ratR 0) : cut_scope.
 Notation "1" := (ratR 1) : cut_scope.
 
 Lemma leRq a x : x >= a <-> a <= x.
-Proof. by split=> [/gec_lt_trans | leax /leax]; last rewrite ltcE ltrr. Qed.
+Proof. by split=> [/gec_lt_trans | leax /leax]; last rewrite ltcE ltxx. Qed.
 
 Lemma ltcW a x : x < a -> x <= a. Proof. by move/ltc_trans. Qed.
 
@@ -186,8 +186,8 @@ split=> [||a b ltEa ltab| a].
 - have [supE|] := classical (has_sup E); last by exists 0%R => -[][].
   have [[y Ey] _] := supE; have [a leay] := cut_lb y.
   by exists a => -[][] // _ [b ltEb /lt_gec_trans/(_ leay)[]]; apply: ltEb.
-- case: ltEa => -[supE ltEa]; last by right; rewrite ltcE (ltr_trans ltEa).
-  by have [c] := ltEa; left; split=> //; exists c; last apply: ltr_trans ltab.
+- case: ltEa => -[supE ltEa]; last by right; rewrite ltcE (lt_trans ltEa).
+  by have [c] := ltEa; left; split=> //; exists c; last apply: lt_trans ltab.
 case=> -[supE]  => [supEa | /open[c]]; last by exists c; first right.
 have [c ltEc /open[b ltcb ltba]] := supEa.
 by exists b; first by left; split; last exists c.
@@ -277,7 +277,7 @@ split=> [||a b [c lt_na_c lecx] | a [b /(@open (- a)%R)[c lt_na_c ltcb] lebx]].
 - by have [a leax] := cut_lb x; exists (1 - a)%R, a; rewrite // opprB gtr_addl.
 - have [a ltxa] := cut_ub x; exists (- a)%R => -[b ltab []].
   by apply: ltc_trans ltab; rewrite opprK.
-- by exists c; first by apply: ltr_trans lt_na_c; rewrite ltr_opp2.
+- by exists c; first by apply: lt_trans lt_na_c; rewrite ltr_opp2.
 by exists (- c)%R; [exists b; rewrite ?opprK | rewrite ltr_oppl].
 Qed.
 
@@ -391,14 +391,14 @@ Qed.
 Lemma addN x : x - x == 0.
 Proof.
 apply eqR_sym; split=> [c [a ltxa [b lt_ac_b /leRq-lebx]] | d d_gt0].
-  by rewrite ltcE -(ltr_addr (- a)) ltr_oppl (ltr_trans lt_ac_b) ?lebx.
+  by rewrite ltcE -(ltr_addr (- a)) ltr_oppl (lt_trans lt_ac_b) ?lebx.
 have [[a ltxa] [b lebx]] := (cut_ub x, cut_lb x).
 have{a ltxa d_gt0} []: exists n, x < b + d *+ n.
   have ltab: (0 < a - b)%R by move/leRq in lebx; rewrite subr_gt0 lebx.
-  pose c := ((a - b) / d)%R; have c_ge0: (0 <= c)%R by rewrite ltrW ?divr_gt0.
+  pose c := ((a - b) / d)%R; have c_ge0: (0 <= c)%R by rewrite ltW ?divr_gt0.
   exists `|numq c|%N; apply: ltc_le_trans ltxa _; rewrite -ler_subl_addl.
   rewrite pmulrn gez0_abs -?ge_rat0 // -mulrzl numqE mulrAC.
-  by rewrite divfK ?gtr_eqF ?ler_pmulr // ler1z -gtz0_ge1 denq_gt0.
+  by rewrite divfK ?gt_eqF ?ler_pmulr // ler1z -gtz0_ge1 denq_gt0.
 elim=> [|n IHn]; rewrite ?addr0 // mulrSr => /open[a ltxa lt_a_dnd].
 have [/IHn//| le_bdn_x] := classical (x < b + d *+ n).
 by exists a => //; exists (b + d *+ n)%R; rewrite // opprB ltr_subl_addr -addrA.
@@ -430,12 +430,12 @@ Fact amul_is_cut x y : is_cut (amul_cut x y).
 Proof.
 split=> [|| a b [c ltxc ltyac] ltab | a [b ltxb /open[c ltyc ltcab]]].
 - have [[a ltxa] [b ltyb]] := (cut_ub `|x|, cut_ub `|y|).
-  by exists (b * a)%R, a; rewrite ?mulfK ?gtr_eqF // (abs_ge0 ltxa).
-- by exists 0%R => -[a _ /abs_ge0]; rewrite mul0r ltcE ltrr.
+  by exists (b * a)%R, a; rewrite ?mulfK ?gt_eqF // (abs_ge0 ltxa).
+- by exists 0%R => -[a _ /abs_ge0]; rewrite mul0r ltcE ltxx.
 - exists c => //; have c_gt0: 0 < c := abs_ge0 ltxc.
   by apply: ltc_trans ltyac _; rewrite ltr_pmul2r ?invr_gt0.
 have b_gt0: 0 < b := abs_ge0 ltxb.
-by exists (c * b)%R; first exists b; rewrite -?ltr_pdivl_mulr ?mulfK ?gtr_eqF.
+by exists (c * b)%R; first exists b; rewrite -?ltr_pdivl_mulr ?mulfK ?gt_eqF.
 Qed.
 
 Definition amul x y := Cut (amul_is_cut x y).
@@ -455,7 +455,7 @@ Instance mul_Proper : Proper (eqR ==> eqR ==> eqR) mul.
 Proof. by move=> x1 x2 Dx y1 y2 Dy; rewrite /mul Dx Dy. Qed.
 
 Lemma amul_ge0 {x y} : `|x|*|y| >= 0.
-Proof. by case=> a _ /abs_ge0; rewrite ltcE mul0r ltrr. Qed.
+Proof. by case=> a _ /abs_ge0; rewrite ltcE mul0r ltxx. Qed.
 
 Lemma ge0_mul x y : x >= 0 -> y >= 0 -> x * y == `|x|*|y|.
 Proof. by rewrite /mul => le0x le0y; case: ifR_cases => [|[]]. Qed.
@@ -464,16 +464,16 @@ Lemma amulC x y : `|x|*|y| == `|y|*|x|.
 Proof.
 without loss suffices: x y / `|y|*|x| <= `|x|*|y| by [].
 move=> b [a ltxa ltyba]; exists (b / a)%R; rewrite // invf_div mulrC divfK //.
-by rewrite gtr_eqF // -(mul0r a) -ltr_pdivl_mulr (abs_ge0 ltxa, abs_ge0 ltyba).
+by rewrite gt_eqF // -(mul0r a) -ltr_pdivl_mulr (abs_ge0 ltxa, abs_ge0 ltyba).
 Qed.
 
-Lemma amulA x y z : `|x|*|`|y|*|z| | == `|`|x|*|y| |*|z|.
+Lemma amulA x y z : `|x|*|`|y|*|z| | == `| `|x|*|y| |*|z|.
 Proof.
-without loss suffices: x y z / `|`|x|*|y| |*|z| <= `|x|*|`|y|*|z| |.
+without loss suffices: x y z / `| `|x|*|y| |*|z| <= `|x|*|`|y|*|z| |.
   by split=> //; rewrite !(amulC x) -!(amulC z).
 move=> c [a ltxa [[b ltyb ltz_cab] _]]; have a_gt0: 0 < a := abs_ge0 ltxa.
 exists (a * b)%R; last by rewrite invfM mulrA.
-by rewrite (ge0_abs amul_ge0); exists a; rewrite //= mulrC mulKf ?gtr_eqF.
+by rewrite (ge0_abs amul_ge0); exists a; rewrite //= mulrC mulKf ?gt_eqF.
 Qed.
 
 Lemma amul0 x : `|0|*|x| == 0.
@@ -481,7 +481,7 @@ Proof.
 split=> [a a_gt0|]; last exact/leRq/amul_ge0.
 have [b lexb] := cut_ub `|x|; have b_gt0 := abs_ge0 lexb.
 exists (a / b)%R; first by rewrite ltcE /abs_cut opp0 ltcE divr_gt0.
-by rewrite invfM invrK mulVKf ?gtr_eqF.
+by rewrite invfM invrK mulVKf ?gt_eqF.
 Qed.
 
 Lemma mulC x y : x * y == y * x.
@@ -527,12 +527,12 @@ have [/leRq-leR0y /leRq-leR0z] := (le0y, le0z).
 have le0yz: y + z >= 0 by move/(add_monotony leR0z); rewrite addC add0.
 rewrite !ge0_mul //; symmetry; split=> [c [a ltxa] | c [d [a1 ltxa1]]].
   rewrite ge0_abs // => -[b ltyb ltz_cab]; have a_gt0 := abs_ge0 ltxa.
-  exists (b * a)%R, a => //; first by rewrite mulfK ?gtr_eqF // ge0_abs.
-  by rewrite mulrBl mulfK ?gtr_eqF // ge0_abs.
+  exists (b * a)%R, a => //; first by rewrite mulfK ?gt_eqF // ge0_abs.
+  by rewrite mulrBl mulfK ?gt_eqF // ge0_abs.
 rewrite ge0_abs // => lty_da1 [a2]; rewrite (ge0_abs le0z) // => ltxa2 ltz_cda2.
 have [a ltxa [lea1 lea2]]: exists2 a, `|x| < a & (a <= a1)%R /\ (a <= a2)%R.
   exists (Num.min a1 a2); first by rewrite fun_if; case: ifP.
-  by apply/andP; rewrite -ler_minr.
+  by apply/andP; rewrite -lexI.
 have [[a_gt0 a1_gt0] a2_gt0] := (abs_ge0 ltxa, abs_ge0 ltxa1, abs_ge0 ltxa2). 
 have dgt0: 0 < d by move/leR0y: lty_da1; rewrite ltcE pmulr_lgt0 ?invr_gt0.
 have cdgt0: 0 < c - d.
@@ -549,7 +549,7 @@ elim/opp_ind: x => [x IHx | x le0x].
 rewrite ge0_mul //; split=> [b /open[a ltxa ltab] | b [a [lt1a _] ltxba]].
   have a_gt0: 0 < a by apply/leRq: (a) ltxa.
   by rewrite amulC; exists a; rewrite ge0_abs // ltcE ltr_pdivl_mulr ?mul1r.
-have a_gt0: 0 < a by apply: ltr_trans lt1a.
+have a_gt0: 0 < a by apply: lt_trans lt1a.
 have b_gt0: 0 < b by rewrite ltcE -(mul0r a) -ltr_pdivl_mulr ?(abs_ge0 ltxba).
 rewrite -[x]ge0_abs //; apply: ltc_trans ltxba _.
 by rewrite gtr_pmulr ?invf_lt1.
@@ -610,20 +610,20 @@ rewrite ge0_mul //; split=> [b lt1b | b [c ltxc [ltybc _]]]; last first.
   have [c_gt0 d_gt0] := (abs_ge0 ltxc, abs_ge0 ltxd).
   suffices: (1 / c < b / c)%R by rewrite ltr_pmul2r ?invr_gt0.
   apply: gec_lt_trans ltybc; apply/leRq/ubEy; exists d => //.
-  by rewrite !mul1r ge0_abs ltcE ?ltf_pinv // ltr_gtF ?invr_gt0.
-have lt0b: 0 < b by apply: ltr_trans lt1b.
+  by rewrite !mul1r ge0_abs ltcE ?ltf_pinv // lt_gtF ?invr_gt0.
+have lt0b: 0 < b by apply: lt_trans lt1b.
 pose e := (1 - b^-1)%R; have lt0e: 0 < e by rewrite ltcE subr_gt0 invf_lt1.
 have [c ltxc [d lt_cea_d ledx]]: x - x < a * e by rewrite addN ltcE mulr_gt0.
 have ltac: a < c := gec_lt_trans leax ltxc.
-have lt0c: 0 < c := ltr_trans lt0a ltac.
+have lt0c: 0 < c := lt_trans lt0a ltac.
 have lt0d: 0 < d.
-  apply: ltr_trans lt_cea_d; rewrite opprB subr_gt0 mulrBr mulr1.
+  apply: lt_trans lt_cea_d; rewrite opprB subr_gt0 mulrBr mulr1.
   by rewrite ltr_snsaddr // oppr_lt0 divr_gt0.
 have le_y_vd: y <= d^-1%R.
   apply/sup_le_ub=> // z -[f ltxf [lt_z_vf _]]; apply/ltcW/(ltc_trans lt_z_vf).
   by rewrite mul1r (ltf_pinv (abs_ge0 ltxf)) ?(gec_lt_trans _ ltxf) // => -[].
 exists c; rewrite ge0_abs //; apply: le_y_vd; rewrite ltcE.
-rewrite -invf_div ltf_pinv ?rpred_div //; apply: ltr_trans lt_cea_d.
+rewrite -invf_div ltf_pinv ?rpred_div //; apply: lt_trans lt_cea_d.
 by rewrite ltr_oppr -[c in (_ - c)%R]mulr1 ltr_subl_addl -mulrBr ltr_pmul2r.
 Qed.
 

@@ -4,7 +4,7 @@ Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
 Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype tuple.
 From mathcomp
-Require Import path fingraph bigop ssralg ssrnum ssrint div intdiv.
+Require Import path fingraph bigop order ssralg ssrnum ssrint div intdiv.
 From fourcolor
 Require Import hypermap geometry coloring grid matte.
 From fourcolor
@@ -61,7 +61,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory RealPlaneCoercions.
+Import Order.TTheory GRing.Theory Num.Theory RealPlaneCoercions.
 
 Definition scaled_rect (R : Real.model) : Type := nat * grect.
 Definition scaled_matte (R : Real.model) : Type := nat * matte.
@@ -276,8 +276,8 @@ have lt_approx u v mu mv: ap_s1 u mu -> ap_s1 v mv -> (mu + 1 <= mv)%R -> u < v.
   case=> _ ubu [lbv _] ltuv; apply/(leR_pmul2l v u es1gt0)/(ltR_le_trans ubu).
   by apply: leR_trans lbv; rewrite -intRD1; apply/intR_leP.
 case=> x2 y2 [[mx2 my2] [Dmx2 Dmy2]] /=; rewrite -andbA -!lez_addr1 => /and4P[].
-move=> /(ler_trans lbx0)/lt_approx-lbx /ler_trans/(_ ubx1)/lt_approx-ubx.
-move=> /(ler_trans lby0)/lt_approx-lby /ler_trans/(_ uby1)/lt_approx-uby.
+move=> /(le_trans lbx0)/lt_approx-lbx /le_trans/(_ ubx1)/lt_approx-ubx.
+move=> /(le_trans lby0)/lt_approx-lby /le_trans/(_ uby1)/lt_approx-uby.
 by do 2!split; [apply/lbx | apply/ubx | apply/lby | apply/uby].
 Qed.
 

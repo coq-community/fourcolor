@@ -4,7 +4,7 @@ Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
 Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
 From mathcomp
-Require Import bigop ssralg ssrnum ssrint.
+Require Import bigop order ssralg ssrnum ssrint.
 From fourcolor
 Require Import hypermap geometry quiztree part discharge.
 
@@ -192,7 +192,7 @@ Definition check_dbound2 p b :=
   if (dns%:Z - dnt%:Z + b)%R isn't Posz nt then false else
   check_dbound2_rec p rt' rs' [::] nt (size rt' + 2).
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 
 Lemma check_dbound2P (x : G) p b :
     arity x = nhub -> exact_fitp x p -> check_dbound2 p b ->
@@ -407,14 +407,14 @@ have db2_inc w i (v_i := nth 0 v i) (w' := incr_nth w i) :
     by do [rewrite -/v_i; case: eqP w_i => [->|_] [|[|?]]] in lt_wvi ub_wi *.
   apply: eq_bigr => y /andP[x1Fy x1i'y]; congr (_ *+ _)%R; rewrite nth_incr_nth.
   by have [Di | //] := i =P _; rewrite Di iter_findex ?eqxx in x1i'y.
-have: vb v by []; rewrite /v -ltr_subl_addl sub0r -lerNgt; clearbody v.
+have: vb v by []; rewrite /v -ltr_subl_addl sub0r -leNgt; clearbody v.
 elim: hc {b0}(_ - 1)%R hc_v hc_p => /= [|i b1 hc IHhc|j i b1 hc IHhc] b0.
-- by rewrite -lerNgt -oppr_ge0 [sum_db2 _]big1 // => y _; rewrite /db2 nth_nil.
+- by rewrite -leNgt -oppr_ge0 [sum_db2 _]big1 // => y _; rewrite /db2 nth_nil.
 - case/andP=> /eqP-Dvi v_hc /andP[p_b1 p_hc] vb_hci.
   have /vb_inc[_ vb_hc] := vb_hci.
   have [ltin | leni] := ltnP i nhub; last by rewrite nth_default ?Ev in Dvi.
   rewrite {}db2_inc ?Dvi {vb_hci}//= -ler_subr_addl -opprD addrC.
-  apply: {IHhc vb_hc v_hc p_hc}(ler_trans (IHhc _ v_hc p_hc vb_hc)).
+  apply: {IHhc vb_hc v_hc p_hc}(le_trans (IHhc _ v_hc p_hc vb_hc)).
   rewrite ler_opp2 ler_add2r ler_pmuln2r //.
   by apply: check_dbound2P p_b1; rewrite ?arity_iter_face ?fit_hubcap_rot.
 set vj := nth 0 v j => /and3P[/eqP-Dvi vj_le2] v_hc /andP[p_b1 p_hc] vb_hcij.
@@ -423,7 +423,7 @@ have{vj_gt} vj_gt0: 0 < vj by apply: leq_trans vj_gt.
 have [ltin | ?] := ltnP i nhub; last by rewrite Dvi nth_default ?Ev in vj_gt0.
 have [ltjn | ?] := ltnP j nhub; last by rewrite [vj]nth_default ?Ev in vj_gt0.
 rewrite !{}db2_inc -?Dvi {vb_hcij vb_hcj}//= addrA -ler_subr_addl -opprD -/vj.
-apply: {IHhc v_hc p_hc vb_hc}(ler_trans (IHhc _ v_hc p_hc vb_hc)).
+apply: {IHhc v_hc p_hc vb_hc}(le_trans (IHhc _ v_hc p_hc vb_hc)).
 rewrite ler_opp2 addrC ler_add2r -mulrnDl ler_pmuln2r //.
 rewrite addrC -(iter_hub_subn i ltjn) //.
 apply: check_2dbound2P p_b1; rewrite ?arity_iter_face ?hub_subn_hub //.

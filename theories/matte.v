@@ -2,7 +2,7 @@
 (* Distributed under the terms of CeCILL-B.                                  *)
 Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice path.
+Require Import ssrfun ssrbool eqtype ssrnat seq choice path order.
 From mathcomp
 Require Import ssralg ssrnum ssrint div intdiv.
 From fourcolor
@@ -112,7 +112,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 Local Open Scope ring_scope.
 
 Definition mrlink := [rel d1 d2 | end1g d1 == end0g d2].
@@ -149,7 +149,7 @@ Qed.
 
 Lemma madj_irrefl : irreflexive madj.
 Proof.
-by move=> m; apply/hasPn=> d; rewrite !inE !in_mring !inE => /andP[_ /negPf->]. 
+by move=> m; apply/hasPn=> d; rewrite !inE !in_mring !inE => /andP[_ /negPf->].
 Qed.
 
 (* Initial single_square matte. *)
@@ -608,7 +608,7 @@ have ndFE q: nd (gface (gedge q)) = gedge (gface (nd q)).
   by rewrite -[q in RHS]gedgeK ndN gnodeK gedge2.
 have m_nd4 q: r0 q -> has (equad (nd q)) m -> q \in m.
   move=> r0q /hasP[q1 m_q1 q4q1]; rewrite -[_ \in m](r0Emh _ q1) {m_q1}//.
-  apply/esym/eqP; rewrite -[_ == _]/(_ && _) !eqr_le -andbA; apply/and4P.
+  apply/esym/eqP; rewrite -[_ == _]/(_ && _) !eq_le -andbA; apply/and4P.
   move: q4q1; rewrite !(inE, in_gchop_rect) /gchop halfg_face -[halfg _]halfgK.
   rewrite h_nd oddg_face o_nd ccw4; case: (halfg q) q1 => x y [x1 y1] /=.
   rewrite -!(ltz_addr1 (_ %/ _)%Z) !ltz_divLR ?lez_divRL // !mulrDl !mulz2.

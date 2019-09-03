@@ -285,7 +285,7 @@ suffices{U1open} U2open: open U2.
 move=> z [/Uopen[r /approx_rect[b b_z r_b] Ur] U1'z].
 suffices b'U1: ~ meet b U1.
   have [p /rect_approx[rp rp_z p_rp] b_p] := b_z; exists rp => // t /p_rp-p_t.
-  have b_t: b t by apply: sub_mem_approx t p_t => q /gtouch_l/(insetP b_p). 
+  have b_t: b t by apply: sub_mem_approx t p_t => q /gtouch_l/(insetP b_p).
   by split=> [|U1t]; [apply/Ur/r_b | have [] := b'U1; exists t].
 case=> t [b_t [m1]]; move: r_b b_z b_t.
 without loss: b m1 / b.1 = m1.1 /\ coarse_in b.2 m1.2.
@@ -326,7 +326,7 @@ pose E i := enum [pred e : Er | i \in e].
 suffices /fin_all_exists[m mP] i: exists m, proper_smatte m i [mem E i].
   pose s_ i := \sum_(j | j != i) (m j).1.
   exists (\sum_i (m i).1), (fun i => (refine_smatte (s_ i) (m i)).2) => i.
-  rewrite (bigD1 i) //= addnC; apply/refine_smatte_proper. 
+  rewrite (bigD1 i) //= addnC; apply/refine_smatte_proper.
   by have [m_i m_E] := mP i; split=> // e; rewrite -mem_enum => /m_E.
 have: all [pred e : Er | i \in e] (E i) by apply/allP=> e; rewrite mem_enum.
 have [[_ m0open m0connect] _] := fin_m0.
@@ -344,7 +344,7 @@ by exists t; split; first apply/m1m.
 Qed.
 
 End DiscrMatte.
-                                                                     
+
 End AdjRepr.
 
 Lemma discretize_to_hypermap :

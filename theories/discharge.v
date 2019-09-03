@@ -4,7 +4,7 @@ Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
 Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
 From mathcomp
-Require Import bigop ssralg ssrnum ssrint.
+Require Import bigop order ssralg ssrnum ssrint.
 From fourcolor
 Require Import hypermap geometry part.
 
@@ -159,7 +159,7 @@ Fixpoint symmetrize_drules (r : drules) : drules :=
 
 Definition the_drules := symmetrize_drules base_drules.
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 Local Open Scope ring_scope.
 
 Section Discharge.
@@ -215,7 +215,7 @@ Lemma posz_dscore : exists x : G, dscore x > 0.
 Proof.
 apply/existsP; have: ~~ (0 <= - (120 : int)) by []; apply: contraR.
 rewrite negb_exists -dscore_roots -sumrN => /forallP-score_le0.
-by apply: sumr_ge0 => x _; rewrite oppr_ge0 lerNgt.
+by apply: sumr_ge0 => x _; rewrite oppr_ge0 leNgt.
 Qed.
 
 Lemma dscore_mirror (x : G) : @dscore (mirror G) x = dscore x.
@@ -385,7 +385,7 @@ move=> ub_m x pos_x d max_m; apply: contraLR pos_x; rewrite -leqNgt => ledx.
 have ltm10: (m < 10)%N by rewrite -subn_gt0; case: (10 - m)%N max_m.
 have{max_m}: 60%:Z <= ((10 - m) * arity x)%:Z.
   by rewrite lez_nat (leq_trans max_m) ?leq_mul.
-rewrite -lerNgt -ler_subr_addr ler_subl_addl add0r => /ler_trans-> //.
+rewrite -leNgt -ler_subr_addr ler_subl_addl add0r => /le_trans-> //.
 rewrite !PoszM -!mulrzz -![_ *~ _]sumr_const -sumrB ler_sum // => y _.
 rewrite -(ler_add2r m%:Z) -PoszD subnK 1?ltnW // addrAC.
 by rewrite ler_subr_addr ler_add2l ler_subl_addr ler_paddr.
@@ -404,7 +404,7 @@ Lemma dscore_cap2 (x : G) :
     arity x = nhub -> 0 < dscore x ->
   0 < dboundK + \sum_(y in cface x) dbound2 rt rs y.
 Proof.
-move=> nFx /ltr_le_trans-> //; rewrite /dscore -dboundK_eq // ler_add2l.
+move=> nFx /lt_le_trans-> //; rewrite /dscore -dboundK_eq // ler_add2l.
 do 2!rewrite (reindex_inj faceI) -(eq_bigl _ _ (fun y => cface1r y x)) /=.
 by apply: ler_sum => y xFy; rewrite dbound2_leq // -(arity_cface xFy).
 Qed.
