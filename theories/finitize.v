@@ -303,8 +303,8 @@ suffices [g g_k]: exists g, forall i, i < nc -> subregion (kfn i) (kn (g i)).
   by exists i; [apply/ltP | apply/g_k].
 elim: nc => [|i [g g_k]]; first by exists f.
 have [[t [k_fi_t n_t]] | kfn'i] := Rclassic (nonempty (kfn i)).
-  exists [eta g with i |-> t] => j /=; rewrite ltnNge.
-  by case: ltngtP => [/g_k||->] // _ z [/(map_transl kP k_fi_t)].
+  exists [eta g with i |-> t] => j /=; rewrite ltnS.
+  by case: (ltngtP j) => [/g_k||->] // _ z [/(map_transl kP k_fi_t)].
 exists g => j; rewrite ltnS leq_eqVlt => /predU1P[->|/g_k//] z kfn_iz.
 by case: kfn'i; exists z.
 Qed.
@@ -467,9 +467,9 @@ without loss lt_i12: i1 i2 le_i1n le_i2n n1i1 n1i2 / i1 < i2.
   exact/k2n1/cover_pmap.
 have [lt_i1n1 lt_i2n1]: i1 < n1 /\ i2 < n1 by split; apply: leq_trans lt_nn1.
 have lt_i1n: i1 < n by apply: leq_trans lt_i12 le_i2n.
-have [|lt12n|/esym-Di2] := ltngtP n i2; first by rewrite ltnNge le_i2n.
+case: (ltngtP i2) le_i2n => // [lt12n|Di2] _.
   by move/IHn; apply; [apply: pmap_std n1i1 | apply: pmap_std n1i2].
-rewrite {i2}Di2 in n1i2 lt_i12 {le_i1n le_i2n lt_i2n1} * => k1i1n.
+rewrite {i2}Di2 in n1i2 lt_i12 {le_i1n lt_i2n1} * => k1i1n.
 elim: {1}n i1 lt_i12 => // n3 IHn3 i1 lt_i1n3 in lt_i1n {lt_i1n1} n1i1 k1i1n *.
 have [[n1k1 k1ext k1min] [n1k2 k2ext k2min]] := (k1pre, k2pre).
 have [n'_i1 n'_n] := (pmap_std (leqW lt_i1n) n1i1, pmap_std (ltnSn n) n1i2).
