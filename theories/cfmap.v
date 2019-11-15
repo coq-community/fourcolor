@@ -300,7 +300,7 @@ apply: cpring_def; last first.
   by rewrite rev_rot rotr_ucycle; apply: ucycle_rev_cpring.
 rewrite /cpring -rev_rotr /rotr size_orbit /=; set m := order _ _.
 have <-: m = order node x0 by apply: eq_card => x; rewrite !inE -!cnode1.
-case: (m - n0) (leq_subr n0 m) => [|n] Hn.
+case: (m - n0) (leq_subl n0 m) => [|n] Hn.
   by rewrite rot0 -/(cpring x0) head_cpring.
 rewrite rev_cat (take_nth (node (node x0))) ?size_orbit ?rev_rcons //=.
 by rewrite nth_traject // -!iterSr.

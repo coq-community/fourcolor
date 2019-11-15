@@ -92,7 +92,7 @@ apply/idP/idP; rewrite /= fconnect_orbit => /trajectP[n _ Dv].
   by case: eqP => // ->; rewrite same_fconnect1.
 elim: {n}n.+1 {-2}n (ltnSn n) => // m IHm n lemn in u Dv *.
 case: n => [|n] in Dv lemn; first exact/eq_connect0/val_inj.
-have ltn1m: n - (f (val u) == z) < m by rewrite (leq_ltn_trans (leq_subr _ _)).
+have ltn1m: n - (f (val u) == z) < m by rewrite (leq_ltn_trans (leq_subl _ _)).
 rewrite (same_fconnect1 inj_skip) (IHm _ ltn1m) //= -fun_if -subSKn -iterSr.
 case: eqP => // Dfu; rewrite -[in RHS]Dfu -iterSr subn1 prednK // lt0n.
 by apply: contraFneq (z'G' v) => /= n_0; rewrite Dv iterSr Dfu n_0.

@@ -418,7 +418,7 @@ have{Dov} Dev: halfg (gmedge v) = p0 + Gpoint (x - 1)%N (y - (x == 0))%N.
   by rewrite halfg_edge {}Dv {}Dov addrAC -addrA; case: x y Dn => [|x] [].
 rewrite (same_connect1 glinkC (glinkE v)) (IHn _ _ _ Dev) //.
   have:= bb_v; rewrite !inE Dv Dev !bbE /= => /andP[ubx uby].
-  by rewrite !ltz_nat !(leq_ltn_trans (leq_subr _ _)).
+  by rewrite !ltz_nat !(leq_ltn_trans (leq_subl _ _)).
 by case: x y {Dv Dev} Dn => [|x] [|y] // [<-]; rewrite !subn1.
 Qed.
 

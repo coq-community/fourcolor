@@ -182,7 +182,7 @@ without loss [p Dr]: r r_z Dfz cycNr Ur cubGr / {p | rot 1 r = z :: p}.
   case=> //; first 2 [by exists p].
     by congr eq: cubGr; apply/eq_subset=> x /=; rewrite !inE mem_rot.
   have{Dr} [j lejr <-]: {j | j <= size ri & rot j ri = r}.
-    by exists (size ri - i); rewrite ?leq_subr ?[LHS]rotK.
+    by exists (size ri - i); rewrite ?leq_subl ?[LHS]rotK.
   have{lejr} <-: iter j (rot 1) ri = rot j ri.
     by elim: j => [|j IHj] in lejr *; rewrite ?rot0 //= IHj -?rotS // ltnW.
   elim: j ri => [|j IHj] r1 w WMr wGr; first by exists w.

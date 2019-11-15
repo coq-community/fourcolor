@@ -279,7 +279,7 @@ elim: m rt1 => // m IHm [|r rt1]/= in nt x1 i nFx1 ub_i rs1 ru1 p1 b1ru1 Exp1 *.
   move: rs1 ru1 p1 b1ru1 Exp1.
   have <-: iter i1 face x2 = x1.
     by rewrite -iter_add subnK // -nFx1 iter_face_arity.
-  by apply: IHm => //; rewrite ?arity_iter_face ?leq_subr.
+  by apply: IHm => //; rewrite ?arity_iter_face ?leq_subl.
 set x2 := iter i face x1 => rt2 rs2 ru2 p2 b1ru2 Exp2.
 case: ifP => [lt_rt_nt _ | _ /andP[]].
   apply: leq_trans (leq_addl _ _); apply: leq_trans lt_rt_nt.
@@ -338,9 +338,9 @@ move=> nFx fit_xp; have n_gt1: 1 < nhub by rewrite -nFx 3?ltnW ?pentaG.
 have [/eqP Ep _] := andP fit_xp; rewrite nFx in Ep.
 case=> [|[|j]] ltjn; rewrite -?iterSr.
 - rewrite -(iter_face_arity x) nFx -(subnKC n_gt1) /hubcap_rot addn0.
-  by rewrite /inv_face2 /= !faceK -fitp_rot -?Ep ?leq_subr.
+  by rewrite /inv_face2 /= !faceK -fitp_rot -?Ep ?leq_subl.
 - rewrite -(iter_face_arity x) nFx -(subnKC (ltnW n_gt1)) /hubcap_rot addn1.
-  by rewrite subSS /inv_face2 /= nodeK faceK -fitp_rot -?Ep ?leq_subr.
+  by rewrite subSS /inv_face2 /= nodeK faceK -fitp_rot -?Ep ?leq_subl.
 by rewrite /hubcap_rot !iterSr !nodeK -fitp_rot -?Ep // 3?ltnW.
 Qed.
 

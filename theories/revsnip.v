@@ -154,7 +154,7 @@ rewrite (cycle_path x) -{2}Dr /rev_ring rev_cons last_rcons.
 apply/(pathP x) => i; rewrite size_rev size_map => lt_i_r.
 rewrite -rev_rcons -map_rcons !nth_rev ?size_map ?size_rcons ?leqW //.
 rewrite subSn //; set j := size r - i.+1.
-have ltjr: j < size r by rewrite -subSn // subSS leq_subr.
+have ltjr: j < size r by rewrite -subSn // subSS leq_subl.
 rewrite !(nth_map x) ?size_rcons // /rlink cfaceC ee.
 have:= cycRr; rewrite Dr in ltjr * => /(pathP x)/(_ j).
 by rewrite -rcons_cons nth_rcons size_rcons ltjr; apply.
