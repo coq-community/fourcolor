@@ -2,7 +2,7 @@
 (* Distributed under the terms of CeCILL-B.                                  *)
 Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq ssralg ssrnum ssrint rat.
+Require Import ssrfun ssrbool eqtype ssrnat seq order ssralg ssrnum ssrint rat.
 Require Import Morphisms Setoid.
 From fourcolor
 Require Import real realsyntax realprop.
@@ -34,7 +34,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 
 Section RealsCategorical.
 
@@ -349,11 +349,11 @@ have lt0Rb: 0 < ratR R b.
 have lt0b: (0 < b)%R by apply/(@ratR_lt0P R).
 have lt0Sb: 0 < ratR S b by apply/ratR_lt0P.
 have lt_ab_x: ratR R (a / b) < x.
-  rewrite -(leR_pmul2r _ _ lt0Rb) -ratRM divfK ?gtr_eqF //.
+  rewrite -(leR_pmul2r _ _ lt0Rb) -ratRM divfK ?gt_eqF //.
   by rewrite -(pmulKR (ratR R a) lt0x) mulRCA leR_pmul2l.
 suffices lt_a_psix_b: ratR S a < psi x * ratR S b.
   by apply: (ltR_trans lt_a_psix_b); rewrite leR_pmul2l // -psi_rat psi_le.
-by rewrite -[a](@divfK _ b) ?gtr_eqF // ratRM leR_pmul2r // -psi_rat psi_le.
+by rewrite -[a](@divfK _ b) ?gt_eqF // ratRM leR_pmul2r // -psi_rat psi_le.
 Qed.
 
 Let psi_sup E :

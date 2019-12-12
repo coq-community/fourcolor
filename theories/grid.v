@@ -2,7 +2,7 @@
 (* Distributed under the terms of CeCILL-B.                                  *)
 Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq path div choice.
+Require Import ssrfun ssrbool eqtype ssrnat seq path div choice order.
 From mathcomp
 Require Import ssralg ssrnum ssrint intdiv.
 From fourcolor
@@ -74,7 +74,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 Local Open Scope ring_scope.
 
 (* Complement to intdiv. *)
@@ -332,8 +332,8 @@ Definition extend_grect p r :=
 Lemma in_extend_grect p (r : grect) : subpred (predU1 p r) (extend_grect p r).
 Proof.
 case: r p => x0 x2 y0 y2 [x1 y1] [x y] /predU1P[->|] /=.
-  by rewrite !ler_minl !ltr_maxr !lerr !ltr_addl !orbT.
-by rewrite !ler_minl !ltr_maxr -andbA => /and4P[-> -> -> ->].
+  by rewrite !leIx !ltxU !lexx !ltr_addl !orbT.
+by rewrite !leIx !ltxU -andbA => /and4P[-> -> -> ->].
 Qed.
 
 (* Rectangle dimensions and enumeration. *)
@@ -364,9 +364,9 @@ Lemma mem_zspan xmin xmax x : (x \in zspan xmin xmax) = (xmin <= x < xmax).
 Proof.
 rewrite -[xmax in RHS](subrK xmin) -ltr_subl_addr -subr_ge0 /zspan /zwidth.
 case: {xmax}(xmax - xmin) => n; last by case: (x - xmin).
-elim: n xmin => [|n IHn] x0; first by rewrite ltrNge andbN.
+elim: n xmin => [|n IHn] x0; first by rewrite ltNge andbN.
 rewrite inE -subr_eq0 {}IHn opprD addrA ler_subr_addl ltr_subl_addl.
-by rewrite orb_andr eq_sym -ler_eqVlt; case: eqP => // <-.
+by rewrite orb_andr eq_sym -le_eqVlt; case: eqP => // <-.
 Qed.
 
 Lemma mem_enum_grect r p : (p \in enum_grect r) = r p.
@@ -384,7 +384,7 @@ Qed.
 Lemma zspan_uniq xmin xmax : uniq (zspan xmin xmax).
 Proof.
 rewrite /zspan /zwidth; case: {xmax}(xmax - xmin) => -[|n] //.
-apply/(sorted_uniq (@ltr_trans _) (@ltrr _))=> /=; set w := traject _ _ _.
+apply/(sorted_uniq lt_trans ltxx)=> /=; set w := traject _ _ _.
 have: fpath (+%R^~ 1) xmin w by apply: fpath_traject.
 by apply/sub_path=> x _ /eqP<-; rewrite ltr_addl.
 Qed.
@@ -422,7 +422,7 @@ Lemma subgrectE x0 x1 x2 x3 y0 y1 y2 y3 :
   subpred (Grect x1 x2 y1 y2) (Grect x0 x3 y0 y3).
 Proof.
 case=> lex01 lex23 ley01 ley23 [x y] /andP[] /=.
-by do 2![case/andP=> /(ler_trans _)-> // /ltr_le_trans-> //].
+by do 2![case/andP=> /(le_trans _)-> // /lt_le_trans-> //].
 Qed.
 
 Lemma gtouch_l p : subpred (ltouch p) (gtouch p).
@@ -478,7 +478,7 @@ Proof. by move <-; apply: gchop_halfg. Qed.
 Lemma gchop_edge d p : gchop (gedge d) p = ~~ gchop d p.
 Proof.
 rewrite /gchop halfg_edge oddg_edge; case: (halfg d) p => x0 y0 [x y] /=.
-by case: oddgP; rewrite /= -!ltrNge ?lez_addr1 // -ltz_addr1 addrK.
+by case: oddgP; rewrite /= -!ltNge ?lez_addr1 // -ltz_addr1 addrK.
 Qed.
 
 Lemma gchop_face_node d : gchop (gface (gnode d)) = gchop (gface (gface d)).
@@ -498,7 +498,7 @@ Lemma gchop_chop1 d : subpred (gchop d) (gchop1 d).
 Proof.
 rewrite /gchop1 /gchop !halfg_face halfg_edge !oddg_face oddg_edge ccw4.
 case: (halfg d) => x0 y0 [x y].
-by case: oddgP => /= d_p; rewrite ltrW // -?ltr_subr_addr ltz_addr1.
+by case: oddgP => /= d_p; rewrite ltW // -?ltr_subr_addr ltz_addr1.
 Qed.
 
 Lemma gtouch_chop1 d p :
@@ -534,7 +534,7 @@ Definition gchop_rect d :=
 Lemma in_gchop_rect d : gchop_rect d =1 predI r (gchop d).
 Proof.
 rewrite /gchop_rect /gchop; case: r (halfg d) => x0 x2 y0 y2 [x1 y1] [x y] /=.
-case: oddgP; rewrite /= (ler_maxl, ltr_minr) ?ltz_addr1 -!andbA; do !bool_congr.
+case: oddgP; rewrite /= (leUx, ltxI) ?ltz_addr1 -!andbA; do !bool_congr.
 Qed.
 
 Lemma gchop_rect_sub d : subpred (gchop_rect d) r.
@@ -548,8 +548,8 @@ rewrite /gchop; case: r (halfg d) => [x0 x2 y0 y2] [x1 y1] /= in r_ed *.
 rewrite andbT -!andbA -!lez_addr1 => /and5P[lbx ubx lby uby].
 by case: oddgP r_ed; rewrite /= ?addr0 -andbA -!lez_addr1 ?subrK;
    case/and4P=> lbx1 ubx1 lby1 uby1 d_xy; apply/and4P; split=> //;
-   rewrite ?lez_addr1 ?(ler_trans _ d_xy, ler_lt_trans d_xy) -?lez_addr1 //;
-   apply/ltrW; rewrite -lez_addr1 // -ler_subr_addr.
+   rewrite ?lez_addr1 ?(le_trans _ d_xy, le_lt_trans d_xy) -?lez_addr1 //;
+   apply/ltW; rewrite -lez_addr1 // -ler_subr_addr.
 Qed.
 
 Definition gchop1_rect d := gchop_rect (gface (gface (gedge d))).

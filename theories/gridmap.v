@@ -4,7 +4,7 @@ Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
 Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
 From mathcomp
-Require Import ssralg ssrnum ssrint.
+Require Import order ssralg ssrnum ssrint.
 From fourcolor
 Require Import hypermap geometry color coloring patch snip grid matte.
 
@@ -67,7 +67,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory Num.Def.
+Import Order.TTheory GRing.Theory Num.Theory Num.Def.
 Local Open Scope ring_scope.
 
 Section GridMap.
@@ -169,7 +169,7 @@ case: eqP => // -> -[e2bf bf_f]; split=> [/e2bf[cm2ref_bf cm2_bf]|]; last first.
 split=> [p q bf_p Dpq|]; last first.
   by have [p /cm2cm-cm2p bf_p] := hasP cm2_bf; apply/hasP; exists p.
 without loss suffices IHpq: p q bf_p Dpq / p \in cm2 -> q \in cm2.
-  by apply/idP/idP=> /IHpq-> //; rewrite !in_refine_rect Dpq in bf_p *. 
+  by apply/idP/idP=> /IHpq-> //; rewrite !in_refine_rect Dpq in bf_p *.
 by case/ab_cm2/andP=> _ /orP[/bf'e//|cm2p]; rewrite cm2cm // (cm2ref_bf p q).
 Qed.
 
@@ -254,7 +254,7 @@ Proof. by move=> u; apply/val_inj; rewrite /= gedge2. Qed.
 Lemma gmedgeK : cancel3 gmedge gmnode gmface.
 Proof.
 case=> d Gd; apply/val_inj; rewrite !val_insubd /= ifE.
-have [_ | G'n3ed] := ifP; first by rewrite gnode4 gedge2 Gd. 
+have [_ | G'n3ed] := ifP; first by rewrite gnode4 gedge2 Gd.
 have [_ | G'n2ed] := ifP; first by rewrite gnode4 gedge2 Gd gmgrid_edge G'n3ed.
 rewrite ifT; first by rewrite gnode4 gedge2 Gd !gmgrid_edge G'n3ed G'n2ed.
 rewrite -gnode_face gnode4 gmgridE halfg_face in G'n3ed.
@@ -319,14 +319,14 @@ move=> d; apply/imageP/flatten_mapP=> [[/= u G'u ->] | [c ltc /mapP[z ltz ->]]].
     by rewrite /c mem_iota; case: oddgP.
   rewrite {}/c /bbd /bbp; congr ((p0 + _) *+ 2 + _); last by case: oddgP.
   case: oddgP G'u; rewrite bbE ?addr0 ?ubx ?uby /= ?andbT /h1 /w1;
-    do ?by rewrite andbC -lez_addr1 subrK ltrW // subr_ge0 -eqn0Ngt => /eqP->.
-  - by have [/idPn||->] := ltrgtP bbh%:Z; rewrite ?addrK // -lerNgt lez_addr1.
-  - by have [/idPn||->] := ltrgtP bbw%:Z; rewrite ?addrK // -lerNgt lez_addr1.
+    do ?by rewrite andbC -lez_addr1 subrK ltW // subr_ge0 -eqn0Ngt => /eqP->.
+  - by have [/idPn||->] := ltrgtP bbh%:Z; rewrite ?addrK // -leNgt lez_addr1.
+  - by have [/idPn||->] := ltrgtP bbw%:Z; rewrite ?addrK // -leNgt lez_addr1.
 rewrite -[bbd c z]gedge2; set ed := gedge (bbd c z).
 suffices /andP[Ged]: (ed \in gmgrid) && ~~ bb (halfg ed) by exists (Gmdart Ged).
 rewrite mem_iota /= -ltz_nat in ltz; rewrite !inE in ltc.
 rewrite gmgridE andb_orl andbN gedge2 halfg_edge halfg_add2 oddg_add2 -!addrA.
-by case/or4P: ltc ltz => /eqP->; rewrite !bbE !addr0 ?addrK ?ltrr => ->;
+by case/or4P: ltc ltz => /eqP->; rewrite !bbE !addr0 ?addrK ?ltxx => ->;
    rewrite ?gtr_addl !andbT ?subr_ge0.
 Qed.
 
@@ -357,7 +357,7 @@ have gmendP (u : gmdart): end0g u - p0 \in gmframe.
     rewrite -halfg_face -[gface _]gnode4 gedgeK => bbn3u; have:= IHu (face u).
     by rewrite inE val_insubd gmgridE bbn3u !end0g_node => ->.
   rewrite /end0g {}Du addrC -addrA addKr mem_enum_grect !intS !(addrC 1).
-  by case: oddgP; rewrite /= ?addr0 ?ltr_add2r ?ltz_addr1 ?ltrW ?ubx.
+  by case: oddgP; rewrite /= ?addr0 ?ltr_add2r ?ltz_addr1 ?ltW ?ubx.
 pose gmend u := SeqSub (gmendP u).
 suffices adj_gmend: fun_adjunction gmend id face predT.
   rewrite -(adjunction_n_comp _ (fconnect_sym _) cfaceC _ adj_gmend) //.
@@ -371,7 +371,7 @@ suffices Gu: (p0 + (Gpoint x y - oddg c)) *+ 2 + oddg c \in gmgrid.
   by rewrite halfg_eq ?oddg_eq ?subrK.
 rewrite gmgridE halfg_eq //= {}/c -lock bbE !ltr_subl_addl !subr_ge0.
 apply/orP; left; apply/andP; move: Gxy; rewrite mem_enum_grect /=.
-rewrite !intS !ltz_add1r (ler_eqVlt x) (ler_eqVlt y) => /andP[Gx Gy].
+rewrite !intS !ltz_add1r (le_eqVlt x) (le_eqVlt y) => /andP[Gx Gy].
 by split; [move: Gx | move: Gy]; case: eqP => // -> _; rewrite ltr_addr andbT.
 Qed.
 

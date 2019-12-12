@@ -2,7 +2,7 @@
 (* Distributed under the terms of CeCILL-B.                                  *)
 Require Import mathcomp.ssreflect.ssreflect.
 From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat div.
+Require Import ssrfun ssrbool eqtype ssrnat div order.
 From mathcomp
 Require Import ssralg ssrnum ssrint rat intdiv.
 Require Import Morphisms Setoid.
@@ -32,7 +32,7 @@ Set Implicit Arguments.
 Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
-Import GRing.Theory Num.Theory.
+Import Order.TTheory GRing.Theory Num.Theory.
 Hint Resolve iff_refl.
 Local Open Scope real_scope.
 
@@ -688,7 +688,7 @@ by case: (m2 - m1)%R => n; split; rewrite // -oppR0 leR_opp2 => /ltR0Sn.
 Qed.
 
 Lemma intR_ltP m1 m2 : reflect (m1 < m2) (m1 + 1 <= m2)%R.
-Proof. by rewrite lez_addr1 ltrNge; apply: (iffP idP) => /intR_leP. Qed.
+Proof. by rewrite lez_addr1 ltNge; apply: (iffP idP) => /intR_leP. Qed.
 
 (* Embedding the rationals.                                                  *)
 
@@ -712,7 +712,7 @@ by rewrite !intRM -Dr1 -Dr2 mulRAC !leR_pmul2r.
 Qed.
 
 Lemma ratR_ltP a1 a2 : reflect (a1 < a2) (a1 < a2)%R.
-Proof. by rewrite ltrNge; apply: (iffP idP) => /ratR_leP. Qed.
+Proof. by rewrite ltNge; apply: (iffP idP) => /ratR_leP. Qed.
 
 Lemma ratR_lt0P a : reflect (0 < a) (0 < a)%R. Proof. exact: (ratR_ltP 0). Qed.
 
@@ -755,7 +755,7 @@ Lemma ratR_pinv a : (0 < a)%R -> a^-1%R == a^-1.
 Proof.
 move=> a_gt0; have aR_gt0: 0 < a by rewrite -ratR0; apply/ratR_ltP.
 apply: (pmulIR aR_gt0); rewrite -ratRM mulRC (divRR (gtR_neq aR_gt0)).
-by rewrite mulVf ?ratR1 ?gtr_eqF.
+by rewrite mulVf ?ratR1 ?gt_eqF.
 Qed.
 
 (* The floor function                                                   *)
@@ -825,7 +825,7 @@ Lemma range1z_inj x m1 m2 : range1 m1 x -> range1 m2 x -> m1 = m2.
 Proof.
 move=> [m1x x_m1] [m2x x_m2].
 wlog suffices: m1 m2 m1x {x_m1 m2x} x_m2 / (m1 <= m2)%R.
-  by move=> IH; apply/eqP; rewrite eqr_le !IH.
+  by move=> IH; apply/eqP; rewrite eq_le !IH.
 rewrite -(ler_add2r 1); apply/intR_ltP.
 by rewrite intRD1; apply: leR_lt_trans x_m2.
 Qed.
