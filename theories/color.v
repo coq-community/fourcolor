@@ -465,7 +465,7 @@ Proof.
 elim: n => [|n IHn]; first by rewrite !rot0.
 have [le_le_c | lt_n_le] := leqP (size lc) n.
   by rewrite !rot_oversize ?size_trace // ltnW.
-by rewrite -add1n !rot_addn ?size_trace // -IHn -!urtrace_trace -urtrace_rot.
+by rewrite -add1n !rotD ?size_trace // -IHn -!urtrace_trace -urtrace_rot.
 Qed.
 
 Lemma trace_rev (lc : colseq) : trace (rev lc) = rot 1 (rev (trace lc)).

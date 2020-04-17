@@ -382,7 +382,7 @@ have -> /=: even_trace (pre (etrace et)).
     by apply: (congr1 even_tail (eq_map _ _)); case e => [] [].
 rewrite -[n in dyck n]odd_double_half -lt0n.
 have -> et': odd (count_cbit1 et') = cbit1 (sumt et').
-  by elim: et' => //= c et' IHet'; rewrite odd_add IHet' cbit1_addc; case c.
+  by elim: et' => //= c et' IHet'; rewrite oddD IHet' cbit1_addc; case c.
 by rewrite !sumt_permt sumt_ctrace !permc0 even_dyck_pos.
 Qed.
 
@@ -421,4 +421,3 @@ split=> //; exists (g \o k); first exact: coloring_inj (@permc_inj g) col_k.
 rewrite map_comp trace_permt sumt_permt.
 by rewrite -[trace _](rotK 1) -trace_rot -map_rot -Det1 rotr1_rcons.
 Qed.
-
