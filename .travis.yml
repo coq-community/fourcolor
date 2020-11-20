@@ -11,9 +11,9 @@ env:
   - CONTRIB_NAME="fourcolor"
   - MATHCOMP_VERSION="-dev:"
   matrix:
-  - COQ_VERSION="8.7"
-  - COQ_VERSION="8.8"
-  - COQ_VERSION="8.9"
+  - COQ_VERSION="8.10"
+  - COQ_VERSION="8.11"
+  - COQ_VERSION="8.12"
   - COQ_VERSION="dev"
 
 install: |
