@@ -125,7 +125,8 @@ have{dNx pFnnx p_x n IHn le_p_n dF0 cycRp Up URp} p_nnx: node (node x) \in p.
       by rewrite proper_chord_ring ?ee -?(fclosed1 (diskE_edge cexG _)).
     have p_y: y \in p by rewrite -(mem_rot i) Eip mem_cat q_y orbT.
     apply: cc_p; move: p_y; rewrite Dp => /predU1P[y_x | //].
-    by rewrite -(rot_uniq i) Eip -{2}y_x /= !mem_cat q_y orbT andbF in Up.
+    move: Up; rewrite -(rot_uniq i) Eip/= -[x as X in X \in _]y_x.
+    by rewrite !mem_cat/= q_y orbT andbF.
   rewrite diskF_chord_ring ?ee //; first by rewrite inE /= dF0 andbF.
   by rewrite -(fclosed1 (diskE_edge cexG _)).
 have x'nx := cubic_neq cexG x.
