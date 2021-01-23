@@ -395,7 +395,7 @@ apply eqR_sym; split=> [c [a ltxa [b lt_ac_b /leRq-lebx]] | d d_gt0].
 have [[a ltxa] [b lebx]] := (cut_ub x, cut_lb x).
 have{a ltxa d_gt0} []: exists n, x < b + d *+ n.
   have ltab: (0 < a - b)%R by move/leRq in lebx; rewrite subr_gt0 lebx.
-  pose c := ((a - b) / d)%R; have c_ge0: (0 <= c)%R by rewrite ltW ?divr_gt0.
+  pose c := ((a - b) / d)%R; have c_ge0: (0 <= c)%R by rewrite ltW // divr_gt0.
   exists `|numq c|%N; apply: ltc_le_trans ltxa _; rewrite -ler_subl_addl.
   rewrite pmulrn gez0_abs -?ge_rat0 // -mulrzl numqE mulrAC.
   by rewrite divfK ?gt_eqF ?ler_pmulr // ler1z -gtz0_ge1 denq_gt0.
