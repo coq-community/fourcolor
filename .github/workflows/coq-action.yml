@@ -29,5 +29,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: coq-community/docker-coq-action@v1
         with:
-          opam_file: 'coq-mathcomp-fourcolor.opam'
+          opam_file: 'coq-fourcolor.opam'
           custom_image: ${{ matrix.image }}
