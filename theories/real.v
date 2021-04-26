@@ -87,6 +87,14 @@ Unset Printing Implicit Defensive.
 
 Definition excluded_middle := forall P : Prop, P \/ ~ P.
 
+(** [(IF_then_else P Q R)], written [IF P then Q else R] denotes
+    either [P] and [Q], or [~P] and [R] *)
+
+Definition IF_then_else (P Q R:Prop) := P /\ Q \/ ~ P /\ R.
+
+Notation "'IF' c1 'then' c2 'else' c3" := (IF_then_else c1 c2 c3)
+  (at level 200, right associativity) : type_scope.
+
 Module Real.
 
 Record structure : Type := Structure {
