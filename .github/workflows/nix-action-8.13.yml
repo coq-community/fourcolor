@@ -22,6 +22,7 @@ jobs:
     - name: Cachix setup math-comp
       uses: cachix/cachix-action@v8
       with:
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: math-comp
     - id: stepCheck
       name: Checking presence of CI target coq
@@ -57,6 +58,7 @@ jobs:
     - name: Cachix setup math-comp
       uses: cachix/cachix-action@v8
       with:
+        authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
         name: math-comp
     - id: stepCheck
       name: Checking presence of CI target fourcolor
