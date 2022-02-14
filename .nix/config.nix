@@ -30,7 +30,7 @@
 
   ## select an entry to build in the following `bundles` set
   ## defaults to "default"
-  default-bundle = "8.14+1.14";
+  default-bundle = "8.15+1.14";
 
   ## write one `bundles.name` attribute set per
   ## alternative configuration, the can be used to
@@ -48,9 +48,11 @@
     "8.12+1.13".coqPackages = { coq.override.version = "8.12"; } // mc13;
     "8.13+1.13".coqPackages = { coq.override.version = "8.13"; } // mc13;
     "8.14+1.13".coqPackages = { coq.override.version = "8.14"; } // mc13;
+    "8.15+1.13".coqPackages = { coq.override.version = "8.14"; } // mc13;
     "8.12+1.14".coqPackages = { coq.override.version = "8.12"; } // mc14;
     "8.13+1.14".coqPackages = { coq.override.version = "8.13"; } // mc14;
     "8.14+1.14".coqPackages = { coq.override.version = "8.14"; } // mc14;
+    "8.15+1.14".coqPackages = { coq.override.version = "8.15"; } // mc14;
 
   ## you may mark a package as a CI job as follows
   #  coqPackages.<another-pkg>.ci.job = "test";
