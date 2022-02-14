@@ -337,7 +337,7 @@ apply/idP/eqP=> [/connectP[_ /fpathP[k ->] ->] | /same_end0g/trajectP[k]].
   by rewrite !val_insubd !(fun_if end0g) !end0g_node !if_same.
 without loss: k u v / k \in iota 2 2.
   case: k => [|[|k]] IHk ltk Dv; first by have ->: v = u by apply/val_inj.
-    by rewrite cfaceC (IHk 3) // Dv /= gnode4.
+    by rewrite cfaceC (IHk 3%N) // Dv /= gnode4.
   by rewrite (IHk k.+2) ?mem_iota.
 have Gv := valP v; rewrite !inE => /pred2P[]-> _ /= Dv; rewrite /= Dv in Gv.
   case Gn3u: (iter 3 gnode u \in gmgrid).
@@ -385,7 +385,7 @@ rewrite -[n in n.*2]muln2 doubleMr (fcard_order_set nodeI _ gm_inner_closed).
   by apply/imageP/(ex_intro2 _ _ (Sub d _)); rewrite // gmgridE bb_d.
 apply/subsetP=> /= u bb_u; rewrite inE.
 have cyc_u: fcycle node (traject node u 4).
-  rewrite [3]lock /= rcons_path fpath_traject -lock /= -val_eqE.
+  rewrite [3%N]lock /= rcons_path fpath_traject -lock /= -val_eqE.
   by rewrite !val_gmnode ?gm_inner_node // -[gedge _]gface4 !gnodeK.
 rewrite (order_cycle cyc_u) ?mem_head // looping_uniq.
 have neq_node v: oddg v != oddg u -> v != u by apply: contraNneq => ->.

@@ -237,8 +237,8 @@ have fit_rp i G1 x1:
     by rewrite -iterS iterSr -IHi.
   rewrite /exact_fitp size_rot_part size_mirror_part Erp -/n.
   by rewrite !arity_face arity_iter_face in n'x1 *; rewrite (negPf n'x1).
-move Dp1: (rp 5) => p1.
-move: Dp1 {fit_rp}(fit_rp 5) {Erp}(Erp 5) => /= -> fit_p1 Ep1.
+move Dp1: (rp 5%N) => p1.
+move: Dp1 {fit_rp}(fit_rp 5%N) {Erp}(Erp 5%N) => /= -> fit_p1 Ep1.
 set x2' := inv_face2 x; pose x3 := face (face (face x)).
 have Ex3: x3 = iter 5 face x2' by rewrite /x2' /inv_face2 /= !nodeK.
 rewrite /= !(f_finv nodeI) in IHp Ex3 *.
