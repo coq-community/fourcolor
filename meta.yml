@@ -1,0 +1,94 @@
+fullname: The Four Color Theorem
+shortname: fourcolor
+organization: coq-community
+community: true
+action: true
+
+synopsis: >-
+  Mechanization of the Four Color Theorem in Coq
+
+description: |-
+  This library contains a formal proof of the Four Color Theorem in Coq,
+  along with the theories needed to support stating and then proving the Theorem.
+  This includes an axiomatization of the setoid of classical real numbers,
+  basic plane topology definitions, and a theory of combinatorial hypermaps.
+
+publications:
+- pub_url: https://www.ams.org/notices/200811/tx081101382p.pdf
+  pub_title: Formal Proof—The Four-Color Theorem
+
+authors:
+- name: Georges Gonthier
+  initial: true
+
+maintainers:
+- name: Yves Bertot
+  nickname: ybertot
+
+opam-file-maintainer: palmskog@gmail.com
+
+opam-file-version: dev
+
+license:
+  fullname: CeCILL-B
+  identifier: CECILL-B
+
+supported_coq_versions:
+  text: 8.11 or later
+  opam: '{(>= "8.11" & < "8.16~") | (= "dev")}'
+
+tested_coq_opam_versions:
+- version: '1.11.0-coq-8.10'
+  repo: 'mathcomp/mathcomp'
+- version: '1.12.0-coq-8.11'
+  repo: 'mathcomp/mathcomp'
+- version: '1.13.0-coq-8.12'
+  repo: 'mathcomp/mathcomp'
+- version: '1.13.0-coq-8.13'
+  repo: 'mathcomp/mathcomp'
+- version: '1.13.0-coq-8.14'
+  repo: 'mathcomp/mathcomp'
+- version: '1.14.0-coq-8.13'
+  repo: 'mathcomp/mathcomp'
+- version: '1.14.0-coq-8.14'
+  repo: 'mathcomp/mathcomp'
+- version: '1.14.0-coq-8.15'
+  repo: 'mathcomp/mathcomp'
+- version: 'coq-8.14'
+  repo: 'mathcomp/mathcomp-dev'
+- version: 'coq-8.15'
+  repo: 'mathcomp/mathcomp-dev'
+- version: 'coq-dev'
+  repo: 'mathcomp/mathcomp-dev'
+
+# test master every day at 05:00 UTC
+# (mathcomp/mathcomp-dev is rebuilt every day at 04:00 Paris time)
+ci_cron_schedule: '0 5 * * *'
+
+dependencies:
+- opam:
+    name: coq-mathcomp-ssreflect
+    version: '{(>= "1.11" & < "1.15~") | (= "dev")}'
+  description: |-
+    [MathComp ssreflect 1.11 or later](https://math-comp.github.io)
+- opam:
+    name: coq-mathcomp-algebra
+  description: |-
+    [MathComp algebra](https://math-comp.github.io)
+
+namespace: fourcolor
+
+keywords:
+- name: Four color theorem
+- name: small scale reflection
+- name: Mathematical Components
+
+categories:
+- name: Mathematics/Combinatorics and Graph Theory
+
+documentation: |-
+  ## Documentation
+
+  The [Four Color Theorem](https://en.wikipedia.org/wiki/Four_color_theorem) (Appel & Haken, 1976) is a landmark result of graph theory.
+
+  The formal proof is based on the [Mathematical Components](https://github.com/math-comp/math-comp) library.
