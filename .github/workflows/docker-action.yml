@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - 'mathcomp/mathcomp:1.11.0-coq-8.10'
+          - 'mathcomp/mathcomp:1.11.0-coq-8.11'
           - 'mathcomp/mathcomp:1.12.0-coq-8.11'
           - 'mathcomp/mathcomp:1.13.0-coq-8.12'
           - 'mathcomp/mathcomp:1.13.0-coq-8.13'
