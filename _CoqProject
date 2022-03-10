@@ -1,3 +1,6 @@
+-R theories fourcolor
+-arg -w -arg -notation-overridden
+-arg -w -arg -redundant-canonical-projection
 theories/real.v
 theories/realsyntax.v
 theories/realprop.v
@@ -117,5 +120,3 @@ theories/unavoidability.v
 theories/reducibility.v
 theories/combinatorial4ct.v
 theories/fourcolor.v
-
--R theories fourcolor

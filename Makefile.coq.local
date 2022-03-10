@@ -1,1 +1,0 @@
-OTHERFLAGS := $(OTHERFAGS) -w -notation-overridden -w -redundant-canonical-projection
