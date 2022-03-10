@@ -64,8 +64,8 @@
   ## Cachix caches to use in CI
   ## Below we list some standard ones
   cachix.coq = {};
-  cachix.math-comp.authToken = "CACHIX_AUTH_TOKEN";
-  cachix.coq-community = {};
+  cachix.math-comp = {};
+  cachix.coq-community.authToken = "CACHIX_AUTH_TOKEN";
 
   ## If you have write access to one of these caches you can
   ## provide the auth token or signing key through a secret
