@@ -1,10 +1,7 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrbool ssrnat ssrint.
-From fourcolor
-Require Import part hubcap present.
+From mathcomp Require Import ssreflect ssrfun ssrbool ssrnat ssrint.
+From fourcolor Require Import part hubcap present.
 
 (******************************************************************************)
 (*   This file contains the unavoidability proof for cartwheels with a hub    *)

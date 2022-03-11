@@ -1,12 +1,8 @@
 (* (c) Copyright 2006-2015 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice path order.
-From mathcomp
-Require Import ssralg ssrnum ssrint div intdiv.
-From fourcolor
-Require Import grid.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import path order ssralg ssrnum ssrint div intdiv.
+From fourcolor Require Import grid.
 
 (******************************************************************************)
 (* Mattes are finite sets of grid squares that are delimited by a simple grid *)

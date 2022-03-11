@@ -1,10 +1,8 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap walkup geometry color chromogram.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap walkup geometry color chromogram.
 
 (******************************************************************************)
 (* Hypermap, graph and contract colorings, colorable maps, ring traces, valid *)

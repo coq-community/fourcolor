@@ -1,16 +1,11 @@
 (* (c) Copyright 2006-2015 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap jordan geometry color chromogram coloring patch snip.
-From fourcolor
-Require Import sew revsnip kempe.
-From fourcolor
-Require Import ctree initctree gtree initgtree ctreerestrict gtreerestrict.
-From fourcolor
-Require Import cfmap cfcolor kempetree.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap jordan geometry color chromogram.
+From fourcolor Require Import coloring patch snip sew revsnip kempe.
+From fourcolor Require Import ctree initctree gtree initgtree ctreerestrict.
+From fourcolor Require Import gtreerestrict cfmap cfcolor kempetree.
 
 (******************************************************************************)
 (* The Birkhoff theorem, stating that a minimal coloring counter-example must *)

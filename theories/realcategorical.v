@@ -1,11 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq order ssralg ssrnum ssrint rat.
-Require Import Morphisms Setoid.
-From fourcolor
-Require Import real realsyntax realprop.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq order.
+From mathcomp Require Import ssralg ssrnum ssrint rat.
+From Coq Require Import Morphisms Setoid.
+From fourcolor Require Import real realsyntax realprop.
 
 (******************************************************************************)
 (*   A proof that the real axiomatisation is categorical -- hence that our    *)

@@ -1,10 +1,8 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap geometry color coloring cfmap ctree.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap geometry color coloring cfmap ctree.
 
 (******************************************************************************)
 (*   Compute the set of colorings of a configuration ring, directly from the  *)

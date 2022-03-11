@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From mathcomp
-Require Import order ssralg ssrnum ssrint.
-From fourcolor
-Require Import hypermap geometry color coloring patch snip grid matte.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph order ssralg ssrnum ssrint.
+From fourcolor Require Import hypermap geometry color coloring patch snip grid.
+From fourcolor Require Import matte.
 
 (******************************************************************************)
 (* The construction of a hypermap, from a finite set of disjoint mattes and a *)

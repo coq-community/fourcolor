@@ -1,7 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-From fourcolor
-Require Import real.
+From fourcolor Require Import real.
 
 (******************************************************************************)
 (*  An elementary formalization of the real plane topology required to state  *)

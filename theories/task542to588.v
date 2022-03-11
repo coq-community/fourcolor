@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrnat seq.
-From fourcolor
-Require Import cfmap cfreducible configurations.
-From fourcolor
-Require Import job542to545 job546to549 job550to553 job554to562 job563to588.
+From mathcomp Require Import ssreflect ssrfun ssrbool ssrnat seq.
+From fourcolor Require Import cfmap cfreducible configurations.
+From fourcolor Require Import job542to545 job546to549 job550to553.
+From fourcolor Require Import job554to562 job563to588.
 
 (******************************************************************************)
 (* Reducibility of configurations number 542 to 588, whose indices in         *)

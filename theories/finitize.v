@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice path ssralg ssrint.
-From fourcolor
-Require Import real realplane realsyntax realprop.
-From fourcolor
-Require Import grid approx.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import path ssralg ssrint.
+From fourcolor Require Import real realplane realsyntax realprop.
+From fourcolor Require Import grid approx.
 
 (******************************************************************************)
 (*   We use a special case of the compactness theorem for predicate logic to  *)

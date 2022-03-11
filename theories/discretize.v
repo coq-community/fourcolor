@@ -1,14 +1,10 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From mathcomp
-Require Import bigop ssralg ssrnum ssrint div intdiv.
-From fourcolor
-Require Import hypermap geometry coloring grid matte gridmap.
-From fourcolor
-Require Import real realplane realprop approx.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph bigop ssralg ssrnum ssrint.
+From mathcomp Require Import div intdiv.
+From fourcolor Require Import hypermap geometry coloring grid matte gridmap.
+From fourcolor Require Import real realplane realprop approx.
 
 (******************************************************************************)
 (* Discretizing the coloring problem for an arbitrary finite map. We compute  *)

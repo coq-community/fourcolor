@@ -1,12 +1,8 @@
 (* (c) Copyright 2006-2015 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq path div choice order.
-From mathcomp
-Require Import ssralg ssrnum ssrint intdiv.
-From fourcolor
-Require Import hypermap.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq path.
+From mathcomp Require Import div choice order ssralg ssrnum ssrint intdiv.
+From fourcolor Require Import hypermap.
 
 (******************************************************************************)
 (*    Geometry over an integer grid, that is, raster graphics.                *)

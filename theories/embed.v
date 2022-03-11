@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap geometry color chromogram coloring patch snip revsnip.
-From fourcolor
-Require Import kempe birkhoff contract.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap geometry color chromogram coloring patch.
+From fourcolor Require Import snip revsnip kempe birkhoff contract.
 
 (******************************************************************************)
 (*   This is the crux of the Four Color Theorem proof: we build an injective  *)

@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2015 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From mathcomp
-Require Import bigop order ssralg ssrnum ssrint.
-From fourcolor
-Require Import hypermap geometry quiztree part discharge.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From mathcomp Require Import bigop order ssralg ssrnum ssrint.
+From fourcolor Require Import hypermap geometry quiztree part discharge.
 
 (******************************************************************************)
 (* Ruling out a part using a combination of discharging and reducibility.     *)

@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap geometry patch sew snip color chromogram coloring.
-From fourcolor
-Require Import kempe.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap geometry patch sew snip color chromogram.
+From fourcolor Require Import coloring kempe.
 
 (******************************************************************************)
 (*   Dissecting a connected plain map along a proper ring, and its reverse    *)

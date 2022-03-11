@@ -1,10 +1,7 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq.
-From fourcolor
-Require Import color chromogram gtree ctree.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq.
+From fourcolor Require Import color chromogram gtree ctree.
 
 (******************************************************************************)
 (* This is the second phase of a D-reducibility step: adjusting the coloring  *)

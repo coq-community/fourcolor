@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype.
-From mathcomp
-Require Import path fingraph.
-From fourcolor
-Require Import hypermap geometry color coloring quiz cfmap cfquiz cfreducible.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap geometry color coloring quiz cfmap.
+From fourcolor Require Import cfquiz cfreducible.
 
 (******************************************************************************)
 (*   Compile a sequence of (reducible) configurations into a set of quizzes,  *)
@@ -330,7 +327,7 @@ Proof. by case: qa t => [] // [] // []. Qed.
 End FitQuizTree.
 
 (*  global sanity check, using the functions defined above
-Require Import configurations.
+From fourcolor Require Import configurations.
 
 Eval compute in (qzt_size (cfquiz_tree the_configs)).
 Eval compute in (cf_qzt_size the_configs).
