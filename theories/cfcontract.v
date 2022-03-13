@@ -104,7 +104,7 @@ elim: cp => //=; case=> // [n||] cp IHcp.
   rewrite cpring_ecpR /rot !insertE_cat -catA uniq_catCA catA /=.
   by rewrite -insertE_cat cat_take_drop.
 - rewrite cpring_ecpY; case Dcp: cp => [|s cp']; first by rewrite cpring0.
-  rewrite -{s cp'}Dcp; set G := cpmap cp => /IHcp{IHcp} IHcp.
+  rewrite -{s cp'}Dcp; set G := cpmap cp => /IHcp {}IHcp.
   rewrite 2!cat_cons (insertE_cat [:: _; _]) -map_cons -map_cat.
   rewrite insertE_icpY cat_uniq has_map has_pred0 !andTb.
   rewrite (map_inj_uniq (@icpY_inj G G)) -cat1s !insertE_cat uniq_catCA.
@@ -732,7 +732,7 @@ case: s Dcpc => // [n||] Dcpc; rewrite !implyTb => cp_ok Emr Emc;
     by case: b1 b2 b3 => [] [] [].
   rewrite -Dcp -/G; have plainGX: plain (ecpY G) := plain_ecpY G plainG.
   case: ifP => // b123; rewrite [size _]/= [size _ = _]/= => [] [Emc] [Emr].
-  case: (cfctr _ _)  {IHcp}(IHcp (b3 :: mr) mc Emr Emc) => // {cpc} cpc IHcp _.
+  case: (cfctr _ _)  {IHcp}(IHcp (b3 :: mr) mc Emr Emc) => // {}cpc IHcp _.
   have <-: map (icpY G) (node G :: ctrenum cp) = ctrenum (CpY :: cp).
     by rewrite /G Dcp.
   move: IHcp; set p := _ ++ _; rewrite sparse_cons -(eq_has (mem_cpring G)).
@@ -764,7 +764,7 @@ case: s Dcpc => // [n||] Dcpc; rewrite !implyTb => cp_ok Emr Emc;
 case: mc mr Emc Emr Dcpc => [|b3 [|b4 [|b5 mc]]] [|b1 [|b2 mr]] // [Emc] Emr.
 rewrite /= in Emc Emr; case: ifP => // b314_325; case: ifP => // _.
 have{IHcp}:= IHcp [:: b4, b5 & mr] mc Emr Emc; set p := _ ++ _.
-case: (cfctr _ _ _) => // []{cpc} cpc IHcp _; rewrite {cpc}implyTb in IHcp.
+case: (cfctr _ _ _) => // []{}cpc IHcp _; rewrite {cpc}implyTb in IHcp.
 have plainGX := plain_ecpH G plainG.
 have <-: face (ecpH G) :: map (icpH G) [:: node G, G : G & ctrenum cp] =
           ctrenum (CpH :: cp) by [].
@@ -988,7 +988,7 @@ apply/andP; split=> [{mtc_max} | {mtc_min}]; last first.
     by case/hasP=> z /ccAx xAz /adjFr->.
   move: mc mt Emcq Emtq Uq; rewrite simple_recI.
   elim: q => [|y q IHq] [|b1 m1] // [|b2 m2] //= Em1 Em2 /andP[qF'y Uq].
-  have{qF'y} qF'y m: (y \in fband (mask m q)) = false.
+  have {}qF'y m: (y \in fband (mask m q)) = false.
     by apply: contraNF qF'y; apply: has_mask.
   case: b1 b2 => [] [] //= q12F; try apply: (IHq m1 m2) => //.
   - move=> z q1Fz; have:= q12F z; rewrite !unfold_in /=.
@@ -1017,7 +1017,7 @@ rewrite {n_Ax_cc DccF DmtF}/nF_qtc simple_fcard_fband; last first.
 move: mc mt Emcq Emtq Uq; rewrite simple_recI.
 elim: q => [|y q IHq] [|b1 m1] // [|b2 m2] //= Em1 Em2 /andP[qF'y Uq].
 set q1 := mask m1 q; set q2 := mask m2 q.
-have{qF'y} qF'y m: (y \in fband (mask m q)) = false.
+have{} qF'y m: (y \in fband (mask m q)) = false.
   by apply: contraNF qF'y; apply: has_mask.
 have Eq21: filter (fband (y :: q2)) q1 = filter (fband q2) q1.
   apply: eq_in_filter => z q1z; apply: orb_idl; rewrite cfaceC => yFz.

@@ -271,7 +271,7 @@ pose gm := =^~ (gtr_match0E, gtr_match1E, gtr_match2E, gtr_match3E).
 elim: t => /= [t0 IHt0 t1 IHt1 t2 IHt2 t3 IHt3|||||||||] in r w *;
   case Dr: r => [|bs ct r'];
   do [ by rewrite /= gtree_mem_empty ?andbF | rewrite -{bs ct r'}Dr];
-  try by do 2?case: ifP => /(pair gm){gm}gm; case: w => [|[][]] //; rewrite !gm.
+  try by do 2?case: ifP => /(pair gm){}gm; case: w => [|[][]] //; rewrite !gm.
 rewrite gtr_split_eq gtree_mem0_cons_pairs; try exact: gtree_restrict_partition.
 by case: w => [|s w]; rewrite // (gtr_mem_gsplit r); case: s => /=.
 Qed.

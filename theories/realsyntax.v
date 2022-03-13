@@ -35,6 +35,8 @@ From fourcolor Require Import real.
 Import Real.
 Export RealCoercions.
 
+Declare Scope real_scope.
+Declare Scope realset_scope.
 Bind Scope real_scope with val.
 Bind Scope realset_scope with set.
 Delimit Scope real_scope with Rval.

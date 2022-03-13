@@ -157,7 +157,7 @@ exists h => z t; split=> [mzt | [i le_i_n [Dhz Dht]]].
     by exists n; rewrite // /h !IFR_then // -(map_transl mP mzt).
   have [[//| i /leqW-lt_i_n1 Dgzt_i] _] := gP z t; exists i => //.
   by rewrite /h -(map_transl mP mzt) IFR_else 1?IFR_then // IFR_else ?IFR_then.
-generally have m_t, m_z: z Dhz / m z z; last have{m_t} m_t: m t t by apply: m_t.
+generally have m_t, m_z: z Dhz / m z z; last have {}m_t: m t t by apply: m_t.
   have: (h z < n.+1%:R)%Rval by rewrite Dhz Dht; apply/RleqP; rewrite -ltnNge.
   by apply: RcontraR => m'z; rewrite /h !IFR_else // => /(map_cover mP)[].
 generally have m_tnP, m_zn: z Dhz m_z / m z (f n) <-> i == n.

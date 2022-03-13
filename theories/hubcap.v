@@ -214,7 +214,7 @@ case fit_xr: (fitp x r); last by move=> _ /IHm-> //=; rewrite fit_xr.
 set p1 := meet_part p r; have Exp1: exact_fitp x p1 by apply: exact_fitp_meet.
 have [_ fit_xp1] := andP Exp1; rewrite (check_unfitP fit_xp1) //.
 have [dnt] := sort_drulesP fit_xp1 rt; have [dns] := sort_drulesP fit_xp1 rs.
-move=> {rs rt fit_xp1} rs rt bound_p1 _.
+move=> {fit_xp1} {}rs {}rt bound_p1 _.
 case Dnt1: (_ - dnt) => [|nt1] in bound_p1.
   by case/idPn: Exp1; apply: redpP.
 have le_dnt: dnt <= dns + nt by rewrite ltnW // -subn_gt0 Dnt1.
@@ -278,7 +278,7 @@ elim: m rt1 => // m IHm [|r rt1]/= in nt x1 i nFx1 ub_i rs1 ru1 p1 b1ru1 Exp1 *.
   rewrite ![_ + dbound1 _ x2]addnC -[0]/(dbound1 [::] x1).
   move: rs1 ru1 p1 b1ru1 Exp1.
   have <-: iter i1 face x2 = x1.
-    by rewrite -iter_add subnK // -nFx1 iter_face_arity.
+    by rewrite -iterD subnK // -nFx1 iter_face_arity.
   by apply: IHm => //; rewrite ?arity_iter_face ?leq_subr.
 set x2 := iter i face x1 => rt2 rs2 ru2 p2 b1ru2 Exp2.
 case: ifP => [lt_rt_nt _ | _ /andP[]].
@@ -356,9 +356,9 @@ Lemma iter_hub_subn i j :
      j < nhub -> forall x : G, arity x = nhub ->
   iter (hub_subn i j) face (iter j face x) = iter i face x.
 Proof.
-move=> ltjn x nFx; rewrite -iter_add subnK //; last first.
+move=> ltjn x nFx; rewrite -iterD subnK //; last first.
   by case: ifP => // _; rewrite ltnW ?ltn_addl.
-by case: ifP => _ //;  rewrite iter_add -nFx iter_face_arity.
+by case: ifP => _ //;  rewrite iterD -nFx iter_face_arity.
 Qed.
 
 Fixpoint hubcap_fit (p : part) (hc : hubcap) : bool :=

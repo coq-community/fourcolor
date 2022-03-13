@@ -404,10 +404,10 @@ case: zp => zi' pl pr /(congr1 size_part).
 rewrite catrev_part_eq size_cat_part size_rev_part -iterS.
 case sz_pr: (size_part pr) => [|[|n]] sz_pl; rewrite ?addn0 ?addn1 in sz_pl.
 - rewrite {}sz_pl -zvalid_initr catrev_part_eq size_cat_part size_rev_part.
-  rewrite size_drop_part subn1 Ep0r -nFx0 -addnS iter_add [RHS]/=(f_finv faceI).
+  rewrite size_drop_part subn1 Ep0r -nFx0 -addnS iterD [RHS]/=(f_finv faceI).
   by case: pr sz_pr.
 - rewrite {}sz_pl -zvalid_init catrev_part_eq size_cat_part size_rev_part.
-  rewrite iter_add Ep0r -nFx0 iter_face_arity.
+  rewrite iterD Ep0r -nFx0 iter_face_arity.
   by case: pr sz_pr => // [s h|h f1|h f1 f2|h f1 f2 f3] [].
 by case: pr sz_pr => // [s h|h f1|h f1 f2|h f1 f2 f3] [].
 Qed.
@@ -666,10 +666,10 @@ apply/andP; split.
   move/eqP: (congr1 size_part Ep0r1); rewrite size_cat_part Ey eq_sym.
   by rewrite size_drop_part size_cat_part Ep0r addnK addnC eqn_add2r.
 suffices: fitp y p0r1 by rewrite -{1}Ep0r1 fitp_cat => /andP[].
-rewrite fitp_cat fit_pc // -iter_add addnC.
+rewrite fitp_cat fit_pc // -iterD addnC.
 have [-> _] := Dpcj (popqa r) pr; rewrite -{}Epr -(size_rev_part pl).
 rewrite -size_cat_part -catrev_part_eq p_ok size_cat_part  Ep0r -nFx0.
-by rewrite iter_add !iter_face_arity.
+by rewrite iterD !iter_face_arity.
 Qed.
 
 Definition red_popr_spoke pr :=

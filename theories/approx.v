@@ -98,7 +98,7 @@ Proof. by apply/(@intR_leP R 1); rewrite lez_nat expn_gt0. Qed.
 Lemma ltR0exp2 s : 0 < exp2R s.
 Proof. exact/(ltR_le_trans ltR01)/leR1exp2. Qed.
 Arguments ltR0exp2 : clear implicits.
-Hint Resolve ltR0exp2.
+Hint Resolve ltR0exp2 : core.
 
 Lemma exp2R_add s1 s2 : exp2R (s1 + s2) == exp2R s1 * exp2R s2.
 Proof. by rewrite /exp2R expnD -intRM. Qed.

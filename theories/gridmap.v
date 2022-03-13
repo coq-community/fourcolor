@@ -574,7 +574,7 @@ have{cycNr kN} k_r i: {in r i &, forall x y, k x = k y}.
 pose kn x := Ordinal (index_size (k x) [:: Color0; Color1; Color2] : _ < 4)%N.
 exists (fun i => oapp kn ord0 [pick x in r i]) => e /ab_cmP/hasP[d].
 rewrite !inE eqE /= -!val_gmring => /mapP[u r2u {d}->] /mapP[eu r1eu Deu].
-have{Deu} Deu: edge u = eu by apply/val_inj.
+have {}Deu: edge u = eu by apply/val_inj.
 rewrite -{eu}Deu -!{}Dr !mem_rev in r2u r1eu.
 case/mapP: r2u r1eu => x r2x ->; rewrite -hE mem_map // => r1ex.
 apply: contraFN (kE x); have [y /= /k_r <- | /(_ (edge x))/idP] // := pickP.

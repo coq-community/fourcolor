@@ -38,7 +38,7 @@ Import Order.TTheory GRing.Theory Num.Theory.
 
 Section RealsCategorical.
 
-Hint Resolve eqR_refl leRR.
+Hint Resolve eqR_refl leRR : core.
 
 Local Open Scope real_scope.
 
