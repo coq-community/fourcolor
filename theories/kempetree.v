@@ -176,7 +176,7 @@ elim: d => [|d IHd] /= in ctu ctr gtu *.
     rewrite Pgtr andbC; case gt_w: (gtr_mem _ w) => [] => [_ | /negbFE//].
     by move: gt_w; rewrite -Dctrr /= orbF => /has_matchP[et /Dctr[]]; exists et.
   split=> [|et /= Pet].
-    case: ctu_lt_sz => [|[{Dctr}Dctr _]]; [by left | right; split=> // w].
+    case: ctu_lt_sz => [|[{}Dctr _]]; [by left | right; split=> // w].
     by rewrite Pgtr -Dctrr Dctr /= andbC; case: has_matchP => // [] [].
   right; apply/eqP/match_countP=> [[w gt_w wMet]]; case/negP: (Pgt w).
   rewrite gt_w; case gtu_w: (gtree_mem gtu w); last by rewrite orbT.
@@ -212,7 +212,7 @@ suffices{IHktc'} [gt_valid gt_full]:
     & forall sz, Kempe_complete sz.+1 ctu CtreeEmpty gtr gtu ->
       Kempe_complete sz ctu' (ctree_rotlr ctr) GtreeEmpty gtu].
 - by case/IHktc': gt_valid; split=> // sz; rewrite addnS => /gt_full; move: sz.
-have{Dctu'} Dctu': ctree_sub ctu' =1 even_fun et (sub_gt gtu et).
+have{} Dctu': ctree_sub ctu' =1 even_fun et (sub_gt gtu et).
   by move=> et; rewrite Dctu' Dctu addn0; case: ifP; rewrite ?addKn.
 split=> [|sz [ctu_lt_sz ctr_closed]].
   split=> // [|et0 ct_et0 | [] //].

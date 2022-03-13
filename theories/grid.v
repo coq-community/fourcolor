@@ -172,7 +172,7 @@ Proof. by rewrite -[d1 in LHS]halfgK addrAC -addrA halfg_add2. Qed.
 
 Lemma oddgP d : is_oddg (oddg d).
 Proof. by case: d => x y /=; rewrite !modz2; do 2!case: odd; constructor. Qed.
-Hint Resolve oddgP.
+Hint Resolve oddgP : core.
 
 Lemma oddg_id c : is_oddg c -> oddg c = c. Proof. by case. Qed.
 
@@ -583,5 +583,6 @@ Qed.
 
 End GridGeometry.
 
-Hint Resolve oddgP.
+#[export]
+Hint Resolve oddgP : core.
 Arguments insetP {r p}.

@@ -121,8 +121,8 @@ have fitp_split x (x_ok : valid_hub x) := fitp_split (proj1 x_ok) _ _ x.
 have p0lpl: forced_part p0l pl.
   rewrite /p0l; case: ifP => [p0ijk | _] G x x_ok //.
   by rewrite !fitp_split // => /andP[-> /p0p->].
-have{pl_ok} pl_ok: successful pl by apply: pl_ok.
-have{p0lpl pr_ok} pr_ok: successful pr.
+have {}pl_ok: successful pl by apply: pl_ok.
+have{p0lpl}{}pr_ok: successful pr.
   apply: pr_ok => G x x_ok => [|p0x]; have:= pl_ok G x x_ok.
     exact/contra/p0lpl.
   by rewrite !fitp_split // p0p ?andbT ?addNb.

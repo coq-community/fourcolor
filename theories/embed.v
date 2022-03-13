@@ -1385,7 +1385,7 @@ apply/existsP; exists (h1 x); apply/and3P; split=> // [{xA'cc} | {adj3x}].
   by case: hasP => // [[]]; exists y => //=; apply: cface_h1.
 apply: contra xA'cc => /subsetP ccAx; apply/subsetP=> y cc_y.
 have cc_ey: edge y \in insertE cc by apply: ccE.
-have{ccAx} ccAx z: z \in insertE cc -> adj (h1 x) (h1 z).
+have {}ccAx z: z \in insertE cc -> adj (h1 x) (h1 z).
   by move=> cc_z; apply/ccAx/map_f.
 have bc_ey: edge y \in bc by apply: (hasPn rc'cc).
 have: cface x (node y) || cface x (node (edge y)).

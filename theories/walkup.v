@@ -538,14 +538,14 @@ have{uCq} xCp: path clink2 x p; last move {u q} in (p) (x) (y) Uzp xCp pynx Lp.
 have [p'x Up]: x \notin p /\ uniq p by case/and3P: Uzp.
 have y'x: x != y by rewrite (memPnC p'x) // (mem2l pynx).
 have not_xCp: ~~ path clink x p.
-  apply: contra (JordanG (x :: p)) => {xCp}xCp; rewrite /= p'x Up xCp /=.
+  apply: contra (JordanG (x :: p)) => {} xCp; rewrite /= p'x Up xCp /=.
   case: eqP => [y_t | _] in Lp; rewrite Lp GnK; last first.
     case: eqP => // x_t in pynx; have/and3P[] := JordanG [:: z, x & p].
     by rewrite Uzp /= Lp GnK -cat1s mem2_cat pynx orbT xCp x_t zCt.
   have/and3P[] := JordanG (x :: rcons p z); rewrite last_rcons -/t -y_t.
   rewrite rcons_path xCp Lp clinkN -cats1 -cat_cons uniq_catC Uzp.
   by rewrite -y_t ifN // in pynx; rewrite mem2_cat pynx.
-have{not_xCp y'x} not_xCp: ~~ path clink1 x p.
+have{y'x} {}not_xCp: ~~ path clink1 x p.
   apply/negP=> /cpath1P[] {not_xCp}// p1 [p2 [_ Dp Lp2 xCp1 zCp2]]. 
   rewrite Dp -cat_cons uniq_catCA in Uzp.
   have /and3P[] := JordanG (x :: p1 ++ z :: p2); rewrite Uzp last_cat /= Lp2.
@@ -560,23 +560,23 @@ have{not_xCp y'x} not_xCp: ~~ path clink1 x p.
   rewrite xCp1 last_rcons -cats1 (subseq_uniq _ Uzp) ?catA ?prefix_subseq //.
   by rewrite -y_t ifN // Dp mem2r_cat // y_t in pynx; rewrite mem2_cat pynx.
 have p_t: t \in p by apply: contraR (cpath1I x p _) _.
-have{pynx p'x} pynx: mem2 p y (node x) by rewrite ifN ?(memPnC p'x) in pynx.
+have{p'x} {}pynx: mem2 p y (node x) by rewrite ifN ?(memPnC p'x) in pynx.
 do [have{p p_t} [p1 p2] := splitPr p_t] in Uzp Up Lp xCp not_xCp pynx.
 rewrite !cat_path cat_uniq /= has_sym -cons_uniq in Up xCp not_xCp.
 have [[xCp1 p1Ct tCp2] [Up1 /norP[p1't Up21] Utp2]] := (and3P xCp, and3P Up).
 have{xCp Up} [p2't Up2]: t \notin p2 /\ uniq p2 by case/andP: Utp2.
-have{xCp1 p1't} xCp1: path clink1 x p1 by rewrite cpath1I.
-have{tCp2 p2't cpath1I} tCp2: path clink1 t p2 by rewrite cpath1I.
+have{p1't} {}xCp1: path clink1 x p1 by rewrite cpath1I.
+have{p2't cpath1I} {}tCp2: path clink1 t p2 by rewrite cpath1I.
 have{not_xCp p1Ct} Lp1: last x p1 = node z.
   case/predU1P: p1Ct => [-> /= | p1Ft]; first by rewrite nt_z eqxx.
   by rewrite xCp1 tCp2 /clink1 p1Ft orbT in not_xCp.
 have{Lp} [Lp2 t'y]: last t p2 = node y /\ y != t.
   case: ifPn Lp Uzp; rewrite (lastI x) last_cat => //= _ -> /nandP[]; right.
   by rewrite belast_cat Lp1 rcons_uniq mem_cat mem_head orbT.
-have{xCp1 Up21} xCp1: path clink x p1.
+have{Up21} {}xCp1: path clink x p1.
   apply/idPn=> /cpath1P[] {xCp1}// q1 [q2 [p1fz Dp1 Lq2 xCq1 zCq2]].
   rewrite {}Dp1 cat_uniq -catA -cat_cons uniq_catCA catA cats1 in Up1 Uzp pynx.
-  have{tCp2 p1fz} tCp2: path clink t p2 by rewrite cpathI ?(hasPn Up21).
+  have{p1fz} {}tCp2: path clink t p2 by rewrite cpathI ?(hasPn Up21).
   have q2'nx: node x \notin q2.
     apply: contra (JordanG (x :: rcons q1 z ++ q2)) => q2nx; apply/and3P.
     rewrite (subseq_uniq _ Uzp) ?catA ?prefix_subseq // last_cat cat_path xCq1.
