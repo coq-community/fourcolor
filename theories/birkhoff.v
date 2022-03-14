@@ -309,7 +309,7 @@ apply: (@colorable_from_ring _ geoG planarG _ Ur1 _ nt_r1 (e :: et)).
     suffices ->: e :: et = ctrace (belast e et).
       by rewrite -[ctrace _](mapK (inv_permc g)); apply: tr1_et.
     by rewrite -Dct0 /= (scanlK addKc).
-  case: Kempe_tree_closure => ctu3 [[] // gtu3] {tr1'et r1valid}r1valid _.
+  case: Kempe_tree_closure => ctu3 [[] // gtu3] {tr1'et}{}r1valid _.
   case/orP=> [/(chkbP r1)[]// et1 tr_et1 ct3'et1 | {r1closed}/idPn[]].
     suffices sz_et1: size et1 = n'.+1.
       by have[] := Kempe_validP r1valid sz_et1 ct3'et1 r1closed tr_et1.
@@ -331,7 +331,7 @@ have []:= @Kempe_tree_closure_correct n' (P r2 Ur2) n ctu2 ctr gtu2.
     by rewrite rev_cons rev_rcons /= addc_eq0 => /eqP->.
   rewrite -rot1_cons -Dct0 -[rev _](rotrK 1) -rev_rot -!trace_rot -trace_rev.
   exact: sumt_trace.
-case: Kempe_tree_closure => ctu3 [[] // gtu3] {r2valid tr2'et}r2valid _.
+case: Kempe_tree_closure => ctu3 [[] // gtu3] {tr2'et}{}r2valid _.
 case/orP=> [/(chkbP r2)[]// et3 tr_et3 ct'et3 | /idPn[]]; last exact: (IHnm r1).
 suffices sz_et3: size et3 = n'.+1.
   by have [] := Kempe_validP r2valid sz_et3 ct'et3 r2closed tr_et3.

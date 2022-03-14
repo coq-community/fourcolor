@@ -29,7 +29,8 @@ Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
 Import Order.TTheory GRing.Theory Num.Theory.
-Hint Resolve iff_refl.
+#[export]
+Hint Resolve iff_refl : core.
 Local Open Scope real_scope.
 
 Local Notation "m %:Z" := m%:Z%R%N (only parsing).
@@ -86,7 +87,7 @@ Local Notation eqRset := (pointwise_relation Rtype iff).
 
 Lemma leRR x : x <= x.
 Proof. exact: (Real.le_reflexive R). Qed.
-Hint Resolve leRR.
+Hint Resolve leRR : core.
 
 Lemma leR_trans x y z : x <= y -> y <= z -> x <= z.
 Proof. exact: (Real.le_transitive R). Qed.
@@ -119,7 +120,7 @@ by case: (leR_total x y) => leyx neq_xy; [left | right] => lexy; case: neq_xy.
 Qed.
 
 Lemma ltRW x y : x < y -> x <= y. Proof. by have [] := leR_total x y. Qed.
-Hint Resolve ltRW.
+Hint Resolve ltRW : core.
 
 Lemma leR_lt_trans x y z : x <= y -> y < z -> x < z.
 Proof. by move=> lexy ltyz lezx; have:= leR_trans lezx lexy. Qed.
@@ -135,12 +136,12 @@ Proof. by move/ltRW; apply: leR_lt_trans. Qed.
 (**********************************************************)
 
 Lemma eqR_refl x : x == x. Proof. by []. Qed.
-Hint Resolve eqR_refl.
+Hint Resolve eqR_refl : core.
 
 Lemma eqR_congr x y : x = y -> x == y. Proof. by move->. Qed.
 
 Lemma eqR_sym x y : x == y -> y == x. Proof. by case. Qed.
-Hint Immediate eqR_sym.
+Hint Immediate eqR_sym : core.
 
 Lemma eqR_trans x y z : x == y -> y == z -> x == z.
 Proof. by move=> [lexy leyx] [/(leR_trans lexy)lexz /leR_trans/(_ leyx)]. Qed.
@@ -151,6 +152,7 @@ Add Parametric Relation : R eqR
   transitivity proved by eqR_trans
   as real_equality.
 
+#[export]
 Instance leR_Proper : Proper (eqR ==> eqR ==> iff) Real.le.
 Proof.
 move=> x1 x2 [lex12 lex21] y1 y2 [ley12 ley21].
@@ -164,6 +166,7 @@ Qed.
 Lemma addRC x y : x + y == y + x.
 Proof. exact: (Real.add_commutative R). Qed.
 
+#[export]
 Instance addR_Proper : Proper (eqR ==> eqR ==> eqR) Real.add.
 Proof.
 move=> x1 x2 Dx y1 y2 Dy; apply: (@eqR_trans _ (x1 + y2)).
@@ -240,6 +243,7 @@ Proof. by rewrite -subR_ge0 oppRK addRC subR_ge0. Qed.
 Lemma oppR_inj x y : - x == - y -> x == y.
 Proof. by rewrite /eqR !leR_opp2 => /eqR_sym. Qed.
 
+#[export]
 Instance oppR_Proper : Proper (eqR ==> eqR) Real.opp.
 Proof. by move=> x1 x2 Dx; apply: oppR_inj; rewrite !oppRK. Qed.
 
@@ -256,6 +260,7 @@ Proof. exact: (Real.mul_distributive_right R). Qed.
 Lemma mulRDl x y z : (y + z) * x == y * x + z * x.
 Proof. by rewrite -!(mulRC x) -mulRDr. Qed.
 
+#[export]
 Instance mulR_Proper : Proper (eqR ==> eqR ==> eqR) Real.mul.
 Proof.
 have posMr x y z : 0 <= x -> y == z -> x * y == x * z.
@@ -317,7 +322,7 @@ case/ltR_total: neqR10 => // lt10 le10; case: lt10.
 have{le10} le0N1: (0 : R) <= -1 by rewrite -oppR0 leR_opp2.
 by have:= Real.mul_monotone R le0N1 le0N1; rewrite mulR0 mulN1R oppRK.
 Qed.
-Hint Resolve ltR01.
+Hint Resolve ltR01 : core.
 
 Lemma ltRS x : x < x + 1.
 Proof. by rewrite -subR_le0 (addRC x) addRK. Qed.
@@ -329,7 +334,7 @@ Arguments ltPR x : clear implicits.
 
 Lemma ltR02 : (0 : R) < 2.
 Proof. exact: ltR_trans ltR01 (ltRS 1). Qed.
-Hint Resolve ltR02.
+Hint Resolve ltR02 : core.
 Let leR02 : 0 <= 2 := ltRW ltR02.
 
 (* Excluded middle and minimality of sup follow from the properties of 2! *)
@@ -395,6 +400,7 @@ Proof. by move=> notP; case: IFR_cases => z [][]. Qed.
 
 End SelectR.
 
+#[export]
 Instance IFR_Proper : Proper (iff ==> eqR ==> eqR ==> eqR) Real.select.
 Proof.
 move=> P1 P2 defP x1 x2 Dx y1 y2 Dy.
@@ -452,6 +458,7 @@ Qed.
 Lemma mulIR x y z : x != 0 -> y * x == z * x -> y == z.
 Proof. by rewrite -!(mulRC x); apply: mulRI. Qed.
 
+#[export]
 Instance invR_Proper : Proper (eqR ==> eqR) Real.extended_inv.
 Proof.
 move=> x1 x2 Dx; have [x2_0 | nzx2] := reals_classic (x2 == 0).
@@ -527,23 +534,29 @@ move=> hasE; have [|ubEx] := reals_classic (Real.down E x); first by left.
 by right; apply: sup_le_ub => // y Ey; apply/ltRW=> lexy; case: ubEx; exists y.
 Qed.
 
+#[export]
 Instance nonempty_Proper : Proper (eqRset ==> iff) Real.nonempty.
 Proof. by move=> E F defE; rewrite /Real.nonempty; setoid_rewrite defE. Qed.
 
+#[export]
 Instance ub_Proper : Proper (eqRset ==> eqR ==> iff) Real.ub.
 Proof. by move=> E F defE x1 x2 Dx; split=> ub_x y /defE/ub_x; rewrite Dx. Qed.
 
+#[export]
 Instance down_Proper : Proper (eqRset ==> eqR ==> iff) Real.down.
 Proof.
 by move=> E F defE x1 x2 Dx; split=> -[y /defE]; rewrite (Dx, =^~ Dx); exists y.
 Qed.
 
+#[export]
 Instance has_ub_Proper : Proper (eqRset ==> iff) Real.has_ub.
 Proof. by move=> E F dE; split=> -[y]; exists y; rewrite (dE, =^~ dE). Qed.
 
+#[export]
 Instance has_sup_Proper : Proper (eqRset ==> iff) Real.has_sup.
 Proof. by move=> E F dE; rewrite /Real.has_sup dE. Qed.
 
+#[export]
 Instance sup_Proper : Proper (eqRset ==> eqR) sup.
 Proof.
 move=> E F eqEF; have [supE | trivE] := reals_classic (Real.has_sup E).
@@ -585,7 +598,7 @@ Proof. by case: (min x y) / IFR_cases => _ [][lemx ->] //; apply/ltRW. Qed.
 
 Lemma leR_minr : min x y <= y.
 Proof. by case: (min x y) / IFR_cases => _ [][lemy ->]. Qed.
-Hint Resolve leR_minl leR_minr.
+Hint Resolve leR_minl leR_minr : core.
 
 Lemma ltR_min z : z < min x y <-> z < x /\ z < y.
 Proof.
@@ -605,7 +618,7 @@ Proof. by case: (max x y) / IFR_cases => _ [][ltxm ->]//; apply/ltRW. Qed.
 
 Lemma leR_maxr : y <= max x y.
 Proof. by case: (max x y) / IFR_cases => _ [][leym ->]. Qed.
-Hint Resolve leR_maxl leR_maxr.
+Hint Resolve leR_maxl leR_maxr : core.
 
 Lemma ltR_max z : max x y < z <-> x < z /\ y < z.
 Proof.
@@ -622,9 +635,11 @@ Qed.
 
 End MinMaxReal.
 
+#[export]
 Instance min_Proper : Proper (eqR ==> eqR ==> eqR) min.
 Proof. by move=> x1 x2 Dx y1 y2 Dy; rewrite /min Dx Dy. Qed.
 
+#[export]
 Instance max_Proper : Proper (eqR ==> eqR ==> eqR) max.
 Proof. by move=> x1 x2 Dx y1 y2 Dy; rewrite /max Dx Dy. Qed.
 
@@ -641,7 +656,7 @@ Arguments ltR0Sn n : clear implicits.
 
 Lemma leR0n n : 0 <= n.
 Proof. by case: n => // n; apply/ltRW/ltR0Sn. Qed.
-Hint Resolve ltR0Sn leR0n.
+Hint Resolve ltR0Sn leR0n : core.
 
 Lemma intRN m : (- m)%R == - m.
 Proof. by case: m => [[|n]|n]; rewrite ?oppR0 ?oppRK. Qed.
@@ -758,11 +773,11 @@ Qed.
 
 Fact ub_floor_set x : Real.ub (floor_set x) x.
 Proof. by move=> y [m]. Qed.
-Hint Resolve ub_floor_set.
+Hint Resolve ub_floor_set : core.
 
 Fact has_ub_floor_set x : Real.has_ub (floor_set x).
 Proof. by exists x. Qed.
-Hint Resolve has_ub_floor_set.
+Hint Resolve has_ub_floor_set : core.
 
 Let has_floor_max x : Real.nonempty (floor_set x) -> x < floor x + 1.
 Proof.
@@ -786,17 +801,19 @@ rewrite -{2}(oppRK x) intRN leR_opp2 -{2}(subRK (- x) 1) !intRD1 leR_add2r.
 apply/leR_trans/ltRW; rewrite -(leR_add2r 1) subRK.
 by apply: has_floor_max; case: ub_nx0.
 Qed.
-Hint Resolve nonempty_floor_set.
+Hint Resolve nonempty_floor_set : core.
 
 Lemma has_sup_floor_set x : Real.has_sup (floor_set x). Proof. by []. Qed.
-Hint Resolve has_sup_floor_set.
+Hint Resolve has_sup_floor_set : core.
 
+#[export]
 Instance floor_Proper : Proper (eqR ==> eqR) floor.
 Proof.
 move=> x1 x2 Dx; apply: sup_Proper => y.
 by split=> -[m int_m_x]; split; rewrite (Dx, =^~ Dx).
 Qed.
 
+#[export]
 Instance range1_Proper : Proper (eqR ==> eqR ==> iff) range1.
 Proof. by move=> x1 x2 Dx y1 y2 Dy; rewrite /range1 Dx Dy. Qed.
 
@@ -861,6 +878,7 @@ move: lemx; rewrite -(leR_add2r (d1 * z)); apply: ltR_le_trans.
 by rewrite leR_add2l mulRC leR_pmul2l // /d1 intRS.
 Qed.
 
+#[export]
 Instance imageR_Proper (S : Real.structure) :
   Proper
     (pointwise_relation S eqR ==> pointwise_relation S iff ==> eqR ==> iff)
@@ -883,27 +901,28 @@ Arguments intR_ltP {R m1 m2}.
 Arguments ratR_leP {R a1 a2}.
 Arguments ratR_ltP {R a1 a2}.
 
-Hint Resolve eqR_refl leRR ltRW.
+#[export]
+Hint Resolve eqR_refl leRR ltRW : core.
 
-Existing Instance real_equality.
-Existing Instance real_equality_Transitive.
-Existing Instance real_equality_Symmetric.
-Existing Instance real_equality_Reflexive.
-Existing Instance real_equality_relation.
-Existing Instance leR_Proper.
-Existing Instance addR_Proper.
-Existing Instance oppR_Proper.
-Existing Instance mulR_Proper.
-Existing Instance invR_Proper.
-Existing Instance IFR_Proper.
-Existing Instance nonempty_Proper.
-Existing Instance ub_Proper.
-Existing Instance has_ub_Proper.
-Existing Instance has_sup_Proper.
-Existing Instance sup_Proper.
-Existing Instance min_Proper.
-Existing Instance max_Proper.
-Existing Instance range1_Proper.
-Existing Instance floor_Proper.
-Existing Instance imageR_Proper.
+#[export] Existing Instance real_equality.
+#[export] Existing Instance real_equality_Transitive.
+#[export] Existing Instance real_equality_Symmetric.
+#[export] Existing Instance real_equality_Reflexive.
+#[export] Existing Instance real_equality_relation.
+#[export] Existing Instance leR_Proper.
+#[export] Existing Instance addR_Proper.
+#[export] Existing Instance oppR_Proper.
+#[export] Existing Instance mulR_Proper.
+#[export] Existing Instance invR_Proper.
+#[export] Existing Instance IFR_Proper.
+#[export] Existing Instance nonempty_Proper.
+#[export] Existing Instance ub_Proper.
+#[export] Existing Instance has_ub_Proper.
+#[export] Existing Instance has_sup_Proper.
+#[export] Existing Instance sup_Proper.
+#[export] Existing Instance min_Proper.
+#[export] Existing Instance max_Proper.
+#[export] Existing Instance range1_Proper.
+#[export] Existing Instance floor_Proper.
+#[export] Existing Instance imageR_Proper.
 

@@ -378,7 +378,7 @@ have:= De12; rewrite [e1]addcC => /addcI KnG.
 have k'F: invariant face k' =1 ecpA G2.
   move=> x; apply/eqP; move: (fconnect1 face x); rewrite cface_icpA /k'.
   case/orP=> [/fconnect_invariant <-// | /allP kFx].
-  have{kFx} kFx y: y \in [:: x; face x] -> k y = k (node G2).
+  have{} kFx y: y \in [:: x; face x] -> k y = k (node G2).
     move/kFx; rewrite /= unfold_in => /hasP[z Dz /fconnect_invariant-> //].
     by move: Dz; rewrite !inE => /pred2P[]->.
   by rewrite /= kFx ?(kFx x) // ?inE ?eqxx ?orbT.

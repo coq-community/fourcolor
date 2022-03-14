@@ -199,7 +199,7 @@ pose s := \sum_a (ab0 a).1; pose s_ a := \sum_(b | b != a) (ab0 b).1.
 have Ds a: s = s_ a + (ab0 a).1 by rewrite addnC [s](bigD1 a).
 pose ab_ a := refine_srect (s_ a).+1 (ab0 a).
 exists (fun e => if insub e is Some e then (ab_ e).2 else r0).
-have{ar_ab} ar_ab a z: ab_ a z -> ar a z by move/in_refine_srect/ar_ab.
+have {}ar_ab a z: ab_ a z -> ar a z by move/in_refine_srect/ar_ab.
 split=> [e f p | | e [adj_e lte]]; last 1 first.
 - have [a _ _|/negP[]] := insubP; last exact/arcP.
   have [p _ /insetW-ab0a_p] := ab0ap a.
@@ -369,7 +369,7 @@ have{ab_mrP} ab_cmP e i: ab_cm_proper ab cm e i.
     by apply/hasP; exists q; rewrite // -[q](approx_point_inj Dp) ?Ds1.
   have [_ ->//] := ab_mrP e i ab_e; exists (scale_point R s p).
   by split; last apply/m0i_cm; rewrite -Ds1; apply/mem_approx_scale.
-have{cmP} cmP: cm_proper cm.
+have {}cmP: cm_proper cm.
   move=> i j /hasP[p /= cmi_p cmj_p].
   have [_ /(_ j)-> //] := mrP i; apply: m0tr (scale_point R s1 p) _ _ _.
     by have [m0_cmi _] := cmP i; apply/m0_cmi/mem_approx_scale.

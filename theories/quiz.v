@@ -473,7 +473,7 @@ have ccRa2: rlink_connected [predI fband a2 & hc].
   - move=> x y; rewrite !inE !fband_cons !orbF => /andP[xFx0 _] /andP[yFx0 _].
     by exists [::]; rewrite //= /rlink faceK (same_cface xFx0) cfaceC yFx0.
   by rewrite -{1}[x0c]e2c edgeK.
-have{Dac} Dac: ac =i fband a2.
+have {}Dac: ac =i fband a2.
   by move=> x; rewrite -Dac !(fband_cons, fband_cat); do !bool_congr.
 move=> x y; rewrite !(Dac, inE) => a2Fx a2Fy.
 have [p nfxRp a2_p] := ccRa2 _ _ a2Fx a2Fy.
