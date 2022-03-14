@@ -1,16 +1,10 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From mathcomp
-Require Import bigop ssralg ssrnum ssrint.
-From fourcolor
-Require Import hypermap geometry patch coloring birkhoff embed quiz quiztree.
-From fourcolor
-Require Import part redpart discharge hubcap.
-From fourcolor
-Require Import cfmap cfcontract cfreducible configurations.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph bigop ssralg ssrnum ssrint.
+From fourcolor Require Import hypermap geometry patch coloring birkhoff embed.
+From fourcolor Require Import quiz quiztree part redpart discharge hubcap.
+From fourcolor Require Import cfmap cfcontract cfreducible configurations.
 
 (******************************************************************************)
 (*   This file defines the properties and the specialized scripting language  *)

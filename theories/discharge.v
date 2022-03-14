@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2015 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From mathcomp
-Require Import bigop order ssralg ssrnum ssrint.
-From fourcolor
-Require Import hypermap geometry part.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From mathcomp Require Import bigop order ssralg ssrnum ssrint.
+From fourcolor Require Import hypermap geometry part.
 
 (******************************************************************************)
 (* Discharging arities to neighbouring faces. We specify how to compute the   *)

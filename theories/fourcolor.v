@@ -1,9 +1,7 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-From fourcolor
-Require Import real realplane.
-From fourcolor
-Require combinatorial4ct discretize finitize.
+From fourcolor Require Import real realplane.
+From fourcolor Require combinatorial4ct discretize finitize.
 
 (******************************************************************************)
 (*   This files contains the proof of the high-level statement of the Four    *)

@@ -1,12 +1,10 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap geometry color chromogram coloring cfmap cfcolor.
-From fourcolor
-Require Import dyck ctree initctree gtree initgtree gtreerestrict ctreerestrict.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap geometry color chromogram coloring cfmap.
+From fourcolor Require Import cfcolor dyck ctree initctree gtree initgtree.
+From fourcolor Require Import gtreerestrict ctreerestrict.
 
 (******************************************************************************)
 (*   Here we put all the reducibility steps together, to compute the Kempe    *)

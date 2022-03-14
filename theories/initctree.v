@@ -1,10 +1,7 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq.
-From fourcolor
-Require Import color ctree dyck.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq.
+From fourcolor Require Import color ctree dyck.
 
 (******************************************************************************)
 (*   Creation of an initial (full) coloring tree and its correctness theorem. *)

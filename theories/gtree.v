@@ -1,10 +1,7 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq.
-From fourcolor
-Require Import color chromogram.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq.
+From fourcolor Require Import color chromogram.
 
 (******************************************************************************)
 (*   Sets of partial chromograms are stored as 4-way trees, much like partial *)

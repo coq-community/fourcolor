@@ -1,16 +1,11 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From mathcomp
-Require Import ssralg ssrnum ssrint.
-From fourcolor
-Require Import hypermap geometry coloring patch birkhoff part discharge.
-From fourcolor
-Require Import configurations hubcap present.
-From fourcolor
-Require Import present5 present6 present7 present8 present9 present10 present11.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph ssralg ssrnum ssrint.
+From fourcolor Require Import hypermap geometry coloring patch birkhoff part.
+From fourcolor Require Import discharge configurations hubcap present.
+From fourcolor Require Import present5 present6 present7 present8 present9.
+From fourcolor Require Import present10 present11.
 
 (******************************************************************************)
 (*   The main unavoidability theorem: reducibility implies no minimal counter *)

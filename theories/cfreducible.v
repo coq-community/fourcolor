@@ -1,12 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
-Require Import mathcomp.ssreflect.ssreflect.
-From mathcomp
-Require Import ssrfun ssrbool eqtype ssrnat seq choice fintype path fingraph.
-From fourcolor
-Require Import hypermap geometry color chromogram coloring kempe.
-From fourcolor
-Require Import cfmap cfcolor cfcontract ctree kempetree.
+From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
+From mathcomp Require Import fintype path fingraph.
+From fourcolor Require Import hypermap geometry color chromogram coloring kempe.
+From fourcolor Require Import cfmap cfcolor cfcontract ctree kempetree.
 
 (******************************************************************************)
 (*   The reducibility decision procedure; we only use C-reductibility, as the *)
