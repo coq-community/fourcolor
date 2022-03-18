@@ -158,7 +158,7 @@ have: cm_proper xcm.
 apply: IHn => [|f i bf m xcm'f].
   move: le_cm_n; rewrite ltnS (cardD1 e) inE [_ && _]cm'e.
   apply/leq_ltn_trans/subset_leq_card/subsetP=> f xcm'f.
-  by rewrite inE xcm'cm' // (memPn _ _ xcm'f).
+  by rewrite inE /= [f \in _]xcm'cm' // (memPn _ _ xcm'f).
 have bf'e p: ab e p -> ~ bf p by move=> ? /(abP e)D; rewrite D ?xcm'f in xcm_e.
 have /xcm'cm'/(abcmP f i)/= := xcm'f; rewrite -/bf /m /=.
 case: eqP => // -> -[e2bf bf_f]; split=> [/e2bf[cm2ref_bf cm2_bf]|]; last first.

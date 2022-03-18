@@ -1338,12 +1338,12 @@ Lemma node_injcp cp1 cp2 :
   {in [predC cpring (cpmap cp2)], {morph @injcp cp1 cp2 : x / node x}}.
 Proof.
 elim: cp1 cp2 => [|[n||||||] cp1 IHcp] //= cp2 cp1ok x XN'x.
-- by rewrite IHcp // 2!inE cpring_ecpR mem_rot.
+- by rewrite IHcp // inE /= cpring_ecpR mem_rot.
 - rewrite -IHcp -1?icpY_node //; first rewrite !inE mem_cpring in XN'x.
     by rewrite !inE; apply: contra XN'x => /pred2P[]->; rewrite -?cnode1r.
-  rewrite 2!inE cpring_ecpY -/cpmap !inE (mem_map (@icpY_inj _ _)) !orFb.
+  rewrite inE /= cpring_ecpY -/cpmap !inE (mem_map (@icpY_inj _ _)) !orFb.
   by apply: contra XN'x; apply: mem_behead.
-- rewrite -IHcp -1?icpH_node //; first rewrite!inE mem_cpring in XN'x.
+- rewrite -IHcp -1?icpH_node //; first rewrite !inE mem_cpring in XN'x.
     rewrite !inE -/cpmap; apply: contra XN'x => /or3P.
     by case=> /eqP->; rewrite ?fconnect1 // cnode1r edgeK.
   rewrite cpring_ecpN cpring_ecpY -/cpmap; case: ifP => // _.

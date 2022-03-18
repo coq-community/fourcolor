@@ -336,7 +336,7 @@ Let oaGr : n_comp glink Gr = n_comp glink a.
 Proof.
 have [cG cGr] := (@glinkC G, @glinkC Gr).
 rewrite (adjunction_n_comp hr cG cGr clGa).
-  by apply: eq_card => xr; congr (_ && _); rewrite 5!inE mem_closure ?codom_f.
+  by apply: eq_card => xr; congr (_ && _); apply/esym/mem_closure/codom_f.
 split=> [x a_x | xr zr _].
   apply: sigW; have [y /= yGx /imageP[yr _ Dy]] := exists_inP a_x.
   by exists yr; rewrite -Dy.

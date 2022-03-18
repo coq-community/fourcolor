@@ -361,7 +361,7 @@ Lemma nontrivial_cycle2 (x y : G) (r := [:: x; y]) :
 Proof.
 move=> Ur y'ex; apply/nontrivial0P; split.
   exists (node x); rewrite !inE -(fclosed1 (diskN_node r)).
-  rewrite diskN_E inE /= mem_head unfold_in /= -{2}[x]nodeK -cface1r.
+  rewrite diskN_E mem_head unfold_in /= -{2}[x]nodeK -cface1r.
   rewrite bridgeless_cface //= orbF andbT; apply: contraL Ur => nxFy /=.
   rewrite /rlink -(same_connect_r cfaceC nxFy) -[node x]nodeK -cface1r.
   by rewrite cface1 -(canRL nodeK (nnn x)) bridgeless_cface.
