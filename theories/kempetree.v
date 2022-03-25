@@ -212,7 +212,7 @@ suffices{IHktc'} [gt_valid gt_full]:
     & forall sz, Kempe_complete sz.+1 ctu CtreeEmpty gtr gtu ->
       Kempe_complete sz ctu' (ctree_rotlr ctr) GtreeEmpty gtu].
 - by case/IHktc': gt_valid; split=> // sz; rewrite addnS => /gt_full; move: sz.
-have{} Dctu': ctree_sub ctu' =1 even_fun et (sub_gt gtu et).
+have {}Dctu': ctree_sub ctu' =1 even_fun et (sub_gt gtu et).
   by move=> et; rewrite Dctu' Dctu addn0; case: ifP; rewrite ?addKn.
 split=> [|sz [ctu_lt_sz ctr_closed]].
   split=> // [|et0 ct_et0 | [] //].

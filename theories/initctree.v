@@ -198,7 +198,7 @@ have{ltab Dtab Dltab} [Dsz Dsub]: h' + size tab = h.+1
   rewrite cbit0_addc cbit0_ccons cbit1_addc cbit1_ccons.
   case: e; rewrite /= ?addbT ?addbF -1?addSnnS;
     by case: b0; rewrite /= ctree_sub_cons /= ?andbF ?add0n.
-have{} Dsz: size tab = 2 by apply: (@addnI h'); rewrite Dsz Dh addnC.
+have {}Dsz: size tab = 2 by apply: (@addnI h'); rewrite Dsz Dh addnC.
 case: tab Dsz => [|[t0 t1] [|[t2 t3] tab']] //= _ in Dsub *.
 move Dtec: {-}(even_trace et) => tec; rewrite /= ctree_sub_cons {h}Dh.
 case: et => [|e et] //= in Dtec *; rewrite eqSS.

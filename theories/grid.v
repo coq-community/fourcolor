@@ -583,6 +583,5 @@ Qed.
 
 End GridGeometry.
 
-#[export]
 Hint Resolve oddgP : core.
 Arguments insetP {r p}.

@@ -1016,7 +1016,7 @@ rewrite {n_Ax_cc DccF DmtF}/nF_qtc simple_fcard_fband; last first.
 move: mc mt Emcq Emtq Uq; rewrite simple_recI.
 elim: q => [|y q IHq] [|b1 m1] // [|b2 m2] //= Em1 Em2 /andP[qF'y Uq].
 set q1 := mask m1 q; set q2 := mask m2 q.
-have{} qF'y m: (y \in fband (mask m q)) = false.
+have {}qF'y m: (y \in fband (mask m q)) = false.
   by apply: contraNF qF'y; apply: has_mask.
 have Eq21: filter (fband (y :: q2)) q1 = filter (fband q2) q1.
   apply: eq_in_filter => z q1z; apply: orb_idl; rewrite cfaceC => yFz.

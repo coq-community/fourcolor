@@ -470,7 +470,7 @@ case: s scp2ok (config_prog_cubic scp2ok) => // [n||] cp2ok cp2Q;
   rewrite -hF in nu0FnG; rewrite (arity_cface nu0FnG) !nFiG !fband_cons /=.
   rewrite !connect0 orbT -/r -/r1 !add1n addn2 !addnS => /and5P[].
   set v1 := icpY G (node G) => Ea1 q1nG Ea2 q2nu0 /and3P[Ea3 q3iG q_r1].
-  have{} q_r1: rqs_fit h1 qs3 r1.
+  have {}q_r1: rqs_fit h1 qs3 r1.
     move Dea: (fun x => arity (icpY G x) == arity x) => ea.
     have ea_r1: all ea r1.
       apply/allP=> x r1x; rewrite -Dea nFiG [_ \in _]negbTE //.
@@ -639,7 +639,7 @@ rewrite map_cons -/v3 !rqs_fit_cons nFu0 (arity_cface nu0Fv1) in q_r.
 rewrite -hF in nu0Fv1; rewrite (arity_cface nu0Fv1) in q_r.
 rewrite !{1}nFiG /= !fband_cons !connect0 !orbT !addnS addn0 in q_r.
 case/and5P: q_r => Ea1 q1nu0 Ea2 q2u0 /and3P[Ea3 q3v3 q_r1].
-have{} q_r1: rqs_fit h1 qs3 r1.
+have {}q_r1: rqs_fit h1 qs3 r1.
   move Dea: (fun x => arity (icpH G x) == arity x) => ea.
   have: all ea r1.
     apply/allP=> x r1x; rewrite -Dea nFiG // [x \in _]negbTE //=.

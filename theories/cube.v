@@ -175,7 +175,7 @@ suffices{oQ oEQ oNQ oFQ} oGQ: n_comp glink qmap = n_comp glink G.
   rewrite {1}/genus /Euler_lhs /Euler_rhs oQ oEQ oNQ oFQ oGQ.
   by rewrite mulSn 2!addnA -mulnDl addnC subnDl.
 have g1eq y g_y G x := @same_connect1 _ _ (@glinkC G) x (y G x) (g_y G x).
-have{} g1eq := (g1eq _ glinkE, g1eq _ glinkN, g1eq _ glinkF).
+have {}g1eq := (g1eq _ glinkE, g1eq _ glinkN, g1eq _ glinkF).
 have [[cGG cGQ] [[g1e g1n] g1f]] := (@clinkC G, @clinkC qmap, g1eq).
 rewrite -!(eq_n_comp (@clink_glink _)) (adjunction_n_comp (tsI CTnf) _ cGG) //.
 apply: (intro_adjunction _ _ (fun x _ => tsE x)) => // [u _ | x _].

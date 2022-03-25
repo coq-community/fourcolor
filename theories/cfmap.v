@@ -1472,7 +1472,7 @@ rewrite /cpmask => /cpW; elim: cp cm => [|s cp IHcp] [mr mk] cp_ok /= m_ok u.
   by case: mr mk u m_ok => [|[] [|[] []]] // [] // [].
 rewrite orFb in cp_ok; case: s => // [n||] in u cp_ok m_ok *.
 - set cm := Cfmask _ mk; have [/eqP Emr _] := andP m_ok.
-  have{} m_ok: proper_cpmask cp cm by rewrite /= size_rotr.
+  have {}m_ok: proper_cpmask cp cm by rewrite /= size_rotr.
   move: (cpadj_proper m_ok) {IHcp}(IHcp cm (cpW cp cp_ok) m_ok).
   case: (cpadj cm cp) => mr' mk' /andP[/eqP Emr' _] IHm.
   rewrite -(size_rotr n) -size_ring_cpmap in Emr.
