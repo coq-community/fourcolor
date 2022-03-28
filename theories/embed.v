@@ -1376,7 +1376,7 @@ Proof.
 split; try exact: embed_sparse; rewrite ?disjoint_has // size_map ?mapEh1.
   by have [[]] := Cred_cc.
 have [[rc'cc _ _ triad_cc] _] := Cred_cc; rewrite disjoint_has has_sym in rc'cc.
-move=> {triad_cc}/triad_cc/existsP[x /= /and3P[ac_x adj3x xA'cc]].
+move=> {}/triad_cc/existsP[x /= /and3P[ac_x adj3x xA'cc]].
 apply/existsP; exists (h1 x); apply/and3P; split=> // [{xA'cc} | {adj3x}].
   apply: leq_trans adj3x _; rewrite orbitF_h1 // /orbit.
   move: (arity x) => n; elim: n => //= n IHn in x ac_x *.
