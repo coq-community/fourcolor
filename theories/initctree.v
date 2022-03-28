@@ -155,7 +155,7 @@ have{Dtab ltab Dltab} [Dsz sub_ok]: h' + size tab = h.+1
   case: (nth _ _ i) => t0 t1; case: {i tab}(nth _ _ i) => t2 t3.
   do 2![move=> t_ok; move: {t_ok}(t_ok false) (t_ok true) => /= ? ?].
   by case: b0; rewrite /= -Dctp'; apply ctree_cons_proper.
-have{h Dh}{} Dsz: size tab = 2 by apply: (@addnI h'); rewrite Dsz Dh addn2.
+have{h Dh} Dsz: size tab = 2 by apply: (@addnI h'); rewrite Dsz Dh addn2.
 case: tab Dsz => [|[t0 t1] [|[t2 t3] tab']] //= _ in sub_ok *.
 have ok1 := sub_ok 1 _ isT.
 move: {sub_ok ok1}(sub_ok 0 true isT) (ok1 false) (ok1 true).

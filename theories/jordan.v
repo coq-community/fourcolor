@@ -287,7 +287,7 @@ have [p2 []]: exists p2, [/\ fpath edge y p2, last y p2 = nfx & z1 \notin p2].
   case/splitPr: p / => p p2; rewrite cat_path /= => /and3P[_ _ fxEp2].
   by rewrite mem_cat last_cat => /norP[_ /norP[_]]; exists p2.
 elim: p2 y => [|_ p IHp y /andP[/eqP<- /IHp{}IHp Lp]]; first by exists nil.
-rewrite inE => /norP[ey'z1 /(IHp Lp){p Lp}{}IHp].
+rewrite inE => /norP[ey'z1 /(IHp Lp){p Lp}IHp].
 apply: (@proj2 (y != nfx)); pose fey := face (edge y).
 have /connectP[q]: fconnect node y fey by rewrite cnode1r edgeK.
 elim: q (y) => /= [_ _ <- | _ q IHq z /andP[/eqP<- /IHq-IHz] /IHz{IHq IHz IHp}].

@@ -1226,7 +1226,7 @@ have{fit_p4}: let: (h23, q12) := conv_part12 p4 in
   by split; last by rewrite Dn Es1 Eh12 Ef21 Ef22 /inv_face2 !nodeK.
 case: {p4}(conv_part12 p4) => [h23 q12] [Eh23 fit_q12].
 move: (drop_part 5 p1) (size_drop_part 5 p1) (fitp_drop 5 fit_p1) => p6 Ep6.
-have{Ep1}{}Ep6: arity x = 5 + size_part p6 by rewrite Ep6 -(eqP Ep1) subnKC.
+have{Ep1}Ep6: arity x = 5 + size_part p6 by rewrite Ep6 -(eqP Ep1) subnKC.
 move=> /= fit_p6.
 rewrite -2!arity_face {1}/inv_face2 !nodeK Eu /=; apply: {q12}fit_q12.
 case: p6 fit_p6 Ep6 => //= [_ Ex5 | f31 _ p7 /and3P[Ef31 _]].
