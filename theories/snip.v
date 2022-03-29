@@ -234,7 +234,7 @@ have [x1 c_nx1 [p [x1Cp Lp] Upc]]: exists2 x1, node x1 \in z' :: c
     by apply: sub_path x1Dp => t u /andP[].
   rewrite has_rcons orbCA negb_or Ucp andbT.
   by apply: contra Uq1c; rewrite has_sym /= => ->.
-have{z'Cc} z'Cc: path clink z' c.
+have {}z'Cc: path clink z' c.
   apply: sub_path z'Cc => t _ /eqP <- /=.
   by case: ifP => _; [rewrite -{1}[t]edgeK clinkN | rewrite clinkF].
 have [c0 [x1Cc0 Lc0] Ucc0]: exists2 c0,

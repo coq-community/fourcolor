@@ -29,7 +29,7 @@ Unset Strict Implicit.
 Unset Printing Implicit Defensive.
 
 Import Order.TTheory GRing.Theory Num.Theory.
-Hint Resolve iff_refl.
+Hint Resolve iff_refl : core.
 Local Open Scope real_scope.
 
 Local Notation "m %:Z" := m%:Z%R%N (only parsing).
@@ -86,7 +86,7 @@ Local Notation eqRset := (pointwise_relation Rtype iff).
 
 Lemma leRR x : x <= x.
 Proof. exact: (Real.le_reflexive R). Qed.
-Hint Resolve leRR.
+Hint Resolve leRR : core.
 
 Lemma leR_trans x y z : x <= y -> y <= z -> x <= z.
 Proof. exact: (Real.le_transitive R). Qed.
@@ -119,7 +119,7 @@ by case: (leR_total x y) => leyx neq_xy; [left | right] => lexy; case: neq_xy.
 Qed.
 
 Lemma ltRW x y : x < y -> x <= y. Proof. by have [] := leR_total x y. Qed.
-Hint Resolve ltRW.
+Hint Resolve ltRW : core.
 
 Lemma leR_lt_trans x y z : x <= y -> y < z -> x < z.
 Proof. by move=> lexy ltyz lezx; have:= leR_trans lezx lexy. Qed.
@@ -135,12 +135,12 @@ Proof. by move/ltRW; apply: leR_lt_trans. Qed.
 (**********************************************************)
 
 Lemma eqR_refl x : x == x. Proof. by []. Qed.
-Hint Resolve eqR_refl.
+Hint Resolve eqR_refl : core.
 
 Lemma eqR_congr x y : x = y -> x == y. Proof. by move->. Qed.
 
 Lemma eqR_sym x y : x == y -> y == x. Proof. by case. Qed.
-Hint Immediate eqR_sym.
+Hint Immediate eqR_sym : core.
 
 Lemma eqR_trans x y z : x == y -> y == z -> x == z.
 Proof. by move=> [lexy leyx] [/(leR_trans lexy)lexz /leR_trans/(_ leyx)]. Qed.
@@ -317,7 +317,7 @@ case/ltR_total: neqR10 => // lt10 le10; case: lt10.
 have{le10} le0N1: (0 : R) <= -1 by rewrite -oppR0 leR_opp2.
 by have:= Real.mul_monotone R le0N1 le0N1; rewrite mulR0 mulN1R oppRK.
 Qed.
-Hint Resolve ltR01.
+Hint Resolve ltR01 : core.
 
 Lemma ltRS x : x < x + 1.
 Proof. by rewrite -subR_le0 (addRC x) addRK. Qed.
@@ -329,7 +329,7 @@ Arguments ltPR x : clear implicits.
 
 Lemma ltR02 : (0 : R) < 2.
 Proof. exact: ltR_trans ltR01 (ltRS 1). Qed.
-Hint Resolve ltR02.
+Hint Resolve ltR02 : core.
 Let leR02 : 0 <= 2 := ltRW ltR02.
 
 (* Excluded middle and minimality of sup follow from the properties of 2! *)
@@ -585,7 +585,7 @@ Proof. by case: (min x y) / IFR_cases => _ [][lemx ->] //; apply/ltRW. Qed.
 
 Lemma leR_minr : min x y <= y.
 Proof. by case: (min x y) / IFR_cases => _ [][lemy ->]. Qed.
-Hint Resolve leR_minl leR_minr.
+Hint Resolve leR_minl leR_minr : core.
 
 Lemma ltR_min z : z < min x y <-> z < x /\ z < y.
 Proof.
@@ -605,7 +605,7 @@ Proof. by case: (max x y) / IFR_cases => _ [][ltxm ->]//; apply/ltRW. Qed.
 
 Lemma leR_maxr : y <= max x y.
 Proof. by case: (max x y) / IFR_cases => _ [][leym ->]. Qed.
-Hint Resolve leR_maxl leR_maxr.
+Hint Resolve leR_maxl leR_maxr : core.
 
 Lemma ltR_max z : max x y < z <-> x < z /\ y < z.
 Proof.
@@ -641,7 +641,7 @@ Arguments ltR0Sn n : clear implicits.
 
 Lemma leR0n n : 0 <= n.
 Proof. by case: n => // n; apply/ltRW/ltR0Sn. Qed.
-Hint Resolve ltR0Sn leR0n.
+Hint Resolve ltR0Sn leR0n : core.
 
 Lemma intRN m : (- m)%R == - m.
 Proof. by case: m => [[|n]|n]; rewrite ?oppR0 ?oppRK. Qed.
@@ -758,11 +758,11 @@ Qed.
 
 Fact ub_floor_set x : Real.ub (floor_set x) x.
 Proof. by move=> y [m]. Qed.
-Hint Resolve ub_floor_set.
+Hint Resolve ub_floor_set : core.
 
 Fact has_ub_floor_set x : Real.has_ub (floor_set x).
 Proof. by exists x. Qed.
-Hint Resolve has_ub_floor_set.
+Hint Resolve has_ub_floor_set : core.
 
 Let has_floor_max x : Real.nonempty (floor_set x) -> x < floor x + 1.
 Proof.
@@ -786,10 +786,10 @@ rewrite -{2}(oppRK x) intRN leR_opp2 -{2}(subRK (- x) 1) !intRD1 leR_add2r.
 apply/leR_trans/ltRW; rewrite -(leR_add2r 1) subRK.
 by apply: has_floor_max; case: ub_nx0.
 Qed.
-Hint Resolve nonempty_floor_set.
+Hint Resolve nonempty_floor_set : core.
 
 Lemma has_sup_floor_set x : Real.has_sup (floor_set x). Proof. by []. Qed.
-Hint Resolve has_sup_floor_set.
+Hint Resolve has_sup_floor_set : core.
 
 Instance floor_Proper : Proper (eqR ==> eqR) floor.
 Proof.
@@ -883,7 +883,7 @@ Arguments intR_ltP {R m1 m2}.
 Arguments ratR_leP {R a1 a2}.
 Arguments ratR_ltP {R a1 a2}.
 
-Hint Resolve eqR_refl leRR ltRW.
+Hint Resolve eqR_refl leRR ltRW : core.
 
 Existing Instance real_equality.
 Existing Instance real_equality_Transitive.

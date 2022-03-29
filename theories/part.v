@@ -172,6 +172,9 @@ Notation "8" := 8 (at level 0) : nat_scope.
 
 Module PartSyntax.
 
+Declare Scope prange_scope.
+Declare Scope part_scope.
+
 Notation "5" := Pr55 (at level 0) : prange_scope.
 Notation "6" := Pr66 (at level 0) : prange_scope.
 Notation "7" := Pr77 (at level 0) : prange_scope.
@@ -1189,7 +1192,7 @@ have{fit_p3 Eh45}: let: (u, q5) := conv_part5 h45 p3 in
     by rewrite -/effx Eh45 /= andbT => /and3P[Eu Es5 _].
   rewrite -/effx Eh45 !pentaG /= andbT => /andP[Eu].
   by rewrite !andbA andbC -!andbA => /andP[].
-case: {p3 h45}(conv_part5 h45 p3) => [u q5] [Eu {fit_q4}/fit_q4].
+case: {p3 h45}(conv_part5 h45 p3) => [u q5] [Eu {}/fit_q4].
 move: {q4 q5}(q4 q5) => q fit_q.
 move: (drop_part 3 p1) (fitp_drop 3 fit_p1) => p4; rewrite [_ x]/= => fit_p4.
 have{fit_p4}: let: (h23, q12) := conv_part12 p4 in
@@ -1223,7 +1226,7 @@ have{fit_p4}: let: (h23, q12) := conv_part12 p4 in
   by split; last by rewrite Dn Es1 Eh12 Ef21 Ef22 /inv_face2 !nodeK.
 case: {p4}(conv_part12 p4) => [h23 q12] [Eh23 fit_q12].
 move: (drop_part 5 p1) (size_drop_part 5 p1) (fitp_drop 5 fit_p1) => p6 Ep6.
-have{Ep6 Ep1} Ep6: arity x = 5 + size_part p6 by rewrite Ep6 -(eqP Ep1) subnKC.
+have{Ep1}Ep6: arity x = 5 + size_part p6 by rewrite Ep6 -(eqP Ep1) subnKC.
 move=> /= fit_p6.
 rewrite -2!arity_face {1}/inv_face2 !nodeK Eu /=; apply: {q12}fit_q12.
 case: p6 fit_p6 Ep6 => //= [_ Ex5 | f31 _ p7 /and3P[Ef31 _]].

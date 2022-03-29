@@ -260,7 +260,7 @@ have{Lp1} [q1 [fxCq1 Lq1 Uq1 _ z1Fq1]]: exists q1, let q := fx :: q1 in
   - rewrite -cons_uniq -cat_cons cat_uniq Uq1; case: hasP => //= -[t q2t q1t].
     by rewrite (rfP x t _) ?q1Fx // -rf_q2 -map_cons map_f in p'Fx.
   - rewrite map_cat 2!inE mem_cat rf_q2 orbA rfF [lhs in lhs || _]orb_idr //.
-    by case/mapP=> {t}t q1t ->; rewrite (rfP x t _) ?q1Fx // mem_behead.
+    by case/mapP=> {}t q1t ->; rewrite (rfP x t _) ?q1Fx // mem_behead.
   rewrite belast_cat -cat_cons mem_cat -q1Fx /= -cat_rcons -lastI -cface1r.
   by rewrite [t \in _]inE mem_cat orbCA -q1Fx; case: (cface x t) => // /z1Fq2.
 have{rf rfP rfF simple Sp1} p1'fx: fx \notin x :: p1.
@@ -286,8 +286,8 @@ have [p2 []]: exists p2, [/\ fpath edge y p2, last y p2 = nfx & z1 \notin p2].
   move: p1p_fx z1Ep p'z1 Lp; rewrite mem_cat (negPf p1'fx).
   case/splitPr: p / => p p2; rewrite cat_path /= => /and3P[_ _ fxEp2].
   by rewrite mem_cat last_cat => /norP[_ /norP[_]]; exists p2.
-elim: p2 y => [|_ p IHp y /andP[/eqP<- /IHp{IHp}IHp Lp]]; first by exists nil.
-rewrite inE => /norP[ey'z1 /(IHp Lp){p IHp Lp}IHp].
+elim: p2 y => [|_ p IHp y /andP[/eqP<- /IHp{}IHp Lp]]; first by exists nil.
+rewrite inE => /norP[ey'z1 /(IHp Lp){p Lp}IHp].
 apply: (@proj2 (y != nfx)); pose fey := face (edge y).
 have /connectP[q]: fconnect node y fey by rewrite cnode1r edgeK.
 elim: q (y) => /= [_ _ <- | _ q IHq z /andP[/eqP<- /IHq-IHz] /IHz{IHq IHz IHp}].

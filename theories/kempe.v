@@ -198,7 +198,7 @@ set fz := face z in Dfz; set ez := edge z in Lp1; pose nez := node ez.
 pose ez' : WalkupN z := Sub ez (negbT (e'id _)).
 have eez': edge ez' = ez' by apply: val_inj; rewrite /= ee eqxx.
 pose H := WalkupE ez'; pose h (u : H) : G := sval (sval u).
-have{n IHn leGn} /IHn-IH_H: #|H| < n by rewrite ltnW // -!card_S_Walkup.
+have{n leGn} /IHn-IH_H: #|H| < n by rewrite ltnW // -!card_S_Walkup.
 have invh x: x != z -> x != ez -> {u | h u = x}.
   by move=> z'x ez'x; apply: exist (Sub (Sub x _ : WalkupN z) _) _.
 have h_eqE u v: (h u == h v) = (u == v) by [].

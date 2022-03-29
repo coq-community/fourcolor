@@ -1,6 +1,10 @@
 -R theories fourcolor
 -arg -w -arg -notation-overridden
+-arg -w -arg -ambiguous-paths
 -arg -w -arg -redundant-canonical-projection
+-arg -w -arg -deprecated-hint-without-locality
+-arg -w -arg -deprecated-instance-without-locality
+
 theories/real.v
 theories/realsyntax.v
 theories/realprop.v
@@ -120,3 +124,4 @@ theories/unavoidability.v
 theories/reducibility.v
 theories/combinatorial4ct.v
 theories/fourcolor.v
+

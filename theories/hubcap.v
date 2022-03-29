@@ -211,7 +211,7 @@ case fit_xr: (fitp x r); last by move=> _ /IHm-> //=; rewrite fit_xr.
 set p1 := meet_part p r; have Exp1: exact_fitp x p1 by apply: exact_fitp_meet.
 have [_ fit_xp1] := andP Exp1; rewrite (check_unfitP fit_xp1) //.
 have [dnt] := sort_drulesP fit_xp1 rt; have [dns] := sort_drulesP fit_xp1 rs.
-move=> {rs rt fit_xp1} rs rt bound_p1 _.
+move=> {fit_xp1} {}rs {}rt bound_p1 _.
 case Dnt1: (_ - dnt) => [|nt1] in bound_p1.
   by case/idPn: Exp1; apply: redpP.
 have le_dnt: dnt <= dns + nt by rewrite ltnW // -subn_gt0 Dnt1.

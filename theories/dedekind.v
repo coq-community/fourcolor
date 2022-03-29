@@ -51,6 +51,7 @@ Implicit Types n i : nat.
 
 (* Dedekind cuts. *)
 
+Declare Scope cut_scope.
 Delimit Scope cut_scope with cut.
 Open Scope cut_scope.
 
@@ -114,7 +115,7 @@ Lemma leRR x : x <= x. Proof. by []. Qed.
 Arguments leRR x : clear implicits.
 
 Lemma eqRR x : x == x. Proof. by split. Qed.
-Hint Resolve leRR eqRR.
+Hint Resolve leRR eqRR : core.
 
 Lemma eqR_sym x y : x == y -> y == x. Proof. by case. Qed.
 
@@ -516,7 +517,7 @@ elim/opp_ind: y => [y IHy | y le0y] in z *.
   by apply/eqR_opp2; rewrite oppD -!mulRN oppD IHy.
 without loss le0z: y z le0y / z >= 0.
   move=> IHz; have [/gec0_opp-le0nz | /(IHz y)->//] := ltcP z 0.
-  move Dt: (y + z) => t; have{Dt} Dt: y + z == t by rewrite Dt.
+  move Dt: (y + z) => t; have {} Dt: y + z == t by rewrite Dt.
   elim/opp_ind: t => [t IHt | t le0t] in y z Dt le0y le0nz *.
     by apply/eqR_opp2; rewrite oppD -!mulRN addC -IHt ?oppK // addC -oppD Dt.
   rewrite -(add0 (x * t)) -(addN (x * z)) -mulRN -addA -{}IHz //.

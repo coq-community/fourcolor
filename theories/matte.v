@@ -644,7 +644,7 @@ have [m_p6 | p6'm] := boolP (has (ehex (nd p)) m).
     right with (nd p) m => //; first by left.
     by rewrite in_mring inE gedge2 h_nd m_ep.
   by move=> q /predU1P[->|m_q]; [rewrite h_nd inE r_p | apply/orP; right].
-have [m_p | {m'p}m'p] := boolP (has (gtouch p) m); last first.
+have [m_p | {}m'p] := boolP (has (gtouch p) m); last first.
   suffices: has [pred q | has (predD r0 (gchop1 q)) m] (traject gface (nd p) 4).
     case/hasP/sig2W=> _ /trajectP/sig2_eqW[i _ ->].
     by apply: IHp; rewrite halfg_iter_face.

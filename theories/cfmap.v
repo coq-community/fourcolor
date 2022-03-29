@@ -410,7 +410,7 @@ rewrite edgeK /=; case ex0Fnx0: (cface (edge x0) (node x0)).
   by rewrite /ecpA_face ex0Fnx0 -cface1.
 have: cface (node x0) (edge (node (node x0))) by rewrite cface1r nodeK.
 case/connectP=> _ /shortenP[p nx0Fp Up _] Lp.
-have:= nx0Fp; rewrite -(map_path baseF_ecpA) ?map_id => [{nx0Fp}nx0Fp|].
+have:= nx0Fp; rewrite -(map_path baseF_ecpA) ?map_id => [{}nx0Fp|].
   rewrite (@cfaceC ecpA) (connect_trans (path_connect nx0Fp (mem_last _ _))) //.
   apply: connect1; rewrite -Lp /= /ecpA_face ex0Fnx0 nodeK eqxx.
   by rewrite (canF_eq (canF_sym faceK)); case: ifP.
@@ -1472,7 +1472,7 @@ rewrite /cpmask => /cpW; elim: cp cm => [|s cp IHcp] [mr mk] cp_ok /= m_ok u.
   by case: mr mk u m_ok => [|[] [|[] []]] // [] // [].
 rewrite orFb in cp_ok; case: s => // [n||] in u cp_ok m_ok *.
 - set cm := Cfmask _ mk; have [/eqP Emr _] := andP m_ok.
-  have{m_ok} m_ok: proper_cpmask cp cm by rewrite /= size_rotr.
+  have {}m_ok: proper_cpmask cp cm by rewrite /= size_rotr.
   move: (cpadj_proper m_ok) {IHcp}(IHcp cm (cpW cp cp_ok) m_ok).
   case: (cpadj cm cp) => mr' mk' /andP[/eqP Emr' _] IHm.
   rewrite -(size_rotr n) -size_ring_cpmap in Emr.

@@ -293,7 +293,7 @@ Lemma qzt_fit_store_cf qz sym t :
  \/ qzt_fit t.
 Proof.
 rewrite /store_cf_qz /=; case: sym; do!case/qzt_fit_store; try tauto.
-case=> qzR [y]; have{qzR} qzR: isQuizR qz by case: (qz) qzR => q1 []; case: q1.
+case=> qzR [y]; have {}qzR: isQuizR qz by case: (qz) qzR => q1 []; case: q1.
 by rewrite fitqz_flip //; left; split; last by right; exists (face y).
 Qed.
 
