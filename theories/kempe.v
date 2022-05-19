@@ -195,12 +195,12 @@ have defNz y: cnode z y = (y \in z :: p) by apply/fconnect_cycle/mem_head.
 case Dp: p cycNr => [|nz p1]; first by rewrite /= n'id.
 rewrite (cycle_path z) /= => /and3P[/eqP/(canRL nodeK)-Lp1 /eqP-Dnz nzNp1].
 set fz := face z in Dfz; set ez := edge z in Lp1; pose nez := node ez.
-pose ez' : WalkupN z := Sub ez (negbT (e'id _)).
+pose ez' : WalkupN z := sub ez (negbT (e'id _)).
 have eez': edge ez' = ez' by apply: val_inj; rewrite /= ee eqxx.
 pose H := WalkupE ez'; pose h (u : H) : G := sval (sval u).
 have{n leGn} /IHn-IH_H: #|H| < n by rewrite ltnW // -!card_S_Walkup.
 have invh x: x != z -> x != ez -> {u | h u = x}.
-  by move=> z'x ez'x; apply: exist (Sub (Sub x _ : WalkupN z) _) _.
+  by move=> z'x ez'x; apply: exist (sub (sub x _ : WalkupN z) _) _.
 have h_eqE u v: (h u == h v) = (u == v) by [].
 have Ih: injective h by move=> u v /val_inj/val_inj.
 have z'h u: (h u == z) = false by apply/negbTE/(valP (val u)).

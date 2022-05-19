@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype.
 From fourcolor Require Import color.
@@ -68,8 +69,7 @@ Definition eqgs s1 s2 :=
 Lemma eqgsP : Equality.axiom eqgs.
 Proof. by do 2!case; constructor. Qed.
 
-Canonical gram_symbol_eqMixin := EqMixin eqgsP.
-Canonical gram_symbol_eqType := EqType gram_symbol gram_symbol_eqMixin.
+HB.instance Definition _ := hasDecEq.Build gram_symbol eqgsP.
 
 Definition chromogram : predArgType := seq gram_symbol.
 Canonical chromogram_eqType := [eqType of chromogram].

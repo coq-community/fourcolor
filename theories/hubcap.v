@@ -265,7 +265,7 @@ have{fit_p1 Ep1} [dns1 rs1] := sort_drulesP fit_p1 rs.
 have [_ fit_p2] := andP Exp2.
 have{rt} [dnt2 rt2] := sort_drulesP fit_p2 rt; move: (size rt1 + _) => m.
 have{fit_p2} [dns2 rs2] := sort_drulesP fit_p2 rs; rewrite !PoszD => b2p.
-rewrite addrACA -opprD addrACA [rhs in (- rhs)%R]addrACA opprD addrACA.
+rewrite addrACA -opprD addrACA [rhs in (- rhs)%R]addrACA opprD [leLHS]addrACA.
 rewrite -ler_subr_addl opprB [rhs in (_ <= rhs)%R]addrC ler_subl_addl.
 case: {dns1 dns2 dnt1 dnt2 b}(_ + b)%R b2p => // nt; rewrite lez_nat.
 move: @x2 rt2 rs2 ru2 p2 b1ru2 Exp2 => /=.

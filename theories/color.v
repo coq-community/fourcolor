@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype.
 
@@ -76,8 +77,7 @@ Definition eqc (c c' : color) : bool :=
 Lemma eqcP : Equality.axiom eqc.
 Proof. by do 2!case; constructor. Qed.
 
-Canonical color_eqMixin := EqMixin eqcP.
-Canonical color_eqType := EqType color color_eqMixin.
+HB.instance Definition _ := hasDecEq.Build color eqcP.
 
 Arguments eqcP {c1 c2} : rename.
 

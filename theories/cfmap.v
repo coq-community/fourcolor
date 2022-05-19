@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype path fingraph.
 From fourcolor Require Import hypermap geometry color.
@@ -497,19 +498,16 @@ Definition ecp_eq u v := match u, v with
 Lemma ecp_eqP : Equality.axiom ecp_eq.
 Proof. case=> [||x] [||y]; by [constructor | apply: (iffP eqP) => [->|[]]]. Qed.
 
-Canonical ecp_eqMixin := EqMixin ecp_eqP.
-Canonical ecp_eqType := EqType (ecp_dart A) ecp_eqMixin.
+HB.instance Definition _ := hasDecEq.Build (ecp_dart A) ecp_eqP.
 
 End EcpEq.
 
-Definition ecp_choiceMixin (A : choiceType) := CanChoiceMixin (@ecp_cancel A).
-Canonical ecp_choiceType (A : choiceType) :=
-  ChoiceType (ecp_dart A) (ecp_choiceMixin A).
-Definition ecp_countMixin (A : countType) := CanCountMixin (@ecp_cancel A).
-Canonical ecp_countType (A : countType) :=
-  CountType (ecp_dart A) (ecp_countMixin A).
-Definition ecp_finMixin (A : finType) := CanFinMixin (@ecp_cancel A).
-Canonical ecp_finType (A : finType) := FinType (ecp_dart A) (ecp_finMixin A).
+HB.instance Definition _ (A : choiceType) := Choice.copy (ecp_dart A)
+  (can_type (@ecp_cancel A)).
+HB.instance Definition _ (A : countType) := Countable.copy (ecp_dart A)
+  (can_type (@ecp_cancel A)).
+HB.instance Definition _ (A : finType) : isFinite (ecp_dart A) :=
+  CanFinMixin (@ecp_cancel A).
 
 Lemma card_ecp (A : finType) : #|ecp_dart A| = #|A|.+2.
 Proof.
@@ -1384,7 +1382,7 @@ elim: cp => [|[n||||||] cp1]; rewrite ?cpring0 // /cprsize => <-.
 - exact: size_cpring_ecpR.
 - exact: size_cpring_ecpR.
 - by rewrite size_cpring_ecpN size_cpring_ecpU.
-- by rewrite !size_cpring_ecpN size_cpring_ecpU head_cpring.
+- by rewrite 2!size_cpring_ecpN size_cpring_ecpU head_cpring.
 - exact: size_cpring_ecpU.
 - exact: size_cpring_ecpK.
 exact: size_cpring_ecpA.

@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2015 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq path.
 From mathcomp Require Import div choice order ssralg ssrnum ssrint intdiv.
 From fourcolor Require Import hypermap.
@@ -89,12 +90,8 @@ Definition code p : int * int := let: Gpoint x y := p in (x, y).
 Definition decode xy := Gpoint xy.1 xy.2.
 Lemma codeK : cancel code decode. Proof. by case. Qed.
 
-Definition eqMixin := CanEqMixin codeK.
-Canonical eqType := EqType gpoint eqMixin.
-Definition choiceMixin := CanChoiceMixin codeK.
-Canonical choiceType := ChoiceType gpoint choiceMixin.
-Definition countMixin := CanCountMixin codeK.
-Canonical countType := CountType gpoint countMixin.
+#[export]
+HB.instance Definition _ := Countable.copy gpoint (can_type codeK).
 
 Definition zero := Gpoint 0 0.
 
@@ -116,15 +113,12 @@ Proof. by case=> x y /=; rewrite !add0r. Qed.
 Fact addN : left_inverse zero opp add.
 Proof. by case=> x y /=; rewrite !addNr. Qed.
 
-Definition zmodMixin := ZmodMixin addA addC add0 addN.
-Canonical zmodType := ZmodType gpoint zmodMixin.
+#[export]
+HB.instance Definition _ := GRing.isZmodule.Build gpoint addA addC add0 addN.
 
+Module Exports. HB.reexport. End Exports.
 End GridPoint.
-
-Canonical GridPoint.eqType.
-Canonical GridPoint.choiceType.
-Canonical GridPoint.countType.
-Canonical GridPoint.zmodType.
+Export GridPoint.Exports.
 
 Bind Scope ring_scope with gpoint.
 

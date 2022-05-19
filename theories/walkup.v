@@ -51,7 +51,7 @@ Implicit Types x y : G.
 
 Let tG' : predArgType := {x | x != z}.
 
-Let inG' x neq_xz : tG' := Sub x neq_xz.
+Let inG' x neq_xz : tG' := sub x neq_xz.
 
 Let z'G' (u : tG') : (val u == z) = false. Proof. exact: negPf (valP u). Qed.
 

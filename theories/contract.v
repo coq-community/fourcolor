@@ -266,14 +266,14 @@ have D_E0 (y : G0): cedge x y = (y == x) || (y == edge x).
 pose G1 := WalkupF x; pose h1 (u : G1) : G0 := val u.
 have Ih1: injective h1 by apply: val_inj.
 have x'ex: edge x != x by rewrite (plain_neq geoG0).
-pose uex : G1 := Sub (edge x) x'ex.
+pose uex : G1 := sub (edge x) x'ex.
 pose G2 := WalkupF uex; pose h2 (w : G2) : G1 := val w.
 have Ih2: injective h2 by apply: val_inj.
 pose h w := h1 (h2 w); have Ih: injective h := inj_comp Ih1 Ih2.
 have Eh: codom h =i predC (cedge x).
   move=> y; rewrite inE D_E0; apply/imageP/norP => [[w _ ->] | [x'y ex'y]].
     by rewrite (valP w) (valP (val w)).
-  by exists ((Sub (Sub y x'y : G1) : _ -> G2) ex'y).
+  by exists ((sub (sub y x'y : G1) : _ -> G2) ex'y).
 have xE'h w: cedge x (h w) = false.
   by apply: negPf; rewrite -[~~ _]Eh codom_f.
 have hN w w': cnode w w' = cnode (h w) (h w') by rewrite !fconnect_skip.
