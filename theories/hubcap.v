@@ -382,7 +382,7 @@ pose b (y : G) m := (dbound2 rt0 rs0 y *+ m)%R.
 pose db2 w y (i := findex face x1 y) (w_i := nth 0 w i) (v_i := nth 0 v i) :=
   b y (if w_i > 1 then 2 else if w_i < 1 then 0 else (v_i == 1).+1).
 pose sum_db2 w := (\sum_(y in cface x1) db2 w y)%R.
-have{v'0} db2v: {in cface x1, forall y1, db2 v y1 = b y1 2%N}%R.
+have{v'0} db2v: {in cface x1, forall y1, db2 v y1 = b y1 2}.
   move=> y x1Fy; congr (_ *+ _)%R; set i := findex face x1 y.
   have ltin: i < nhub by rewrite -nFx1 findex_max.
   by case: ltngtP; rewrite // ltnNge lt0n (memPn v'0) ?mem_nth ?Ev.

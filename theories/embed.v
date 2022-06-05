@@ -122,7 +122,7 @@ suffices: ~ exists2 x, x \notin hc & exists2 p, scycle rlink (x :: p) &
 case=> x hc'x [p URp []]; move: {2}_.+1 (ltnSn #|diskN (x :: p)|) URp => n.
 elim: n => // n IHn in x hc'x p *; rewrite ltnS => le_dN_n URp p_hc dN_ac.
 set xp := x :: p in le_dN_n URp p_hc dN_ac.
-have dNx: x \in diskN xp by rewrite diskN_E inE /= mem_head.
+have dNx: x \in diskN xp by rewrite diskN_E mem_head.
 have dNnx: node x \in diskN xp by rewrite -(fclosed1 (diskN_node xp)).
 have dNnnx: node (node x) \in diskN xp by rewrite -(fclosed1 (diskN_node xp)).
 have [cycRp UpF] := andP URp; have Up := simple_uniq UpF; rewrite /xp in cycRp.
@@ -179,8 +179,9 @@ case hc_nx: (node x \in hc).
   move=> t; rewrite unfold_in => /hasP[z q_z /connectP[r yDr ->{t}]].
   move: yDr; set y := finv node z.
   have: y \in diskN xp /\ y \in diskN q.
-    rewrite !(fclosed1 (diskN_node _) y)(f_finv nodeI) !diskN_E !in_simpl /=.
-    rewrite q_z /= inE /= orbAC orbC -implyNb; split=> //; apply/implyP=> p'z.
+    rewrite !(fclosed1 (diskN_node _) y)(f_finv nodeI) !diskN_E /=.
+    rewrite [diskE]lock [q]lock !inE -!lock q_z -orbA; split=> //=.
+    have [_|p'z /=] := boolP (z \in p); first exact: orbT.
     move: q_z; rewrite inE /p1 -cats1 take_cat // 2!fun_if mem_cat.
     case/predU1P=> [-> | ].
       rewrite -(fclosed1 (diskE_edge planarGc URp)) inE /= dNnnx orbC.
@@ -198,8 +199,8 @@ case hc_nx: (node x \in hc).
   rewrite {1}/dlink /= -andbA => /and3P[q'y yCz]; apply: {r}IHr.
   rewrite !(fclosed1 (diskN_node _) z).
   have{z yCz} [<- // | <-] := clinkP yCz.
-  rewrite !diskN_E !in_simpl /= !(fclosed1 (diskE_edge _ _) (node _)) //.
-  rewrite !faceK !in_simpl /= q'y {}dNy dNq_y orbT andbT; split=> //.
+  rewrite !diskN_E !(fclosed1 (diskE_edge _ _) (node _)) // !faceK.
+  rewrite ![y \in diskE _]inE /= q'y {}dNy dNq_y orbT andbT; split=> //.
   apply/orP; right; rewrite inE; case: eqP (dNq'x) => [<- /idP// | _ _] /=.
   apply: contra q'y => py; rewrite !inE -[p1]cats1 take_cat orbC {le_i_p1}.
   case: ifP => lt_i_p; last by rewrite mem_cat py.
@@ -277,7 +278,7 @@ move=> z0 /(@hasP _ _ q)[z2 qz2 /connectP[r z1Dr ->]]; move: z1Dr.
 set z1 := finv node z2.
 have{qz2}: z1 \in diskN xp /\ z1 \in diskN q.
   rewrite !(fclosed1 (diskN_node _) z1) (f_finv nodeI).
-  split; last by rewrite diskN_E inE /= qz2.
+  split; last by rewrite diskN_E qz2.
   move: qz2; rewrite -[q]cat_cons mem_cat => /orP[q2z2 | p3z2]; last first.
     by rewrite diskN_E !inE p3_p ?orbT.
   have Uq2p: ~~ has (mem (fband xp)) q2.
@@ -300,7 +301,7 @@ have{qz2}: z1 \in diskN xp /\ z1 \in diskN q.
 elim: r {z2}z1 => [|z2 r IHr] z1 [dNz1 dNq_z1] //= /andP[] /andP[q'z1 z1Cz2].
 apply: {r}IHr; rewrite !(fclosed1 (diskN_node _) z2).
 case/clinkP: z1Cz2 => <- //; rewrite -(canRL edgeK (e2c _)).
-rewrite !diskN_E !in_simpl /= -!(fclosed1 (diskE_edge _ _)) // !in_simpl /=.
+rewrite !diskN_E -!(fclosed1 (diskE_edge _ _)) // ![z1 \in diskE _]inE /=.
 rewrite {}dNz1 dNq_z1 q'z1 orbT andbT orbC; split=> //.
 have {1}->: xp = belast x p1 by rewrite belast_rcons.
 rewrite Dp belast_cat /= -cat_rcons -lastI {q'z1}(contra _ q'z1) //.
@@ -370,15 +371,15 @@ Lemma trivial_hom_ring x p :
     pre_hom_ring x p ->
   fcard face (diskF (map h (x :: p))) <= 0 -> rlink (last x p) x.
 Proof.
-rewrite leqNgt => xHRp /(fcard0P (diskF_face _))/existsP/pred0P pF_0.
+rewrite leqNgt => xHRp /(fcard0P (diskF_face _))/(introN existsP)/existsPn-pF_0.
 elim: {p}_.+1 x {-2}p (ltnSn (size p)) pF_0 xHRp => // n IHn x p.
 rewrite ltnS; set xp := x :: p => le_p_n pF_0 [xRp p_ac URhp].
 set y := last x p; have xp_y: y \in xp := mem_last x p.
 have xp_hy: h y \in map h xp := map_f h xp_y.
 have ac_y: ac y := p_ac y xp_y.
 have xpFnhy: node (h y) \in fband (map h xp).
-  apply: contraFT (pF_0 (node (h y))); rewrite !inE => ->.
-  by rewrite -(fclosed1 (diskN_node _)) diskN_E inE /= xp_hy.
+  apply: contraR (pF_0 (node (h y))); rewrite !inE => ->.
+  by rewrite -(fclosed1 (diskN_node _)) diskN_E xp_hy.
 have:= xpFnhy; rewrite unfold_in has_map => /hasP[z xpz] /=.
 rewrite cfaceC => zFnhy.
 have p_hz: h z \in map h xp by apply: map_f.
@@ -452,10 +453,11 @@ have enyRz: rlink eny z.
     move: Up; rewrite /xp Dp -cat_cons -rcons_cat rotr1_rcons -rcons_cons.
     by rewrite cat_rcons map_cons map_cat !map_cons; apply: right_arc.
   rewrite -[z :: q](rotrK 1) map_rot /= diskF_rot -Ehzq.
-  rewrite diskF_chord_ring // ?h_eny ?e2m //; first by rewrite inE pF_0 andbF.
-    by rewrite /xp Dp (headI p2); case: (p1) => [|? []].
+  rewrite diskF_chord_ring // ?h_eny ?e2m //.
+  - by rewrite negb_and pF_0 orbT.
+  - by rewrite /xp Dp (headI p2); case: (p1) => [|? []].
   rewrite -(fclosed1 (diskE_edge _ _)) // inE /= p_hny -map_cons -/xp.
-  by rewrite -(fclosed1 (diskN_node _)) diskN_E inE /= xp_hy.
+  by rewrite -(fclosed1 (diskN_node _)) diskN_E xp_hy.
 have ac_ny: node y \in ac.
   by rewrite -[node y]e2c (closed_connect acF enyRz) p_ac.
 have h_ny: h (node y) = node (h y).
@@ -520,10 +522,10 @@ have ennyRx: rlink enny x.
     by rewrite /xp Dp cat_rcons map_cons map_cat !map_cons; apply: left_arc.
   rewrite -[x :: q](rotrK 1) map_rot /= diskF_rot -Ehzq.
   rewrite diskF_chord_ring // ?h_enny ?e2m //.
-  - by rewrite inE /= [X in _ && X]pF_0 andbF.
+  - by rewrite negb_and pF_0 orbT.
   - by rewrite /xp Dp (headI p2); case: (p1) => [|x1 []].
   rewrite -(fclosed1 (diskE_edge _ _)) // inE /= p'nnhy.
-  by rewrite -!(fclosed1 (diskN_node _)) diskN_E inE /= xp_hy.
+  by rewrite -!(fclosed1 (diskN_node _)) diskN_E xp_hy.
 by rewrite /rlink e2c (canRL nodeK (n3c _)) -?cface1 // [~~ _]ac_bc in ennyRx.
 Qed.
 

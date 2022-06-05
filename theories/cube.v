@@ -124,9 +124,7 @@ by apply: (intro_closed qfC) => [[o x] v Dv]; rewrite -((_ =P v) Dv); case o.
 Qed.
 
 Let qFaQf : closed qf aQf.
-Proof.
-by move=> u v uFv; rewrite 3!inE /= [u \in _](qFaQe uFv) [u \in _](qFaQn uFv).
-Qed.
+Proof. by move=> u v uFv; congr (~~ (_ || _)); [apply/qFaQe|apply/qFaQn]. Qed.
 
 Let qfAe : fun_adjunction (tsI CTe) cube_face edge aQe.
 Proof.

@@ -97,9 +97,9 @@ have [z rz z'Dx] := hasP dNx; exists z => //.
 by apply: connect_trans z'Dx (connect1 _); rewrite /dlink /= rx /clink /= eqxx.
 Qed.
 
-Lemma diskN_E : diskN =i [predU r & diskE].
+Lemma diskN_E x : (x \in diskN) = (x \in r) || (x \in diskE).
 Proof.
-move=> x; rewrite !inE; case r_x: (x \in r) => //=.
+rewrite !inE; case r_x: (x \in r) => //=.
 rewrite -[x](f_finv nodeI) -(fclosed1 diskN_node).
 by apply/hasP; exists x; last apply: connect0.
 Qed.
@@ -259,7 +259,7 @@ Definition snipd_edge x := if x \in r then next r x else edge x.
 
 Fact dedge_subproof (u : ddart) : snipd_edge (val u) \in diskN.
 Proof.
-rewrite /= /snipd_edge diskN_E inE /=.
+rewrite /= /snipd_edge diskN_E.
 case ru: (val u \in r); first by rewrite mem_next ru.
 by rewrite orbC -(fclosed1 diskE_edge) inE /= ru (valP u).
 Qed.
@@ -268,7 +268,7 @@ Definition snipd_face x := if x \in r then face (edge (prev r x)) else face x.
 
 Fact dface_subproof  (u : ddart) : snipd_face (val u) \in diskN.
 Proof.
-rewrite /= /snipd_face (fclosed1 diskN_node) diskN_E inE /=.
+rewrite /= /snipd_face (fclosed1 diskN_node) diskN_E.
 case ru: (val u \in r); first by rewrite edgeK mem_prev ru.
 by rewrite orbC (fclosed1 diskE_edge) faceK inE /= ru (valP u).
 Qed.
@@ -331,7 +331,7 @@ have homFd' u v :
     apply: contra b'u => ru; apply/hasP; exists u => //.
     by rewrite -(mem_map inj_snipd) map_snipd_ring.
   have dNy: y \in diskN.
-    rewrite (fclosed1 diskN_node) diskN_E inE /= (fclosed1 diskE_edge) orbC.
+    rewrite (fclosed1 diskN_node) diskN_E (fclosed1 diskE_edge) orbC.
     by rewrite -Dy faceK inE /= r'u (valP u).
   apply: connect_trans {IHp yFp Lp}(IHp (Sub y _) _ yFp Lp).
     by rewrite connect1 //= -val_eqE /= /snipd_face (negPf r'u) Dy.

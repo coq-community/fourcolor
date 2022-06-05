@@ -191,7 +191,7 @@ Proof. by case: r nt_r => // x p; exists x; rewrite mem_head. Qed.
 
 Lemma diskN_edge_ring x : x \in r -> (edge x \in diskN r) = false.
 Proof.
-move=> r_x; rewrite diskN_E inE /= -(fclosed1 (diskE_edge geoG _)) //.
+move=> r_x; rewrite diskN_E -(fclosed1 (diskE_edge geoG _)) //.
 rewrite inE /= r_x orbF; apply: contraTF nt_r => r_ex.
 have Dex: edge x = next r x.
   by apply: (scycle_cface scycRr) (next_cycle cycRr r_x); rewrite ?mem_next.
@@ -208,15 +208,15 @@ Lemma diskN_rev_ring : diskN (rev_ring r) =i [predC diskN r].
 Proof.
 case: pick_in_ring => [y r_y] x; move: r_y; rewrite inE /= -(ee y).
 have{y} [p xCp ->] := connected_clink x (edge y) ccG.
-elim: p x xCp => [|y p IHp] x /= => [_ r_ex | /andP[xCy yCP] Lp].
-  by rewrite diskN_E inE /= mem_rev_ring r_ex /= -(ee x) diskN_edge_ring.
+elim: p x xCp => [|y p IHp] x /= => [_ r'ex | /andP[xCy yCP] Lp].
+  by rewrite diskN_E inE /= mem_rev_ring r'ex /= -(ee x) diskN_edge_ring.
 have [-> | fxy] := clinkP xCy.
   by rewrite -!(fclosed1 (diskN_node _) y) //; apply: IHp.
-rewrite diskN_E inE /= mem_rev_ring.
+rewrite diskN_E mem_rev_ring.
 case r_ex: (edge x \in r); first by rewrite -[x]ee diskN_edge_ring.
-rewrite (fclosed1 (diskE_edge geoG scycRrr)) diskN_E 4!inE /=.
-rewrite mem_rev_ring negb_or ee; apply: andb_id2l => r'x.
-rewrite (fclosed1 (diskE_edge geoG scycRr)) inE /= r_ex.
+rewrite (fclosed1 (diskE_edge geoG scycRrr)) diskN_E inE /= mem_rev_ring ee.
+rewrite negb_or; apply: andb_id2l => r'x.
+rewrite (fclosed1 (diskE_edge geoG scycRr)) inE /= r_ex /=.
 by rewrite (canRL edgeK (ee x)) fxy -!(fclosed1 (diskN_node _)); apply: IHp.
 Qed.
 
@@ -295,30 +295,30 @@ Proof.
 move=> y; suffices: (y \in diskN cr1) + (y \in diskN cr2) = (y \in diskN r).
   by rewrite inE /= /in_mem /=; do 3?case: (diskN _ y).
 have{y} [p xCp ->] := connected_clink x y ccG.
+have r1'x: x \notin r1 by case/andP: dEx; rewrite /= Dr12 => /norP[].
+have r2'ex: edge x \notin r2 by case/andP: dEex; rewrite /= Dr12 => /norP[].
 elim/last_ind: p xCp => [_ | p y IHp] /=.
-  rewrite !{1}diskN_E !{1}[x \in _]inE /= dEx orbT addnC -{1}d2Ee Dcr2 2!inE /=.
-  by case/andP: dEx; rewrite !mem_head eq_sym e'id /= Dr12 => /norP[/=/negPf->].
+  rewrite !{1}diskN_E dEx orbT addnC -{1}d2Ee Dcr2 inE /= eq_sym e'id.
+  by rewrite (negPf r1'x) inE /= !mem_head.
 rewrite last_rcons rcons_path !{1}(fclosed1 (diskN_node _) y) => /andP[xCp pCy].
 have:= IHp xCp; have{pCy} [<- //| /(canRL faceK)->] := clinkP pCy.
-move/node: y => y; rewrite !{1}diskN_E {-3}/in_mem /= {1}d1Ee d2Ee.
-rewrite {1 3}Dcr1 {1 3}Dcr2 !in_cons (can_eq ee) (canF_eq ee).
+move/node: y => y; rewrite [diskN r in RHS]lock !{1}diskN_E -lock.
+rewrite {1}d1Ee d2Ee Dcr1 Dcr2 !in_cons (can_eq ee) (canF_eq ee) -Dcr1 -Dcr2.
 have [-> _ | _] := altP (y =P edge x).
-  rewrite e'id /= dEex orbT d1Ee inE /= mem_head orbF.
-  by case/andP: dEex; rewrite /= Dr12 => /norP[/= _ /negPf->].
+  by rewrite e'id /= dEex orbT d1Ee inE /= mem_head (negPf r2'ex).
 have [-> _ | _] /= := altP (y =P x).
-  rewrite dEx orbT -d2Ee Dcr2 inE /= mem_head orbF.
-  by case/andP: dEx; rewrite /= Dr12 => /norP[/= /negPf->].
+  by rewrite dEx orbT -d2Ee Dcr2 inE /= mem_head (negPf r1'x).
 have [r_y|] := boolP (y \in r); last rewrite Dr12 => /norP[/=/negPf-> /negPf->].
-  rewrite -diskN_E (diskN_edge_ring r_y) /= [diskE]lock.
-  do 2![rewrite addnC orbC; case: (y \in _) => //] => _; rewrite !orbF.
+  move/eqP; rewrite (diskN_edge_ring r_y) addn_eq0 !eqb0 !negb_or -andbA.
+  case/and4P=> /= _ /negPf-> _ /negPf->; rewrite !orbF.
   move: Ur r_y; rewrite -(rot_uniq ix) Dr12 Dr cat_uniq inE orbC /=.
   by case/and3P=> _ /hasPn/(_ y)/implyP; case: (y \in r2) => /= [/negPf| _ _]->.
-rewrite -(dEe y) {-3 6}[diskE]lock !inE Dr12 !inE /=.
-rewrite -{1 3}lock -(d1Ee y) -lock -(d2Ee y).
-case r1ey: (edge y \in r1).
-  rewrite /= orbC; case: {1 2}(edge y \in diskE cr1) => // _.
-  by rewrite inE /= Dcr2 mem_behead.
-by case r2ey: (edge y \in r2) => //= [] [<-]; rewrite {1}inE /= mem_behead.
+rewrite -(dEe y) diskN_E ![_ \in diskE r]inE /= !Dr12.
+rewrite [in RHS]inE !negb_or /=; case r1ey: (edge y \in r1) => /=.
+  rewrite orbC; case: (y \in diskE cr1) => //= _.
+  by rewrite -d2Ee Dcr2 !inE r1ey orbT.
+case r2ey: (edge y \in r2) => //= [] [<-].
+by rewrite -d1Ee {1}inE /= Dcr1 mem_behead.
 Qed.
 
 Lemma fband_chord_ring : [predU fband cr1 & fband cr2] =i fband r.
@@ -333,7 +333,7 @@ move=> y; rewrite [diskF cr1]lock [cr2]lock !inE -fband_chord_ring !inE -!lock.
 case: (y \in fband cr2) / (altP hasP) => [[z cr2z yFz] | _]; last first.
   by rewrite inE /= {1}diskN_chord_ring inE /= orbF andbCA.
 rewrite orbT andbF (closed_connect (diskF_face _) yFz) inE /= diskN_chord_ring.
-by rewrite inE /= diskN_E inE /= cr2z andbF.
+by rewrite inE /= diskN_E cr2z andbF.
 Qed.
 
 Lemma nontrivial_chord_ring :
@@ -346,7 +346,7 @@ have [[|x3 p1] Dp1] := Dr1; rewrite Dp1.
 move=> _ nt_cr1F; split; last by rewrite size_cat Dcr1 /= !addSnnS leq_addl.
 have r1x3: x3 \in r1 by rewrite Dp1 mem_behead // mem_head.
 apply/nontrivial0P; split=> //; exists x3; apply/andP; split=> /=; last first.
-  by rewrite inE /= diskN_chord_ring inE /= diskN_E inE /= Dcr2 mem_behead.
+  by rewrite inE /= diskN_chord_ring inE /= diskN_E Dcr2 mem_behead.
 have r_x3: x3 \in r by rewrite Dr12 !inE r1x3.
 have:= Ur; rewrite -(rot_uniq ix) Dr Dcr1 Dp1 /= mem_cat orbC inE.
 apply: contraL; rewrite fband_cons cfaceC (same_cface xFx1).
@@ -374,7 +374,7 @@ have{y} [p xCp ->] := connected_clink x y ccG.
 have rx: x \in r by rewrite Dr mem_head.
 elim/last_ind: p xCp => [|p y IHp]; first by rewrite /= diskN_E !inE rx.
 rewrite last_rcons rcons_path (fclosed1 (diskN_node r)) => /andP[/IHp dNp].
-case/clinkP=> [<- // | /(canRL faceK) enx]; rewrite diskN_E inE /= orbC.
+case/clinkP=> [<- // | /(canRL faceK) enx]; rewrite diskN_E orbC.
 rewrite (fclosed1 (diskE_edge geoG scycRr)) inE /= -{2}enx dNp andbT.
 by rewrite -(mem_rot 1) Dr !inE -Dex (can_eq ee) (canF_eq ee) orNb.
 Qed.
