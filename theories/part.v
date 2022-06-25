@@ -956,7 +956,7 @@ rewrite /rot_part -{1}(cat_take_drop_part n p) !fitp_cat andbC.
 congr (_ && _); congr (fitp _ _).
   congr (iter _ face x); move: (congr1 size_part (cat_take_drop_part n p)).
   by rewrite -(subnKC le_n_p) size_cat_part size_drop_part; apply: addIn.
-by rewrite -iter_add size_drop_part subnK // -nFx iter_face_arity.
+by rewrite -iterD size_drop_part subnK // -nFx iter_face_arity.
 Qed.
 
 Lemma fitp_catrev x p1 p2 :
@@ -1173,7 +1173,7 @@ have: let: (h45, q4) := conv_part4 p1 in
   rewrite fEnne -arity_face nodeK fEnne De2 -eEnf fEnne /effx De2 -eEnf.
   rewrite -{1}[edge (face x)](iter_face_subn (ltnW (ltnW (pentaG _)))).
   set n := arity (edge (face x)).
-  rewrite -iter_add addnC iter_add {1}[Pcons]lock /= !faceK -eEnf -lock.
+  rewrite -iterD addnC iterD {1}[Pcons]lock /= !faceK -eEnf -lock.
   have En: arity (edge (node (edge (face x)))) = n by rewrite -arity_face nodeK.
   rewrite -[edge x]nodeK arity_face -[node (edge x)]nodeK -fEnne in Eh34.
   case: p2 fit_p2 => [|s4 f41 p|f41 h45 p|f41 f42 h45 p|h' f1 f2 f3 p];

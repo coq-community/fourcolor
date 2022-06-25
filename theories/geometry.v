@@ -155,7 +155,7 @@ Proof. exact/iter_order/faceI. Qed.
 
 Lemma iter_face_subn n x :
   n <= arity x -> iter (arity x - n) face (iter n face x) = x.
-Proof. by move=> le_n_x; rewrite -iter_add subnK ?iter_face_arity. Qed.
+Proof. by move=> le_n_x; rewrite -iterD subnK ?iter_face_arity. Qed.
 
 Lemma arity_mirror : @arity (mirror G) =1 @arity G.
 Proof. by move=> x; apply/eq_card/(cface_mirror x). Qed.
