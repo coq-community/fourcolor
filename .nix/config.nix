@@ -41,7 +41,11 @@
       mathcomp.job = false;
     };
     mc14 = {
-      mathcomp.override.version = "mathcomp-1.14.0";
+      mathcomp.override.version = "1.14.0";
+      mathcomp.job = false;
+    };
+    mc15 = {
+      mathcomp.override.version = "mathcomp-1.15.0";
       mathcomp.job = false;
     };             
   in {
@@ -53,6 +57,10 @@
     "8.13+1.14".coqPackages = { coq.override.version = "8.13"; } // mc14;
     "8.14+1.14".coqPackages = { coq.override.version = "8.14"; } // mc14;
     "8.15+1.14".coqPackages = { coq.override.version = "8.15"; } // mc14;
+    "8.13+1.15".coqPackages = { coq.override.version = "8.13"; } // mc15;
+    "8.14+1.15".coqPackages = { coq.override.version = "8.15"; } // mc15;
+    "8.15+1.15".coqPackages = { coq.override.version = "8.15"; } // mc15;
+    "8.16+1.15".coqPackages = { coq.override.version = "8.16"; } // mc15;
 
   ## you may mark a package as a CI job as follows
   #  coqPackages.<another-pkg>.ci.job = "test";

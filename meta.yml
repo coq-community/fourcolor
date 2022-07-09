@@ -38,8 +38,6 @@ supported_coq_versions:
   opam: '{(>= "8.11" & < "8.16~") | (= "dev")}'
 
 tested_coq_opam_versions:
-- version: '1.11.0-coq-8.11'
-  repo: 'mathcomp/mathcomp'
 - version: '1.12.0-coq-8.11'
   repo: 'mathcomp/mathcomp'
 - version: '1.13.0-coq-8.12'
@@ -53,6 +51,12 @@ tested_coq_opam_versions:
 - version: '1.14.0-coq-8.14'
   repo: 'mathcomp/mathcomp'
 - version: '1.14.0-coq-8.15'
+  repo: 'mathcomp/mathcomp'
+- version: '1.15.0-coq-8.13'
+  repo: 'mathcomp/mathcomp'
+- version: '1.15.0-coq-8.14'
+  repo: 'mathcomp/mathcomp'
+- version: '1.15.0-coq-8.15'
   repo: 'mathcomp/mathcomp'
 - version: 'coq-8.14'
   repo: 'mathcomp/mathcomp-dev'
@@ -68,9 +72,9 @@ ci_cron_schedule: '0 5 * * *'
 dependencies:
 - opam:
     name: coq-mathcomp-ssreflect
-    version: '{(>= "1.11" & < "1.15~") | (= "dev")}'
+    version: '{(>= "1.12" & < "1.16~") | (= "dev")}'
   description: |-
-    [MathComp ssreflect 1.11 or later](https://math-comp.github.io)
+    [MathComp ssreflect 1.12 or later](https://math-comp.github.io)
 - opam:
     name: coq-mathcomp-algebra
   description: |-
