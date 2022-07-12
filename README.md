@@ -37,7 +37,7 @@ basic plane topology definitions, and a theory of combinatorial hypermaps.
 - License: [CeCILL-B](LICENSE)
 - Compatible Coq versions: 8.11 or later
 - Additional dependencies:
-  - [MathComp ssreflect 1.11 or later](https://math-comp.github.io)
+  - [MathComp ssreflect 1.12 or later](https://math-comp.github.io)
   - [MathComp algebra](https://math-comp.github.io)
 - Coq namespace: `fourcolor`
 - Related publication(s):
