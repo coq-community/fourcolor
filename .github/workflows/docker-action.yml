@@ -33,7 +33,7 @@ jobs:
           - 'mathcomp/mathcomp-dev:coq-8.14'
           - 'mathcomp/mathcomp-dev:coq-8.15'
           - 'mathcomp/mathcomp-dev:coq-8.16'
-          - 'mathcomp/mathcomp-dev:coq-dev'
+          - 'coqorg/coq:dev'
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
