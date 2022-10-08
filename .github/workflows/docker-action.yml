@@ -30,9 +30,6 @@ jobs:
           - 'mathcomp/mathcomp:1.15.0-coq-8.14'
           - 'mathcomp/mathcomp:1.15.0-coq-8.15'
           - 'mathcomp/mathcomp:1.15.0-coq-8.16'
-          - 'mathcomp/mathcomp-dev:coq-8.14'
-          - 'mathcomp/mathcomp-dev:coq-8.15'
-          - 'mathcomp/mathcomp-dev:coq-8.16'
           - 'coqorg/coq:dev'
       fail-fast: false
     steps:

@@ -60,12 +60,6 @@ tested_coq_opam_versions:
   repo: 'mathcomp/mathcomp'
 - version: '1.15.0-coq-8.16'
   repo: 'mathcomp/mathcomp'
-- version: 'coq-8.14'
-  repo: 'mathcomp/mathcomp-dev'
-- version: 'coq-8.15'
-  repo: 'mathcomp/mathcomp-dev'
-- version: 'coq-8.16'
-  repo: 'mathcomp/mathcomp-dev'
 - version: 'dev'
 
 # test master every day at 05:00 UTC
