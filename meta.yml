@@ -60,7 +60,8 @@ tested_coq_opam_versions:
   repo: 'mathcomp/mathcomp'
 - version: '1.15.0-coq-8.16'
   repo: 'mathcomp/mathcomp'
-- version: 'dev'
+- version: 'coq-dev'
+  repo: 'mathcomp/mathcomp-dev'
 
 # test master every day at 05:00 UTC
 # (mathcomp/mathcomp-dev is rebuilt every day at 04:00 Paris time)
