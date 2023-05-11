@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype path fingraph.
 From fourcolor Require Import hypermap geometry color coloring.
@@ -34,22 +35,13 @@ Definition cube_tag_code o :=
 Fact cube_tag_codeK : cancel cube_tag_code (nth CTn cube_tag_enum).
 Proof. by case. Qed.
 
-Definition cube_tag_eqMixin := CanEqMixin cube_tag_codeK.
-Canonical cube_tag_eqType := EqType cube_tag cube_tag_eqMixin.
-Definition cube_tag_choiceMixin := CanChoiceMixin cube_tag_codeK.
-Canonical cube_tag_choiceType := ChoiceType cube_tag cube_tag_choiceMixin.
-Definition cube_tag_countMixin := CanCountMixin cube_tag_codeK.
-Canonical cube_tag_countType := CountType cube_tag cube_tag_countMixin.
+HB.instance Definition _ := Countable.copy cube_tag (can_type cube_tag_codeK).
 
 Fact cube_tag_enumP : Finite.axiom cube_tag_enum. Proof. by case. Qed.
-Definition cube_tag_finMixin := FinMixin cube_tag_enumP.
-Canonical cube_tag_finType := FinType cube_tag cube_tag_finMixin.
+HB.instance Definition _ := isFinite.Build cube_tag cube_tag_enumP.
 
 Definition cube_dart := cube_tag * G : Type.
-Canonical cube_dart_eqType := [eqType of cube_dart].
-Canonical cube_dart_choiceType := [choiceType of cube_dart].
-Canonical cube_dart_countType := [countType of cube_dart].
-Canonical cube_dart_finType := [finType of cube_dart].
+HB.instance Definition _ := Finite.copy cube_dart [finType of cube_dart].
 
 Let tsI : cube_tag -> G -> cube_dart := @pair _ _.
 Let tsE (u : cube_dart) : G := u.2.

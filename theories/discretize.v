@@ -86,7 +86,7 @@ Proof.
 have [_ [k [mr0 sm0r0]]] := fin_m0; pose mr0k : map_repr k := mr0.
 suffices{sm0r0} [n [mr mrP sr0mr]]: exists n, exists2 mr : map_repr n,
   mr_proper mr & subregion (mr_cover mr0k) (mr_cover mr).
-- by exists n, mr => // z /sm0r0[i /ltP-lti ?]; apply/sr0mr; exists (Sub i lti).
+- by exists n, mr => // z /sm0r0[i /ltP-lti ?]; apply/sr0mr; exists (sub i lti).
 elim: k @mr0k => [|k [n [mr mrP]] sr0mr]; last pose t := mr0 k.
   by exists 0, (fun=> mr0 0) => [|z []] [].
 have [mr_t | mr't] := Rclassic (cover m0 t -> mr_cover mr t).

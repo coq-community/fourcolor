@@ -19,22 +19,8 @@ jobs:
     strategy:
       matrix:
         image:
-          - 'mathcomp/mathcomp:1.12.0-coq-8.11'
-          - 'mathcomp/mathcomp:1.13.0-coq-8.12'
-          - 'mathcomp/mathcomp:1.13.0-coq-8.13'
-          - 'mathcomp/mathcomp:1.13.0-coq-8.14'
-          - 'mathcomp/mathcomp:1.14.0-coq-8.13'
-          - 'mathcomp/mathcomp:1.14.0-coq-8.14'
-          - 'mathcomp/mathcomp:1.14.0-coq-8.15'
-          - 'mathcomp/mathcomp:1.15.0-coq-8.13'
-          - 'mathcomp/mathcomp:1.15.0-coq-8.14'
-          - 'mathcomp/mathcomp:1.15.0-coq-8.15'
-          - 'mathcomp/mathcomp:1.15.0-coq-8.16'
-          - 'mathcomp/mathcomp:1.16.0-coq-8.13'
-          - 'mathcomp/mathcomp:1.16.0-coq-8.14'
-          - 'mathcomp/mathcomp:1.16.0-coq-8.15'
-          - 'mathcomp/mathcomp:1.16.0-coq-8.16'
-          - 'mathcomp/mathcomp:1.16.0-coq-8.17'
+          - 'mathcomp/mathcomp:2.0.0-coq-8.16'
+          - 'mathcomp/mathcomp:2.0.0-coq-8.17'
           - 'mathcomp/mathcomp-dev:coq-dev'
       fail-fast: false
     steps:

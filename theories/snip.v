@@ -276,9 +276,9 @@ Qed.
 Fact dnode_subproof (u : ddart) : node (val u) \in diskN.
 Proof. by rewrite -(fclosed1 diskN_node) (valP u). Qed.
 
-Let dedge u := (Sub _ : _ -> ddart) (dedge_subproof u).
-Let dnode u := (Sub _ : _ -> ddart) (dnode_subproof u).
-Let dface u := (Sub _ : _ -> ddart) (dface_subproof u).
+Let dedge u := (sub _ : _ -> ddart) (dedge_subproof u).
+Let dnode u := (sub _ : _ -> ddart) (dnode_subproof u).
+Let dface u := (sub _ : _ -> ddart) (dface_subproof u).
 
 Fact snipd_subproof : cancel3 dedge dnode dface.
 Proof.
@@ -298,7 +298,7 @@ Lemma inj_snipd : injective snipd. Proof. exact: val_inj. Qed.
 Lemma codom_snipd : codom snipd =i diskN.
 Proof.
 move=> z; apply/imageP/idP => [[[y dNy] /= _ -> //] | dNz].
-by exists (Sub z dNz).
+by exists (sub z dNz).
 Qed.
 
 Definition snipd_ring := preim_seq snipd r.
@@ -333,7 +333,7 @@ have homFd' u v :
   have dNy: y \in diskN.
     rewrite (fclosed1 diskN_node) diskN_E (fclosed1 diskE_edge) orbC.
     by rewrite -Dy faceK inE /= r'u (valP u).
-  apply: connect_trans {IHp yFp Lp}(IHp (Sub y _) _ yFp Lp).
+  apply: connect_trans {IHp yFp Lp}(IHp (sub y _) _ yFp Lp).
     by rewrite connect1 //= -val_eqE /= /snipd_face (negPf r'u) Dy.
   apply/hasP => [[w b_w yFw]]; case/hasP: b'u; exists w => //.
   apply: connect_trans yFw.
@@ -390,9 +390,9 @@ apply: contra (valP u) => /andP[_ /= dNfu]; rewrite -[val u]faceK.
 by rewrite -(fclosed1 diskE_edge) !inE r'nfu -(fclosed1 diskN_node).
 Qed.
 
-Let redge u := (Sub _ : _ -> rdart) (redge_subproof u).
-Let rnode u := (Sub _ : _ -> rdart) (rnode_subproof u).
-Let rface u := (Sub _ : _ -> rdart) (rface_subproof u).
+Let redge u := (sub _ : _ -> rdart) (redge_subproof u).
+Let rnode u := (sub _ : _ -> rdart) (rnode_subproof u).
+Let rface u := (sub _ : _ -> rdart) (rface_subproof u).
 
 Fact snipr_subproof : cancel3 redge rnode rface.
 Proof.
@@ -409,7 +409,7 @@ Lemma inj_snipr : injective snipr. Proof. apply: val_inj. Qed.
 Lemma codom_snipr : codom snipr =i [predC diskE].
 Proof.
 move=> z; apply/imageP/idP => [[[y dE'y] _ /= -> //] | dE'z].
-by exists (Sub z dE'z).
+by exists (sub z dE'z).
 Qed.
 
 Definition snipr_ring : seq snip_rem := preim_seq snipr (rev r).

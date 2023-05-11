@@ -560,9 +560,9 @@ Proof. exact: connect_trans (valP u) (connect1 (glinkN _)). Qed.
 Fact gcompd_face_subproof u : gcomp z (face (val u)).
 Proof. exact: connect_trans (valP u) (connect1 (glinkF _)). Qed.
 
-Definition gcompd_edge u : gcompd_dart := Sub _ (gcompd_edge_subproof u).
-Definition gcompd_node u : gcompd_dart := Sub _ (gcompd_node_subproof u).
-Definition gcompd_face u : gcompd_dart := Sub _ (gcompd_face_subproof u).
+Definition gcompd_edge u : gcompd_dart := sub _ (gcompd_edge_subproof u).
+Definition gcompd_node u : gcompd_dart := sub _ (gcompd_node_subproof u).
+Definition gcompd_face u : gcompd_dart := sub _ (gcompd_face_subproof u).
 
 Fact gcompd_subproof : cancel3 gcompd_edge gcompd_node gcompd_face.
 Proof. by move=> u; apply/val_inj/edgeK. Qed.
@@ -573,7 +573,7 @@ Definition gcompd (u : gcomp_disk) := val u.
 Lemma inj_gcompd : injective gcompd. Proof. exact: val_inj. Qed.
 Lemma codom_gcompd : codom gcompd =i gcomp z.
 Proof.
-by move=> x; apply/imageP/idP => [[[y zGy] _ -> //] | zGx]; exists (Sub x zGx).
+by move=> x; apply/imageP/idP => [[[y zGy] _ -> //] | zGx]; exists (sub x zGx).
 Qed.
 
 Definition gcompr_dart := {x | ~~ gcomp z x}.
@@ -594,9 +594,9 @@ Proof. by rewrite /= -(glink1r (glinkN _)) (valP v). Qed.
 Fact gcompr_face_subproof v : predC (gcomp z) (face (val v)).
 Proof. by rewrite /= -(glink1r (glinkF _)) (valP v). Qed.
 
-Definition gcompr_edge v : gcompr_dart := Sub _ (gcompr_edge_subproof v).
-Definition gcompr_node v : gcompr_dart := Sub _ (gcompr_node_subproof v).
-Definition gcompr_face v : gcompr_dart := Sub _ (gcompr_face_subproof v).
+Definition gcompr_edge v : gcompr_dart := sub _ (gcompr_edge_subproof v).
+Definition gcompr_node v : gcompr_dart := sub _ (gcompr_node_subproof v).
+Definition gcompr_face v : gcompr_dart := sub _ (gcompr_face_subproof v).
 
 Fact gcompr_subproof : cancel3 gcompr_edge gcompr_node gcompr_face.
 Proof. by move=> v; apply/val_inj/edgeK. Qed.
@@ -607,7 +607,7 @@ Lemma inj_gcompr : injective gcompr. Proof. exact: val_inj. Qed.
 Lemma codom_gcompr : codom gcompr =i predC (gcomp z).
 Proof.
 move=> x; apply/imageP/idP => [[[y z'Gy] _ ->] // | z'Gx].
-by exists ((Sub _ : _ -> gcomp_rem) z'Gx).
+by exists ((sub _ : _ -> gcomp_rem) z'Gx).
 Qed.
 
 Lemma patch_gcomp : patch gcompd gcompr [::] [::].

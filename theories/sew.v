@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype path fingraph.
 From fourcolor Require Import hypermap geometry color patch.
@@ -120,14 +121,9 @@ Inductive sew_tag := SewDisk | SewRest.
 Definition sew_tag_code pt := if pt is SewDisk then true else false.
 Definition sew_tag_decode b := if b then SewDisk else SewRest.
 Fact sew_tag_subproof : cancel sew_tag_code sew_tag_decode. Proof. by case. Qed.
-Definition sew_tag_eqMixin := CanEqMixin sew_tag_subproof.
-Canonical sew_tag_eqType := EqType sew_tag sew_tag_eqMixin.
-Definition sew_tag_choiceMixin := CanChoiceMixin sew_tag_subproof.
-Canonical sew_tag_choiceType := ChoiceType sew_tag sew_tag_choiceMixin.
-Definition sew_tag_countMixin := CanCountMixin sew_tag_subproof.
-Canonical sew_tag_countType := CountType sew_tag sew_tag_countMixin.
-Definition sew_tag_finMixin := CanFinMixin sew_tag_subproof.
-Canonical sew_tag_finType := FinType sew_tag sew_tag_finMixin.
+HB.instance Definition _ := Countable.copy sew_tag (can_type sew_tag_subproof).
+#[non_forgetful_inheritance]
+HB.instance Definition _ : isFinite sew_tag := CanFinMixin sew_tag_subproof.
 
 Definition sew_dart_at i : finType :=
   match i with
@@ -136,15 +132,12 @@ Definition sew_dart_at i : finType :=
   end.
 
 Definition sew_dart := {i : sew_tag & sew_dart_at i}.
-Canonical sew_dart_eqType := [eqType of sew_dart].
-Canonical sew_dart_choiceType := [choiceType of sew_dart].
-Canonical sew_dart_countType := [countType of sew_dart].
-Canonical sew_dart_finType := [finType of sew_dart].
+HB.instance Definition _ := Finite.copy sew_dart [finType of sew_dart].
 
 Definition sewd xd : sew_dart := @Tagged _ SewDisk sew_dart_at xd.
 
 Definition sewr_r xr b'xr : sew_dart :=
-  @Tagged _ SewRest sew_dart_at (Sub xr b'xr).
+  @Tagged _ SewRest sew_dart_at (sub xr b'xr).
 
 Definition sewr xr :=
   match in_bGr xr with

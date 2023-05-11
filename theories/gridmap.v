@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From HB Require Import structures.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype path fingraph order ssralg ssrnum ssrint.
 From fourcolor Require Import hypermap geometry color coloring patch snip grid.
@@ -79,14 +80,13 @@ Definition cmatte := Ir -> matte.
 
 Implicit Types (e : adj_index) (ab : adjbox) (cm : cmatte).
 
-Canonical adj_index_eqType := [eqType of adj_index].
-Canonical adj_index_choiceType := [choiceType of adj_index].
-Canonical adj_index_finType := [finType of adj_index].
+#[hnf]
+HB.instance Definition _ := Finite.copy adj_index [finType of adj_index].
 
 Coercion pair_of_adj_index e : Ir * Ir := val e.
 Coercion adj_incident e := pred2 e.1 e.2.
 
-Definition AdjIndex i j ltij : adj_index := Sub (i, j) ltij.
+Definition AdjIndex i j ltij : adj_index := sub (i, j) ltij.
 
 Definition cm_proper cm := forall i j, has (cm i) (cm j) -> i = j.
 
@@ -231,14 +231,11 @@ Proof. by rewrite !gmgridE gedge2 orbC. Qed.
 
 Definition gmdart : predArgType := seq_sub gmgrid.
 Coercion gmval := @ssval _ _ : gmdart -> gpoint.
-Definition Gmdart d : d \in gmgrid -> gmdart := Sub d.
+Definition Gmdart d : d \in gmgrid -> gmdart := sub d.
 Implicit Types u v w : gmdart.
 
-Canonical gmdart_subType := [subType of gmdart for gmval].
-Canonical gmdart_eqType := [eqType of gmdart].
-Canonical gmdart_choiceType := [choiceType of gmdart].
-Canonical gmdart_finType := [finType of gmdart].
-Canonical gmdart_subFinType := [subFinType of gmdart].
+HB.instance Definition _ := [isSub of gmdart for gmval].
+HB.instance Definition _ := Finite.copy gmdart [finType of gmdart].
 
 Definition gmedge u := Gmdart (etrans (gmgrid_edge u) (valP u)).
 Definition gmpick u s : gmdart := foldl insubd u s.
@@ -379,15 +376,16 @@ rewrite -garea_refine_rect -size_enum_grect.
 rewrite -[n in n.*2]muln2 doubleMr (fcard_order_set nodeI _ gm_inner_closed).
   rewrite cardE -(size_map val) uniq_leq_size ?enum_grect_uniq // => d.
   rewrite mem_enum_grect in_refine_rect => bb_d.
-  by apply/imageP/(ex_intro2 _ _ (Sub d _)); rewrite // gmgridE bb_d.
+  by apply/imageP/(ex_intro2 _ _ (sub d _)); rewrite // gmgridE bb_d.
 apply/subsetP=> /= u bb_u; rewrite inE.
 have cyc_u: fcycle node (traject node u 4).
   rewrite [3%N]lock /= rcons_path fpath_traject -lock /= -val_eqE.
   by rewrite !val_gmnode ?gm_inner_node // -[gedge _]gface4 !gnodeK.
 rewrite (order_cycle cyc_u) ?mem_head // looping_uniq.
 have neq_node v: oddg v != oddg u -> v != u by apply: contraNneq => ->.
-by rewrite /looping !inE !(inj_eq nodeI) !negb_or !neq_node //;
-   rewrite !val_gmnode ?gm_inner_node // !(oddg_node, oddg_edge); case: oddgP.
+rewrite /looping !inE !(inj_eq nodeI) !negb_or.
+by apply/and3P; split; apply/neq_node;
+  rewrite !val_gmnode ?gm_inner_node // !(oddg_node, oddg_edge); case: oddgP.
 Qed.
 
 Lemma gmdart_connected : connected gmdart_map.
@@ -425,7 +423,7 @@ rewrite /planar -leqn0 (@half_leq _ 1) // leq_subLR addn1.
 rewrite /Euler_lhs (eqnP gmdart_connected) add2n ltnS -ltn_double -addnn //.
 rewrite doubleD -muln2 (fcard_order_set edgeI gmdart_plain) // ltn_add2l.
 rewrite card_gmdart ltn_double muln2 -addnn -addnA addnAC addnA -mulnSr.
-by rewrite -addSn -addnS -mulSnr addnC fcard_gmface leq_add2r fcard_gmnode.
+by rewrite -addSn -addnS -mulSnr addnC leq_add ?fcard_gmnode// fcard_gmface.
 Qed.
 
 Definition gmring i : seq gmdart := pmap insub (mring (cm i)).

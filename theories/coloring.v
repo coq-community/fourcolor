@@ -241,7 +241,7 @@ have nnx: node (node x) = x.
   rewrite (cardD1 x) (cardD1 (node x)) (cardD1 (node (node x))) !inE.
   by rewrite (inj_eq nodeI) x'nx x'n2x -!cnode1r connect0.
 pose G' := WalkupE x; pose h' (u : G') := val u.
-pose unx : G' := Sub (node x) x'nx; pose G'' := WalkupE unx.
+pose unx : G' := sub (node x) x'nx; pose G'' := WalkupE unx.
 pose h'' (w : G'') := val w; pose h := h' (h'' _).
 have Ih': injective h' := val_inj; have Ih'': injective h'' := val_inj.
 have Ih: injective h := inj_comp Ih' Ih''.
@@ -261,8 +261,8 @@ have ltG''G: #|G''| < #|G| by rewrite ltnW // -!card_S_Walkup.
 have oE_G'' w: order edge w = #|predD1 (cedge (h'' w)) unx|.
   rewrite /order -(card_image Ih''); apply: eq_card => u; rewrite inE /=.
   have [u_nx | nx'u] := altP eqP.
-    by apply/imageP => [[wu _ u_wu]]; case/eqP: (valP wu); rewrite -{4}u_nx.
-  set wu : G'' := Sub u nx'u; rewrite (mem_image Ih'' _ wu) /=.
+    by apply/imageP => [[wu _ u_wu]]; case/eqP: (valP wu); rewrite -[RHS]u_nx.
+  set wu : G'' := sub u nx'u; rewrite (mem_image Ih'' _ wu) /=.
   apply: etrans (eq_fconnect (glink_fp_skip_edge _) w wu) _.
     by rewrite /glink /= -!val_eqE /= nnx !eqxx /= orbT.
   exact: (fconnect_skip edgeI w wu).
@@ -280,7 +280,7 @@ have [|k [kE kF]] := minimal_counter_example_is_minimal cexG _ ltG''G.
     have [/negPf Eu'x Eu'nx] := norP Eu'Nx; rewrite /= orbF in Eu'nx.
     apply/eqP; apply: eq_card => y.
     have [-> {y} | x'y] := eqVneq y x; last first.
-      pose v : G' := Sub y x'y; rewrite (mem_image Ih' _ v) !inE.
+      pose v : G' := sub y x'y; rewrite (mem_image Ih' _ v) !inE.
       case: eqP => [[ynx] | _]; last exact (same_cskip_edge Eu'Nx).
       by apply/esym/(contraNF _ Eu'nx) => wEy; rewrite /= -ynx.
     rewrite [x \in cedge _]Eu'x; apply/imageP=> [[[z x'z] _ /= zx]].
@@ -300,13 +300,13 @@ have [|k [kE kF]] := minimal_counter_example_is_minimal cexG _ ltG''G.
   rewrite (cardD1 x) !inE connect0 eqSS /order -(card_image Ih').
   apply/eqP/esym/eq_card => y; rewrite !inE; have [-> | x'y] /= := altP eqP.
     by apply/imageP=> [[[z x'z] _ /esym/eqP/idPn]].
-  set v : G' := Sub y x'y; rewrite (mem_image Ih' _ v).
+  set v : G' := sub y x'y; rewrite (mem_image Ih' _ v).
   by apply: (etrans (cskip_edge_merge x'Enx EuNx)); rewrite /= orbF !(cedgeC y).
 case: (minimal_counter_example_is_noncolorable cexG).
 pose a' x w := cface x (h w).
 have a'0P y: a' y =1 pred0 -> pred2 x (node x) y.
-  move=> a'y0; apply/norP => [[x'y nx'y]]; pose uy : G' := Sub y x'y.
-  by case/idP: (a'y0 ((Sub uy : _ -> G'') nx'y)); apply: connect0.
+  move=> a'y0; apply/norP => [[x'y nx'y]]; pose uy : G' := sub y x'y.
+  by case/idP: (a'y0 ((sub uy : _ -> G'') nx'y)); apply: connect0.
 have a'F y z: a' y =1 pred0 -> cface y z -> y = z.
   move=> a'y0 yFz; suffices: pred2 y (node y) z.
     by case/pred2P=> // zny; rewrite -[y]nodeK -zny -cface1 cfaceC F'eG in yFz.
@@ -323,7 +323,7 @@ have k'F y z: cface y z -> k' y = k' z.
   rewrite /a' (same_cface yFz) in yFw; case: pickP => [w' zFw' | /(_ w)/idP//].
   by apply: kFF; rewrite hF -(same_cface yFw).
 have k'E y: ~~ (pred2 x (node x) y) -> k' y != k' (edge y).
-  case/norP=> [x'y nx'y]; pose w := (Sub (Sub y x'y : G') : _ -> G'') nx'y.
+  case/norP=> [x'y nx'y]; pose w := (sub (sub y x'y : G') : _ -> G'') nx'y.
   have Dfey: (face (edge y) = h (face (edge w))).
     by apply: nodeI; rewrite -hN1 !edgeK.
   rewrite (k'F (edge y) _ (fconnect1 _ _)) /k'.
