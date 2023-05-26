@@ -35,9 +35,9 @@ basic plane topology definitions, and a theory of combinatorial hypermaps.
 - Coq-community maintainer(s):
   - Yves Bertot ([**@ybertot**](https://github.com/ybertot))
 - License: [CeCILL-B](LICENSE)
-- Compatible Coq versions: 8.11 or later
+- Compatible Coq versions: 8.16 or later
 - Additional dependencies:
-  - [MathComp ssreflect 1.12 or later](https://math-comp.github.io)
+  - [MathComp ssreflect 2.0 or later](https://math-comp.github.io)
   - [MathComp algebra](https://math-comp.github.io)
 - Coq namespace: `fourcolor`
 - Related publication(s):
