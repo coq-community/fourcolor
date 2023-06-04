@@ -690,7 +690,7 @@ Proof. by rewrite lez_addr1 ltNge; apply: (iffP idP) => /intR_leP. Qed.
 
 Lemma ratRE a : ratRR a == numq a / denq a.
 Proof.
-by rewrite /ratRR /ratR unfold_in/=; case: eqP => // ->; rewrite invR1 mulR1.
+by rewrite /ratRR /ratR Qint_def; case: eqP => // ->; rewrite invR1 mulR1.
 Qed.
 
 Lemma ratR_eq a : {r | a = (r.1%:Q / r.2.+1%:Q)%R & a * r.2.+1 == r.1}.
