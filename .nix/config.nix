@@ -30,19 +30,22 @@
 
   ## select an entry to build in the following `bundles` set
   ## defaults to "default"
-  default-bundle = "8.16+2.0";
+  default-bundle = "8.18+2.0";
 
   ## write one `bundles.name` attribute set per
   ## alternative configuration, the can be used to
   ## compute several ci jobs as well
   bundles = let 
-    mc20 = {
-      mathcomp.override.version = "mathcomp-2.0.0";
+    mc21 = {
+      mathcomp.override.version = "mathcomp-2.1.0";
       mathcomp.job = false;
+      mathcomp-finmap.override.version = "2.0.0";
+      graph-theory.override.version = "0.9.3";
     };
   in {
-    "8.16+2.0".coqPackages = { coq.override.version = "8.16"; } // mc20;
-    "8.17+2.0".coqPackages = { coq.override.version = "8.17"; } // mc20;
+    "8.16+2.0".coqPackages = { coq.override.version = "8.16"; } // mc21;
+    "8.17+2.0".coqPackages = { coq.override.version = "8.17"; } // mc21;
+    "8.18+2.0".coqPackages = { coq.override.version = "8.18"; } // mc21;
 
   ## you may mark a package as a CI job as follows
   #  coqPackages.<another-pkg>.ci.job = "test";
