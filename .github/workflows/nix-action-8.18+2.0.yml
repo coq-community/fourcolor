@@ -39,12 +39,12 @@ jobs:
     - id: stepCheck
       name: Checking presence of CI target coq
       run: "nb_dry_run=$(NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link \\\n   --argstr\
-        \ bundle \"8.17+2.0\" --argstr job \"coq\" \\\n   --dry-run 2>&1 > /dev/null)\n\
+        \ bundle \"8.18+2.0\" --argstr job \"coq\" \\\n   --dry-run 2>&1 > /dev/null)\n\
         echo $nb_dry_run\necho status=$(echo $nb_dry_run | grep \"built:\" | sed \"\
         s/.*/built/\") >> $GITHUB_OUTPUT\n"
     - if: steps.stepCheck.outputs.status == 'built'
       name: Building/fetching current CI target
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "coq"
   fourcolor:
     needs:
@@ -87,28 +87,28 @@ jobs:
     - id: stepCheck
       name: Checking presence of CI target fourcolor
       run: "nb_dry_run=$(NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link \\\n   --argstr\
-        \ bundle \"8.17+2.0\" --argstr job \"fourcolor\" \\\n   --dry-run 2>&1 > /dev/null)\n\
+        \ bundle \"8.18+2.0\" --argstr job \"fourcolor\" \\\n   --dry-run 2>&1 > /dev/null)\n\
         echo $nb_dry_run\necho status=$(echo $nb_dry_run | grep \"built:\" | sed \"\
         s/.*/built/\") >> $GITHUB_OUTPUT\n"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: coq'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "coq"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-algebra'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-algebra"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-ssreflect'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-ssreflect"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-fingroup'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-fingroup"
     - if: steps.stepCheck.outputs.status == 'built'
       name: Building/fetching current CI target
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "fourcolor"
   graph-theory:
     needs:
@@ -153,36 +153,36 @@ jobs:
     - id: stepCheck
       name: Checking presence of CI target graph-theory
       run: "nb_dry_run=$(NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link \\\n   --argstr\
-        \ bundle \"8.17+2.0\" --argstr job \"graph-theory\" \\\n   --dry-run 2>&1\
+        \ bundle \"8.18+2.0\" --argstr job \"graph-theory\" \\\n   --dry-run 2>&1\
         \ > /dev/null)\necho $nb_dry_run\necho status=$(echo $nb_dry_run | grep \"\
         built:\" | sed \"s/.*/built/\") >> $GITHUB_OUTPUT\n"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: coq'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "coq"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-algebra'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-algebra"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-finmap'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-finmap"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-fingroup'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-fingroup"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: fourcolor'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "fourcolor"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: hierarchy-builder'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "hierarchy-builder"
     - if: steps.stepCheck.outputs.status == 'built'
       name: Building/fetching current CI target
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "graph-theory"
   mathcomp-finmap:
     needs:
@@ -225,29 +225,29 @@ jobs:
     - id: stepCheck
       name: Checking presence of CI target mathcomp-finmap
       run: "nb_dry_run=$(NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link \\\n   --argstr\
-        \ bundle \"8.17+2.0\" --argstr job \"mathcomp-finmap\" \\\n   --dry-run 2>&1\
+        \ bundle \"8.18+2.0\" --argstr job \"mathcomp-finmap\" \\\n   --dry-run 2>&1\
         \ > /dev/null)\necho $nb_dry_run\necho status=$(echo $nb_dry_run | grep \"\
         built:\" | sed \"s/.*/built/\") >> $GITHUB_OUTPUT\n"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: coq'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "coq"
     - if: steps.stepCheck.outputs.status == 'built'
       name: 'Building/fetching previous CI target: mathcomp-ssreflect'
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-ssreflect"
     - if: steps.stepCheck.outputs.status == 'built'
       name: Building/fetching current CI target
-      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.17+2.0"
+      run: NIXPKGS_ALLOW_UNFREE=1 nix-build --no-out-link --argstr bundle "8.18+2.0"
         --argstr job "mathcomp-finmap"
-name: Nix CI for bundle 8.17+2.0
+name: Nix CI for bundle 8.18+2.0
 'on':
   pull_request:
     paths:
-    - .github/workflows/nix-action-8.17+2.0.yml
+    - .github/workflows/nix-action-8.18+2.0.yml
   pull_request_target:
     paths-ignore:
-    - .github/workflows/nix-action-8.17+2.0.yml
+    - .github/workflows/nix-action-8.18+2.0.yml
     types:
     - opened
     - synchronize
