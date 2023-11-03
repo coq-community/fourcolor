@@ -1,5 +1,6 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From mathcomp Require Import ssralg.
 From fourcolor Require Import real.
 
 (******************************************************************************)
@@ -64,9 +65,6 @@ Arguments select_set {R} P%type x%Rval y%Rval _%Rval.
 Arguments select {R} P%type x%Rval y%Rval.
 Arguments extended_inv {R} x%Rval.
 Arguments extended_sup {R} E%Rset.
-
-Reserved Notation "n %:R" (at level 2, left associativity, format "n %:R").
-Reserved Notation "x ^-1" (at level 3, left associativity, format "x ^-1").
 
 Reserved Notation "x == y" (at level 70, no associativity).
 Reserved Notation "x != y" (at level 70, no associativity).

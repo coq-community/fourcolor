@@ -439,7 +439,7 @@ Qed.
 
 Definition amul x y := Cut (amul_is_cut x y).
 Notation "`| x |*| y |" := (amul x y)
-  (at level 0, x, y at level 99, format "`| x |*| y |") : cut_scope.
+  (at level 0, format "`| x |*| y |") : cut_scope.
 
 Definition mul x y := ifR (x < 0 <-> y < 0) `|x|*|y| (- `|x|*|y|).
 Infix "*" := mul : cut_scope.
@@ -566,7 +566,7 @@ Qed.
 
 Definition ainv x := sup {y | `|x|*|y| < 1}.
 Notation "`| x |^-1" := (ainv x)
-  (at level 0, x at level 99, format "`| x |^-1") : cut_scope.
+  (at level 0, format "`| x |^-1") : cut_scope.
 Definition inv x := ifR (x < 0) (- `|x|^-1) `|x|^-1.
 Notation "x ^-1" := (inv x) : cut_scope.
 
