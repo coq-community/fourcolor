@@ -214,7 +214,7 @@ Proof. by case: c => // _ []. Qed.
 (* Boolean correctness predicate *)
 
 Definition colseq : predArgType := seq color.
-Canonical colseq_eqType := [eqType of colseq].
+HB.instance Definition _ := Equality.on colseq.
 
 Definition head_color : colseq -> color := head Color0.
 

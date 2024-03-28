@@ -684,7 +684,7 @@ by case: (m2 - m1)%R => n; split; rewrite // -oppR0 leR_opp2 => /ltR0Sn.
 Qed.
 
 Lemma intR_ltP m1 m2 : reflect (m1 < m2) (m1 + 1 <= m2)%R.
-Proof. by rewrite lez_addr1 ltNge; apply: (iffP idP) => /intR_leP. Qed.
+Proof. by rewrite lezD1 ltNge; apply: (iffP idP) => /intR_leP. Qed.
 
 (* Embedding the rationals.                                                  *)
 
@@ -702,7 +702,7 @@ Qed.
 Lemma ratR_leP a1 a2 : reflect (a1 <= a2) (a1 <= a2)%R.
 Proof.
 have [[r1 {3}-> Dr1] [r2 {3}-> Dr2]] := (ratR_eq a1, ratR_eq a2).
-rewrite ler_pdivl_mulr ?ltr0Sn // mulrAC ler_pdivr_mulr ?ltr0Sn //.
+rewrite ler_pdivlMr ?ltr0Sn // mulrAC ler_pdivrMr ?ltr0Sn //.
 rewrite -!intrM ler_int /=; apply: (equivP (intR_leP _ _)).
 by rewrite !intRM -Dr1 -Dr2 mulRAC !leR_pmul2r.
 Qed.
@@ -822,7 +822,7 @@ Proof.
 move=> [m1x x_m1] [m2x x_m2].
 wlog suffices: m1 m2 m1x {x_m1 m2x} x_m2 / (m1 <= m2)%R.
   by move=> IH; apply/eqP; rewrite eq_le !IH.
-rewrite -(ler_add2r 1); apply/intR_ltP.
+rewrite -(lerD2r 1); apply/intR_ltP.
 by rewrite intRD1; apply: leR_lt_trans x_m2.
 Qed.
 

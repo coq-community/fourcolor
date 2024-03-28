@@ -72,7 +72,7 @@ Proof. by do 2!case; constructor. Qed.
 HB.instance Definition _ := hasDecEq.Build gram_symbol eqgsP.
 
 Definition chromogram : predArgType := seq gram_symbol.
-Canonical chromogram_eqType := [eqType of chromogram].
+HB.instance Definition _ := Equality.on chromogram.
 
 Fixpoint gram_balanced d b0 (w : chromogram) {struct w} :=
   match w, d with

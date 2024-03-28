@@ -357,7 +357,7 @@ Proof. by rewrite sort_dbound1_eq; case: (sort_drules p r). Qed.
 
 Lemma dbound2_leq : dscore2 (face (face x)) <= dbound2 rt rs x.
 Proof.
-rewrite /dbound2 -dbound1_eq ler_add2r lez_nat.
+rewrite /dbound2 -dbound1_eq lerD2r lez_nat.
 set y := inv_face2 _; rewrite /rt /target_drules; case: rf => _ _ [].
 elim: the_drules => //= r dr IHdr; case Dr': (converse_part r) => [u r'].
 case Hyr: (exact_fitp y r).
@@ -382,10 +382,10 @@ move=> ub_m x pos_x d max_m; apply: contraLR pos_x; rewrite -leqNgt => ledx.
 have ltm10: (m < 10)%N by rewrite -subn_gt0; case: (10 - m)%N max_m.
 have{max_m}: 60%:Z <= ((10 - m) * arity x)%:Z.
   by rewrite lez_nat (leq_trans max_m) ?leq_mul.
-rewrite -leNgt -ler_subr_addr ler_subl_addl add0r => /le_trans-> //.
+rewrite -leNgt -lerBrDr lerBlDl add0r => /le_trans-> //.
 rewrite !PoszM -!mulrzz -![_ *~ _]sumr_const -sumrB ler_sum // => y _.
-rewrite -(ler_add2r m%:Z) -PoszD subnK 1?ltnW // addrAC.
-by rewrite ler_subr_addr ler_add2l ler_subl_addr ler_paddr.
+rewrite -(lerD2r m%:Z) -PoszD subnK 1?ltnW // addrAC.
+by rewrite lerBrDr lerD2l lerBlDr ler_wpDr.
 Qed.
 
 Lemma source_drules_range : ~~ Pr58 nhub -> rs = [::].
@@ -401,7 +401,7 @@ Lemma dscore_cap2 (x : G) :
     arity x = nhub -> 0 < dscore x ->
   0 < dboundK + \sum_(y in cface x) dbound2 rt rs y.
 Proof.
-move=> nFx /lt_le_trans-> //; rewrite /dscore -dboundK_eq // ler_add2l.
+move=> nFx /lt_le_trans-> //; rewrite /dscore -dboundK_eq // lerD2l.
 do 2!rewrite (reindex_inj faceI) -(eq_bigl _ _ (fun y => cface1r y x)) /=.
 by apply: ler_sum => y xFy; rewrite dbound2_leq // -(arity_cface xFy).
 Qed.

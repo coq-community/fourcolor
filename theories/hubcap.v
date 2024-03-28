@@ -200,8 +200,8 @@ rewrite /rs0 /rt0 /source_drules /target_drules; case: rf => rs rt _.
 set ru : drules := [::]; have bound_ru: dbound1 ru x = 0 by [].
 have{rt} [dnt rt] := sort_drulesP fit_xp rt; move: (size rt + 2) => m.
 have{rs fit_xp} [dns rs] := sort_drulesP fit_xp rs.
-rewrite ler_subl_addl addrAC !PoszD [rhs in (_ <= rhs)%R]addrAC.
-rewrite -ler_subr_addl [rhs in (_ <= rhs)%R]addrAC.
+rewrite lerBlDl addrAC !PoszD [rhs in (_ <= rhs)%R]addrAC.
+rewrite -lerBrDl [rhs in (_ <= rhs)%R]addrAC.
 case: {dns dnt b}(_ - _)%R => // [nt]; rewrite -PoszD lez_nat.
 elim: m nt rt => // m IHm nt [|r rt] //= in rs (ru) bound_ru p Exp *.
 case: ifP => [lt_rt_nt _ | _ /andP[]].
@@ -266,7 +266,7 @@ have [_ fit_p2] := andP Exp2.
 have{rt} [dnt2 rt2] := sort_drulesP fit_p2 rt; move: (size rt1 + _) => m.
 have{fit_p2} [dns2 rs2] := sort_drulesP fit_p2 rs; rewrite !PoszD => b2p.
 rewrite addrACA -opprD addrACA [rhs in (- rhs)%R]addrACA opprD [leLHS]addrACA.
-rewrite -ler_subr_addl opprB [rhs in (_ <= rhs)%R]addrC ler_subl_addl.
+rewrite -lerBrDl opprB [rhs in (_ <= rhs)%R]addrC lerBlDl.
 case: {dns1 dns2 dnt1 dnt2 b}(_ + b)%R b2p => // nt; rewrite lez_nat.
 move: @x2 rt2 rs2 ru2 p2 b1ru2 Exp2 => /=.
 elim: m rt1 => // m IHm [|r rt1]/= in nt x1 i nFx1 ub_i rs1 ru1 p1 b1ru1 Exp1 *.
@@ -389,7 +389,7 @@ have{v'0} db2v: {in cface x1, forall y1, db2 v y1 = b y1 2}.
 suffices{db2v}: ~~ (0 < b0 *+ 2 - 1 + sum_db2 v)%R.
   apply: contra => /(dscore_cap2 rf geoG nFx); rewrite -/rs0 -/rt0 -/b0.
   rewrite [sum_db2 _](eq_bigr _ db2v) sumrMnl (eq_bigl _ _ (same_cface x1Fx)).
-  by rewrite addrAC subr_gt0 -mulrnDl -!lez_add1r (ler_muln2r 2 1%:Z).
+  by rewrite addrAC subr_gt0 -mulrnDl -!lez1D (lerMn2r 2 1).
 pose vb w := forall i, nth 0 w i <= nth 0 v i.
 have vb_inc w i : vb (incr_nth w i) -> nth 0 w i < nth 0 v i /\ vb w.
   move=> vb_w; split=> [|j]; first by have:= vb_w i; rewrite nth_incr_nth eqxx.
@@ -404,24 +404,24 @@ have db2_inc w i (v_i := nth 0 v i) (w' := incr_nth w i) :
     by do [rewrite -/v_i; case: eqP w_i => [->|_] [|[|?]]] in lt_wvi ub_wi *.
   apply: eq_bigr => y /andP[x1Fy x1i'y]; congr (_ *+ _)%R; rewrite nth_incr_nth.
   by have [Di | //] := i =P _; rewrite Di iter_findex ?eqxx in x1i'y.
-have: vb v by []; rewrite /v -ltr_subl_addl sub0r -leNgt; clearbody v.
+have: vb v by []; rewrite /v -ltrBlDl sub0r -leNgt; clearbody v.
 elim: hc {b0}(_ - 1)%R hc_v hc_p => /= [|i b1 hc IHhc|j i b1 hc IHhc] b0.
 - by rewrite -leNgt -oppr_ge0 [sum_db2 _]big1 // => y _; rewrite /db2 nth_nil.
 - case/andP=> /eqP-Dvi v_hc /andP[p_b1 p_hc] vb_hci.
   have /vb_inc[_ vb_hc] := vb_hci.
   have [ltin | leni] := ltnP i nhub; last by rewrite nth_default ?Ev in Dvi.
-  rewrite {}db2_inc ?Dvi {vb_hci}//= -ler_subr_addl -opprD addrC.
+  rewrite {}db2_inc ?Dvi {vb_hci}//= -lerBrDl -opprD addrC.
   apply: {IHhc vb_hc v_hc p_hc}(le_trans (IHhc _ v_hc p_hc vb_hc)).
-  rewrite ler_opp2 ler_add2r ler_pmuln2r //.
+  rewrite lerN2 lerD2r ler_pMn2r //.
   by apply: check_dbound2P p_b1; rewrite ?arity_iter_face ?fit_hubcap_rot.
 set vj := nth 0 v j => /and3P[/eqP-Dvi vj_le2] v_hc /andP[p_b1 p_hc] vb_hcij.
 have /vb_inc[_ vb_hcj] := vb_hcij; have /vb_inc[vj_gt vb_hc] := vb_hcj.
 have{vj_gt} vj_gt0: 0 < vj by apply: leq_trans vj_gt.
 have [ltin | ?] := ltnP i nhub; last by rewrite Dvi nth_default ?Ev in vj_gt0.
 have [ltjn | ?] := ltnP j nhub; last by rewrite [vj]nth_default ?Ev in vj_gt0.
-rewrite !{}db2_inc -?Dvi {vb_hcij vb_hcj}//= addrA -ler_subr_addl -opprD -/vj.
+rewrite !{}db2_inc -?Dvi {vb_hcij vb_hcj}//= addrA -lerBrDl -opprD -/vj.
 apply: {IHhc v_hc p_hc vb_hc}(le_trans (IHhc _ v_hc p_hc vb_hc)).
-rewrite ler_opp2 addrC ler_add2r -mulrnDl ler_pmuln2r //.
+rewrite lerN2 addrC lerD2r -mulrnDl ler_pMn2r //.
 rewrite addrC -(iter_hub_subn i ltjn) //.
 apply: check_2dbound2P p_b1; rewrite ?arity_iter_face ?hub_subn_hub //.
 by rewrite fit_hubcap_rot.

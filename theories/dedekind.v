@@ -150,7 +150,7 @@ Qed.
 Fact lt_is_cut a : is_cut {b | a < b}%R.
 Proof.
 split=> [||b c /lt_trans| b /midf_lt[ltac ltcb]]; last 2 [exact].
-- by exists (a + 1)%R; rewrite ltr_addl.
+- by exists (a + 1)%R; rewrite ltrDl.
 - by exists a; rewrite ltxx.
 by exists ((a + b) / 2%:R)%R.
 Qed.
@@ -273,11 +273,11 @@ Definition opp_cut x := {a | exists2 b, (- a < b)%R & x >= b}.
 Fact opp_is_cut x : is_cut (opp_cut x).
 Proof.
 split=> [||a b [c lt_na_c lecx] | a [b /(@open (- a)%R)[c lt_na_c ltcb] lebx]].
-- by have [a leax] := cut_lb x; exists (1 - a)%R, a; rewrite // opprB gtr_addl.
+- by have [a leax] := cut_lb x; exists (1 - a)%R, a; rewrite // opprB gtrDl.
 - have [a ltxa] := cut_ub x; exists (- a)%R => -[b ltab []].
   by apply: ltc_trans ltab; rewrite opprK.
-- by exists c; first by apply: lt_trans lt_na_c; rewrite ltr_opp2.
-by exists (- c)%R; [exists b; rewrite ?opprK | rewrite ltr_oppl].
+- by exists c; first by apply: lt_trans lt_na_c; rewrite ltrN2.
+by exists (- c)%R; [exists b; rewrite ?opprK | rewrite ltrNl].
 Qed.
 
 Definition opp x := Cut (opp_is_cut x).
@@ -299,8 +299,8 @@ Proof. by move=> IHopp IHpos x; case: (ltcP x 0) gec0_opp; auto. Qed.
 Lemma oppK x : - (- x) == x.
 Proof.
 split=> [a /open[b ltxb ltba] | a [b lt_na_b le_b_nx]].
-  by exists (- b)%R => [|[c]]; rewrite ?ltr_opp2 ?opprK => // /(ltc_trans ltxb).
-by apply/notK=> leax; case: le_b_nx; exists a; rewrite // ltr_oppl.
+  by exists (- b)%R => [|[c]]; rewrite ?ltrN2 ?opprK => // /(ltc_trans ltxb).
+by apply/notK=> leax; case: le_b_nx; exists a; rewrite // ltrNl.
 Qed.
 
 Lemma eqR_opp2 x y : opp x == opp y -> x == y.
@@ -355,9 +355,9 @@ split=> [|| a b [c ltxc ltyac] ltab | a [b ltxb /open[c ltyc ltcab]]].
   by exists (b + a)%R, a; rewrite ?addrK.
 - have [[a leax] [b /leRq-leby]] := (cut_lb x, cut_lb y).
   exists (b + a)%R => -[c ltxc /leby].
-  by rewrite ltcE ltr_subr_addr ltr_add2l => /(ltc_trans ltxc).
-- by exists c => //; apply: ltc_trans ltyac _; rewrite ltr_add2r.
-by exists (c + b)%R; [exists b; rewrite ?addrK | rewrite -ltr_subr_addr].
+  by rewrite ltcE ltrBrDr ltrD2l => /(ltc_trans ltxc).
+- by exists c => //; apply: ltc_trans ltyac _; rewrite ltrD2r.
+by exists (c + b)%R; [exists b; rewrite ?addrK | rewrite -ltrBrDr].
 
 Qed.
 
@@ -390,24 +390,24 @@ Qed.
 Lemma addN x : x - x == 0.
 Proof.
 apply eqR_sym; split=> [c [a ltxa [b lt_ac_b /leRq-lebx]] | d d_gt0].
-  by rewrite ltcE -(ltr_addr (- a)) ltr_oppl (lt_trans lt_ac_b) ?lebx.
+  by rewrite ltcE -(ltrDr (- a)) ltrNl (lt_trans lt_ac_b) ?lebx.
 have [[a ltxa] [b lebx]] := (cut_ub x, cut_lb x).
 have{a ltxa d_gt0} []: exists n, x < b + d *+ n.
   have ltab: (0 < a - b)%R by move/leRq in lebx; rewrite subr_gt0 lebx.
   pose c := ((a - b) / d)%R; have c_ge0: (0 <= c)%R by rewrite ltW ?divr_gt0.
-  exists `|numq c|%N; apply: ltc_le_trans ltxa _; rewrite -ler_subl_addl.
+  exists `|numq c|%N; apply: ltc_le_trans ltxa _; rewrite -lerBlDl.
   rewrite pmulrn gez0_abs -?ge_rat0 // -mulrzl numqE mulrAC.
-  by rewrite divfK ?gt_eqF ?ler_pmulr // ler1z -gtz0_ge1 denq_gt0.
+  by rewrite divfK ?gt_eqF ?ler_pMr // ler1z -gtz0_ge1 denq_gt0.
 elim=> [|n IHn]; rewrite ?addr0 // mulrSr => /open[a ltxa lt_a_dnd].
 have [/IHn//| le_bdn_x] := classical (x < b + d *+ n).
-by exists a => //; exists (b + d *+ n)%R; rewrite // opprB ltr_subl_addr -addrA.
+by exists a => //; exists (b + d *+ n)%R; rewrite // opprB ltrBlDr -addrA.
 Qed.
 
 Lemma add0 x : 0 + x == x.
 Proof.
 split=> [a /open[b ltxb ltba] | a [b b_gt0] ltxab].
   by exists (a - b)%R; [rewrite ltcE subr_gt0 | rewrite opprD opprK addNKr].
-by apply: ltc_trans ltxab _; rewrite gtr_addl oppr_lt0.
+by apply: ltc_trans ltxab _; rewrite gtrDl oppr_lt0.
 Qed.
 
 Lemma opp0 : - 0 == 0. Proof. by rewrite -[opp 0]add0 addN. Qed.
@@ -432,9 +432,9 @@ split=> [|| a b [c ltxc ltyac] ltab | a [b ltxb /open[c ltyc ltcab]]].
   by exists (b * a)%R, a; rewrite ?mulfK ?gt_eqF // (abs_ge0 ltxa).
 - by exists 0%R => -[a _ /abs_ge0]; rewrite mul0r ltcE ltxx.
 - exists c => //; have c_gt0: 0 < c := abs_ge0 ltxc.
-  by apply: ltc_trans ltyac _; rewrite ltr_pmul2r ?invr_gt0.
+  by apply: ltc_trans ltyac _; rewrite ltr_pM2r ?invr_gt0.
 have b_gt0: 0 < b := abs_ge0 ltxb.
-by exists (c * b)%R; first exists b; rewrite -?ltr_pdivl_mulr ?mulfK ?gt_eqF.
+by exists (c * b)%R; first exists b; rewrite -?ltr_pdivlMr ?mulfK ?gt_eqF.
 Qed.
 
 Definition amul x y := Cut (amul_is_cut x y).
@@ -463,7 +463,7 @@ Lemma amulC x y : `|x|*|y| == `|y|*|x|.
 Proof.
 without loss suffices: x y / `|y|*|x| <= `|x|*|y| by [].
 move=> b [a ltxa ltyba]; exists (b / a)%R; rewrite // invf_div mulrC divfK //.
-by rewrite gt_eqF // -(mul0r a) -ltr_pdivl_mulr (abs_ge0 ltxa, abs_ge0 ltyba).
+by rewrite gt_eqF // -(mul0r a) -ltr_pdivlMr (abs_ge0 ltxa, abs_ge0 ltyba).
 Qed.
 
 Lemma amulA x y z : `|x|*|`|y|*|z| | == `| `|x|*|y| |*|z|.
@@ -537,8 +537,8 @@ have dgt0: 0 < d by move/leR0y: lty_da1; rewrite ltcE pmulr_lgt0 ?invr_gt0.
 have cdgt0: 0 < c - d.
   by move/leR0z: ltz_cda2; rewrite ltcE pmulr_lgt0 ?invr_gt0.
 exists a; rewrite // (ge0_abs le0yz); exists (d / a)%R; last rewrite -mulrBl.
-  by apply: ltc_le_trans lty_da1 _; rewrite ler_pmul2l ?lef_pinv.
-by apply: ltc_le_trans ltz_cda2 _; rewrite ler_pmul2l ?lef_pinv.
+  by apply: ltc_le_trans lty_da1 _; rewrite ler_pM2l ?lef_pV2.
+by apply: ltc_le_trans ltz_cda2 _; rewrite ler_pM2l ?lef_pV2.
 Qed.
 
 Lemma mul1 x : 1 * x == x.
@@ -547,11 +547,11 @@ elim/opp_ind: x => [x IHx | x le0x].
   by apply eqR_opp2; rewrite -IHx mulRN.
 rewrite ge0_mul //; split=> [b /open[a ltxa ltab] | b [a [lt1a _] ltxba]].
   have a_gt0: 0 < a by apply/leRq: (a) ltxa.
-  by rewrite amulC; exists a; rewrite ge0_abs // ltcE ltr_pdivl_mulr ?mul1r.
+  by rewrite amulC; exists a; rewrite ge0_abs // ltcE ltr_pdivlMr ?mul1r.
 have a_gt0: 0 < a by apply: lt_trans lt1a.
-have b_gt0: 0 < b by rewrite ltcE -(mul0r a) -ltr_pdivl_mulr ?(abs_ge0 ltxba).
+have b_gt0: 0 < b by rewrite ltcE -(mul0r a) -ltr_pdivlMr ?(abs_ge0 ltxba).
 rewrite -[x]ge0_abs //; apply: ltc_trans ltxba _.
-by rewrite gtr_pmulr ?invf_lt1.
+by rewrite gtr_pMr ?invf_lt1.
 Qed.
 
 Lemma mul_monotony x y z : 0 <= x -> y <= z -> x * y <= x * z.
@@ -601,15 +601,15 @@ pose E z := `|x|*|z| < 1; have E_0: E 0 by rewrite /E amulC amul0.
 have supE: has_sup E.
   split; [by exists 0 | exists a^-1%R => //].
   move=> z [b ltxb [lt_z_vb _]]; apply/ltcW/(ltc_trans lt_z_vb).
-  by rewrite mul1r (ltf_pinv (abs_ge0 ltxb)) ?(gec_lt_trans _ ltxb) // => -[].
+  by rewrite mul1r (ltf_pV2 (abs_ge0 ltxb)) ?(gec_lt_trans _ ltxb) // => -[].
 have ubEy: ub E y by apply: sup_ub.
 have le0y: y >= 0 by apply/leRq/ubEy.
 rewrite ge0_mul //; split=> [b lt1b | b [c ltxc [ltybc _]]]; last first.
   have [d ltxd ltdc] := open ltxc.
   have [c_gt0 d_gt0] := (abs_ge0 ltxc, abs_ge0 ltxd).
-  suffices: (1 / c < b / c)%R by rewrite ltr_pmul2r ?invr_gt0.
+  suffices: (1 / c < b / c)%R by rewrite ltr_pM2r ?invr_gt0.
   apply: gec_lt_trans ltybc; apply/leRq/ubEy; exists d => //.
-  by rewrite !mul1r ge0_abs ltcE ?ltf_pinv // lt_gtF ?invr_gt0.
+  by rewrite !mul1r ge0_abs ltcE ?ltf_pV2 // lt_gtF ?invr_gt0.
 have lt0b: 0 < b by apply: lt_trans lt1b.
 pose e := (1 - b^-1)%R; have lt0e: 0 < e by rewrite ltcE subr_gt0 invf_lt1.
 have [c ltxc [d lt_cea_d ledx]]: x - x < a * e by rewrite addN ltcE mulr_gt0.
@@ -617,13 +617,13 @@ have ltac: a < c := gec_lt_trans leax ltxc.
 have lt0c: 0 < c := lt_trans lt0a ltac.
 have lt0d: 0 < d.
   apply: lt_trans lt_cea_d; rewrite opprB subr_gt0 mulrBr mulr1.
-  by rewrite ltr_snsaddr // oppr_lt0 divr_gt0.
+  by rewrite ltr_nDr // oppr_lt0 divr_gt0.
 have le_y_vd: y <= d^-1%R.
   apply/sup_le_ub=> // z -[f ltxf [lt_z_vf _]]; apply/ltcW/(ltc_trans lt_z_vf).
-  by rewrite mul1r (ltf_pinv (abs_ge0 ltxf)) ?(gec_lt_trans _ ltxf) // => -[].
+  by rewrite mul1r (ltf_pV2 (abs_ge0 ltxf)) ?(gec_lt_trans _ ltxf) // => -[].
 exists c; rewrite ge0_abs //; apply: le_y_vd; rewrite ltcE.
-rewrite -invf_div ltf_pinv ?rpred_div //; apply: lt_trans lt_cea_d.
-by rewrite ltr_oppr -[c in (_ - c)%R]mulr1 ltr_subl_addl -mulrBr ltr_pmul2r.
+rewrite -invf_div ltf_pV2 ?rpred_div //; apply: lt_trans lt_cea_d.
+by rewrite ltrNr -[c in (_ - c)%R]mulr1 ltrBlDl -mulrBr ltr_pM2r.
 Qed.
 
 Definition structure := Real.Structure leR sup add 0 opp mul 1 inv.

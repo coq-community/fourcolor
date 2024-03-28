@@ -297,7 +297,7 @@ Lemma end0g_equad d : ~~ has (equad (gface d)) m -> m (end0g d) = false.
 Proof.
 move/hasPn/(_ _)/contraTF; apply; rewrite !(inE, in_gchop_rect) /gchop.
 rewrite !halfg_face !oddg_face /end0g; case: (halfg d) => x y.
-by case: oddgP; rewrite /= !lter_add2 /= ?ler_addl ?ger_addl.
+by case: oddgP; rewrite /= !lterD2 /= ?lerDl ?gerDl.
 Qed.
 
 Lemma mring_equad d :
@@ -307,7 +307,7 @@ move=> m'fd; apply/mapP => -[d1 m_d1 Dp].
 rewrite in_mring inE (contraTF (hasPn m'fd _)) {m'fd}// in m_d1.
 rewrite !(inE, in_gchop_rect) /gchop !halfg_face !oddg_face /end0g.
 rewrite -{Dp}(canLR (addrK _) Dp) -addrA; case: (halfg d) => x y.
-by do 2!case: oddgP; rewrite /= !lter_add2 ?ger_addl ?ler_addl.
+by do 2!case: oddgP; rewrite /= !lterD2 ?gerDl ?lerDl.
 Qed.
 
 Section Extend1.
@@ -367,7 +367,7 @@ apply/allP=> _ /trajectP[i lti3 ->]; set p := halfg _.
 have [_] := andP ext1d; apply/contra=> m_p; apply/hasP; exists p => {m_p}//.
 rewrite in_gchop_rect /= /gchop {}/p -iterSr halfg_edge halfg_iter_face.
 case: (halfg d) => x y; rewrite oddg_iter_face.
-by case: oddgP i lti3 => -[|[|[]]] //=; rewrite ?lter_add2 ?ler_addl ?ger_addl.
+by case: oddgP i lti3 => -[|[|[]]] //=; rewrite ?lterD2 ?lerDl ?gerDl.
 Qed.
 
 Lemma ext1_mring_def : ext1_mring =i gborder (ext_mdisk d).
@@ -465,7 +465,7 @@ apply/allP=> _ /trajectP[i lti2 ->]; rewrite -!iterSr.
 have [_ _ /hasPn/(_ _)/contraL] := and3P ext2d; apply.
 rewrite halfg_edge halfg_iter_face oddg_iter_face !(inE, in_gchop_rect).
 rewrite /gchop halfg_face oddg_face; case: (halfg d) => x y.
-by case: oddgP i lti2 => -[|[]] //= _; rewrite !lter_add2 ?ler_addl ?ger_addl.
+by case: oddgP i lti2 => -[|[]] //= _; rewrite !lterD2 ?lerDl ?gerDl.
 Qed.
 
 Lemma ext2_mring_def : ext2_mring =i gborder (ext_mdisk d).
@@ -580,7 +580,7 @@ have{IHn} IHp d: halfg d = p -> has (predD r0 (gchop1 d)) m -> extends_in r p.
     case/andP: m0q => r0q /(hasPn r01'm); apply: contra => d_q.
     by rewrite in_gchop1_rect /= r0q gchop_chop1.
   set ed := gedge d; case Ded: (halfg ed) => [x y].
-  case Dr0: r0 => [x0 x1 y0 y1] /=; rewrite -!ler_subr_addr !ltr_subr_addr.
+  case Dr0: r0 => [x0 x1 y0 y1] /=; rewrite -!lerBrDr !ltrBrDr.
   have r0efd i: r0 (halfg (gedge (iter i gface (gedge ed)))).
     by rewrite (insetP r0p) // -Dp -(halfg_iter_face i) gedge2 gtouch_edge.
   have /= (d2 := gedge (gface (gface ed))): gchop_rect r0 d2 (halfg d2).
@@ -607,8 +607,8 @@ have m_nd4 q: r0 q -> has (equad (nd q)) m -> q \in m.
   apply/esym/eqP; rewrite -[_ == _]/(_ && _) !eq_le -andbA; apply/and4P.
   move: q4q1; rewrite !(inE, in_gchop_rect) /gchop halfg_face -[halfg _]halfgK.
   rewrite h_nd oddg_face o_nd ccw4; case: (halfg q) q1 => x y [x1 y1] /=.
-  rewrite -!(ltz_addr1 (_ %/ _)%Z) !ltz_divLR ?lez_divRL // !mulrDl !mulz2.
-  by case: oddgP; rewrite /= ?addr0 ?addrK !(addrA _ 1 1) !ltz_addr1;
+  rewrite -!(ltzD1 (_ %/ _)%Z) !ltz_divLR ?lez_divRL // !mulrDl !mulz2.
+  by case: oddgP; rewrite /= ?addr0 ?addrK !(addrA _ 1 1) !ltzD1;
      do ![case/andP | move-> | clear 1].
 have gchop1F3E d: gchop1 (iter 3 gface (gedge d)) = gchop1 (gface d).
   by rewrite -gchop1_shift gface4 gedge2.
@@ -657,7 +657,7 @@ have [m_nd | m'nd] := boolP (gnode p \in m).
 have nd4'm: ~~ has (equad (nd (gnode p))) m by apply: contra m'nd => /m_nd4->.
 have r0_n2p: r0 (gnode (gnode p)).
   rewrite -[gnode _]addrA oddg_node (insetP r0p) //.
-  by case: oddgP; case: (p) => x y; rewrite /= !lter_add2.
+  by case: oddgP; case: (p) => x y; rewrite /= !lterD2.
 have m_n2p: gnode (gnode p) \in m.
   have [q m_q p9q] := hasP m_p; apply/m_nd4/hasP=> //; exists q => //.
   have ep_q: gchop (gedge (nd p)) q.
@@ -740,7 +740,7 @@ have ext_along d: {xm : matte | ext_m_r xm & forall c, xmE xm (oddg d) c}.
     by apply/hasP; exists q; rewrite ?in_refine_matte ?in_refine_rect 1?insetW.
   have xr_qd: inset xr (q - oddg d).
     rewrite -in_refine_rect refine_inset in r_p; apply/(insetP r_p).
-    by case: oddgP (q) => -[x y] /=; rewrite !lter_add2.
+    by case: oddgP (q) => -[x y] /=; rewrite !lterD2.
   have[xm1 xm1P xrm_xm1 xm1c1] := coarse_extends_in xrExmh xr_xm xr_qd.
   exists xm1 => [|c].
     split=> p1 xm1p1; first by rewrite (in_extension xm1P) ?in_refine_matte.

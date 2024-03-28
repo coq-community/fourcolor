@@ -40,8 +40,8 @@ HB.instance Definition _ := Countable.copy cube_tag (can_type cube_tag_codeK).
 Fact cube_tag_enumP : Finite.axiom cube_tag_enum. Proof. by case. Qed.
 HB.instance Definition _ := isFinite.Build cube_tag cube_tag_enumP.
 
-Definition cube_dart := cube_tag * G : Type.
-HB.instance Definition _ := Finite.copy cube_dart [finType of cube_dart].
+Definition cube_dart : Type := cube_tag * G.
+HB.instance Definition _ := Finite.on cube_dart.
 
 Let tsI : cube_tag -> G -> cube_dart := @pair _ _.
 Let tsE (u : cube_dart) : G := u.2.
