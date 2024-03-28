@@ -123,7 +123,7 @@ Definition sew_tag_decode b := if b then SewDisk else SewRest.
 Fact sew_tag_subproof : cancel sew_tag_code sew_tag_decode. Proof. by case. Qed.
 HB.instance Definition _ := Countable.copy sew_tag (can_type sew_tag_subproof).
 #[non_forgetful_inheritance]
-HB.instance Definition _ : isFinite sew_tag := CanFinMixin sew_tag_subproof.
+HB.instance Definition _ : isFinite sew_tag := CanIsFinite sew_tag_subproof.
 
 Definition sew_dart_at i : finType :=
   match i with
@@ -132,12 +132,12 @@ Definition sew_dart_at i : finType :=
   end.
 
 Definition sew_dart := {i : sew_tag & sew_dart_at i}.
-HB.instance Definition _ := Finite.copy sew_dart [finType of sew_dart].
+HB.instance Definition _ := Finite.on sew_dart.
 
 Definition sewd xd : sew_dart := @Tagged _ SewDisk sew_dart_at xd.
 
 Definition sewr_r xr b'xr : sew_dart :=
-  @Tagged _ SewRest sew_dart_at (sub xr b'xr).
+  @Tagged _ SewRest sew_dart_at (Sub xr b'xr).
 
 Definition sewr xr :=
   match in_bGr xr with

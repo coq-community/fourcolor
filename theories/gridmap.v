@@ -81,12 +81,12 @@ Definition cmatte := Ir -> matte.
 Implicit Types (e : adj_index) (ab : adjbox) (cm : cmatte).
 
 #[hnf]
-HB.instance Definition _ := Finite.copy adj_index [finType of adj_index].
+HB.instance Definition _ := Finite.on adj_index.
 
 Coercion pair_of_adj_index e : Ir * Ir := val e.
 Coercion adj_incident e := pred2 e.1 e.2.
 
-Definition AdjIndex i j ltij : adj_index := sub (i, j) ltij.
+Definition AdjIndex i j ltij : adj_index := Sub (i, j) ltij.
 
 Definition cm_proper cm := forall i j, has (cm i) (cm j) -> i = j.
 
@@ -208,8 +208,8 @@ have [w_gt0 h_gt0]: 0 < bbw%:Z /\ 0 < bbh%:Z; last split=> //.
 case: bb w_gt0 h_gt0 => x0 x1 y0 y1 /=; rewrite -[x1](subrK x0) -[y1](subrK y0).
 rewrite /zwidth /= !addrK; case: (_ - _) (_ - _) => h []w _ _ //.
 pose p0 := Gpoint x0 y0; exists p0 => [x y | p].
-  by rewrite addrC /= !ltr_add2r !ler_addr.
-rewrite -(subrK p0 p); case: (p - p0) => x y /=; rewrite !ler_addr !ltr_add2r.
+  by rewrite addrC /= !ltrD2r !lerDr.
+rewrite -(subrK p0 p); case: (p - p0) => x y /=; rewrite !lerDr !ltrD2r.
 by case: x y => x [] y /andP[] //; exists x, y; first rewrite addrC.
 Qed.
 
@@ -231,11 +231,11 @@ Proof. by rewrite !gmgridE gedge2 orbC. Qed.
 
 Definition gmdart : predArgType := seq_sub gmgrid.
 Coercion gmval := @ssval _ _ : gmdart -> gpoint.
-Definition Gmdart d : d \in gmgrid -> gmdart := sub d.
+Definition Gmdart d : d \in gmgrid -> gmdart := Sub d.
 Implicit Types u v w : gmdart.
 
 HB.instance Definition _ := [isSub of gmdart for gmval].
-HB.instance Definition _ := Finite.copy gmdart [finType of gmdart].
+HB.instance Definition _ := Finite.on gmdart.
 
 Definition gmedge u := Gmdart (etrans (gmgrid_edge u) (valP u)).
 Definition gmpick u s : gmdart := foldl insubd u s.
@@ -313,15 +313,15 @@ move=> d; apply/imageP/flatten_mapP=> [[/= u G'u ->] | [c ltc /mapP[z ltz ->]]].
     by rewrite /c mem_iota; case: oddgP.
   rewrite {}/c /bbd /bbp; congr ((p0 + _) *+ 2 + _); last by case: oddgP.
   case: oddgP G'u; rewrite bbE ?addr0 ?ubx ?uby /= ?andbT /h1 /w1;
-    do ?by rewrite andbC -lez_addr1 subrK ltW // subr_ge0 -eqn0Ngt => /eqP->.
-  - by have [/idPn||->] := ltrgtP bbh%:Z; rewrite ?addrK // -leNgt lez_addr1.
-  - by have [/idPn||->] := ltrgtP bbw%:Z; rewrite ?addrK // -leNgt lez_addr1.
+    do ?by rewrite andbC -lezD1 subrK ltW // subr_ge0 -eqn0Ngt => /eqP->.
+  - by have [/idPn||->] := ltrgtP bbh%:Z; rewrite ?addrK // -leNgt lezD1.
+  - by have [/idPn||->] := ltrgtP bbw%:Z; rewrite ?addrK // -leNgt lezD1.
 rewrite -[bbd c z]gedge2; set ed := gedge (bbd c z).
 suffices /andP[Ged]: (ed \in gmgrid) && ~~ bb (halfg ed) by exists (Gmdart Ged).
 rewrite mem_iota /= -ltz_nat in ltz; rewrite !inE in ltc.
 rewrite gmgridE andb_orl andbN gedge2 halfg_edge halfg_add2 oddg_add2 -!addrA.
 by case/or4P: ltc ltz => /eqP->; rewrite !bbE !addr0 ?addrK ?ltxx => ->;
-   rewrite ?gtr_addl !andbT ?subr_ge0.
+   rewrite ?gtrDl !andbT ?subr_ge0.
 Qed.
 
 Lemma cface_end0g u v : cface u v = (end0g u == end0g v).
@@ -351,7 +351,7 @@ have gmendP (u : gmdart): end0g u - p0 \in gmframe.
     rewrite -halfg_face -[gface _]gnode4 gedgeK => bbn3u; have:= IHu (face u).
     by rewrite inE val_insubd gmgridE bbn3u !end0g_node => ->.
   rewrite /end0g {}Du addrC -addrA addKr mem_enum_grect !intS !(addrC 1).
-  by case: oddgP; rewrite /= ?addr0 ?ltr_add2r ?ltz_addr1 ?ltW ?ubx.
+  by case: oddgP; rewrite /= ?addr0 ?ltrD2r ?ltzD1 ?ltW ?ubx.
 pose gmend u := SeqSub (gmendP u).
 suffices adj_gmend: fun_adjunction gmend id face predT.
   rewrite -(adjunction_n_comp _ (fconnect_sym _) cfaceC _ adj_gmend) //.
@@ -363,10 +363,10 @@ pose c := locked Gpoint (x == bbw) (y == bbh).
 suffices Gu: (p0 + (Gpoint x y - oddg c)) *+ 2 + oddg c \in gmgrid.
   exists (Gmdart Gu); rewrite fconnect_id -val_eqE /= addrCA -addrA -opprB.
   by rewrite halfg_eq ?oddg_eq ?subrK.
-rewrite gmgridE halfg_eq //= {}/c -lock bbE !ltr_subl_addl !subr_ge0.
+rewrite gmgridE halfg_eq //= {}/c -lock bbE !ltrBlDl !subr_ge0.
 apply/orP; left; apply/andP; move: Gxy; rewrite mem_enum_grect /=.
-rewrite !intS !ltz_add1r (le_eqVlt x) (le_eqVlt y) => /andP[Gx Gy].
-by split; [move: Gx | move: Gy]; case: eqP => // -> _; rewrite ltr_addr andbT.
+rewrite !intS !ltz1D (le_eqVlt x) (le_eqVlt y) => /andP[Gx Gy].
+by split; [move: Gx | move: Gy]; case: eqP => // -> _; rewrite ltrDr andbT.
 Qed.
 
 Lemma fcard_gmnode : (bbw * bbh <= fcard node gmdart_map)%N.
@@ -376,7 +376,7 @@ rewrite -garea_refine_rect -size_enum_grect.
 rewrite -[n in n.*2]muln2 doubleMr (fcard_order_set nodeI _ gm_inner_closed).
   rewrite cardE -(size_map val) uniq_leq_size ?enum_grect_uniq // => d.
   rewrite mem_enum_grect in_refine_rect => bb_d.
-  by apply/imageP/(ex_intro2 _ _ (sub d _)); rewrite // gmgridE bb_d.
+  by apply/imageP/(ex_intro2 _ _ (Sub d _)); rewrite // gmgridE bb_d.
 apply/subsetP=> /= u bb_u; rewrite inE.
 have cyc_u: fcycle node (traject node u 4).
   rewrite [3%N]lock /= rcons_path fpath_traject -lock /= -val_eqE.

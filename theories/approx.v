@@ -266,11 +266,11 @@ have [nx1 lbx1 ubx1] := approx_between Dmx Dmx1 (scale_s_dxy (i4 1%N isT)).
 have [ny0 lby0 uby0] := approx_between Dmy0 Dmy (scale_s_dxy (i4 2%N isT)).
 have [ny1 lby1 uby1] := approx_between Dmy Dmy1 (scale_s_dxy (i4 3%N isT)).
 exists (s1, Grect nx0 (nx1 + 1) ny0 (ny1 + 1)) => /=.
-  by exists (Gpoint mx my); rewrite //= !addrK -!lez_addr1 ubx0 lbx1 uby0 lby1.
+  by exists (Gpoint mx my); rewrite //= !addrK -!lezD1 ubx0 lbx1 uby0 lby1.
 have lt_approx u v mu mv: ap_s1 u mu -> ap_s1 v mv -> (mu + 1 <= mv)%R -> u < v.
   case=> _ ubu [lbv _] ltuv; apply/(leR_pmul2l v u es1gt0)/(ltR_le_trans ubu).
   by apply: leR_trans lbv; rewrite -intRD1; apply/intR_leP.
-case=> x2 y2 [[mx2 my2] [Dmx2 Dmy2]] /=; rewrite -andbA -!lez_addr1 => /and4P[].
+case=> x2 y2 [[mx2 my2] [Dmx2 Dmy2]] /=; rewrite -andbA -!lezD1 => /and4P[].
 move=> /(le_trans lbx0)/lt_approx-lbx /le_trans/(_ ubx1)/lt_approx-ubx.
 move=> /(le_trans lby0)/lt_approx-lby /le_trans/(_ uby1)/lt_approx-uby.
 by do 2!split; [apply/lbx | apply/ubx | apply/lby | apply/uby].
@@ -291,7 +291,7 @@ rewrite -(leR_pmul2l _ x1 sXgt0) -(leR_pmul2l x1 _ sXgt0) !sZK => lbx1 ubx1 [].
 rewrite -(leR_pmul2l _ y1 sXgt0) -(leR_pmul2l y1 _ sXgt0) !sZK => lby1 uby1.
 have [p1 Dp1] := approx_point_exists s (Point x1 y1); exists p1 => //.
 case: p1 Dp1 => [p1x p1y] [[ubp1x lbp1x] [ubp1y lbp1y]] /=.
-rewrite -!(rwP andP) -!ltz_addr1 -!lez_addr1 -!(rwP (@intR_ltP R _ _)).
+rewrite -!(rwP andP) -!ltzD1 -!lezD1 -!(rwP (@intR_ltP R _ _)).
 rewrite (intRD1 R p1x) (intRD1 R p1y)  -/intRR; split.
   by split; [apply: ltR_trans lbp1x | apply: leR_lt_trans ubx1].
 by split; [apply: ltR_trans lbp1y | apply: leR_lt_trans uby1].

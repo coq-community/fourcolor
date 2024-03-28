@@ -68,7 +68,7 @@ have IHe z := IHm (WalkupE z) (ltG'm z) (planar_WalkupE z planarG).
 have IHn z := IHm (WalkupN z) (ltG'm z) (planar_WalkupN z planarG).
 have{m IHm ltG'm} IHf z := IHm (WalkupF z) (ltG'm z) (planar_WalkupF z planarG).
 have injG z : injective (val : WalkupE z -> G) := val_inj.
-pose ofG (z x : G) : x != z -> WalkupE z := sub x.
+pose ofG (z x : G) : x != z -> WalkupE z := Sub x.
 have uniqG z := map_inj_uniq (injG z); have mem2G z := mem2_map (injG z).
 have clink_eq := sameP clinkP pred2P.
 pose map_cpath f x p := {q | (f q.1, map f q.2) = (x : G, p) & cpath q.1 q.2}.

@@ -507,7 +507,7 @@ HB.instance Definition _ (A : choiceType) := Choice.copy (ecp_dart A)
 HB.instance Definition _ (A : countType) := Countable.copy (ecp_dart A)
   (can_type (@ecp_cancel A)).
 HB.instance Definition _ (A : finType) : isFinite (ecp_dart A) :=
-  CanFinMixin (@ecp_cancel A).
+  CanIsFinite (@ecp_cancel A).
 
 Lemma card_ecp (A : finType) : #|ecp_dart A| = #|A|.+2.
 Proof.

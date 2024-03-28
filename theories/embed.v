@@ -1101,9 +1101,9 @@ rewrite /embd_face; case: ifP (edge_perimeter (face (val u))) => //= _.
 by rewrite inE /= (canRL edgeK (e2c _)) -(fclosed1 rcN).
 Qed.
 
-Let dedge u : ddart := sub (embd_edge (val u)) (embd_edge_subproof u).
-Let dnode u : ddart := sub (node (val u)) (embd_node_subproof u).
-Let dface u : ddart := sub (embd_face (val u)) (embd_face_subproof u).
+Let dedge u : ddart := Sub (embd_edge (val u)) (embd_edge_subproof u).
+Let dnode u : ddart := Sub (node (val u)) (embd_node_subproof u).
+Let dface u : ddart := Sub (embd_face (val u)) (embd_face_subproof u).
 
 Fact embed_disk_subproof : cancel3 dedge dnode dface.
 Proof.
@@ -1121,7 +1121,7 @@ Lemma embd_inj : injective embd. Proof. exact: val_inj. Qed.
 Lemma codom_embd : codom embd =i bc.
 Proof.
 move=> x; apply/imageP/idP => [[u _ ->] | bc_x]; first exact: (valP u).
-by exists (sub x bc_x).
+by exists (Sub x bc_x).
 Qed.
 
 Definition embd_ring : seq Gd := preim_seq embd erc.
@@ -1219,9 +1219,9 @@ rewrite [_ \in _](contraR _ (embr_edge_subproof w)) ?Dew //.
 by rewrite (mem_image embdd_inj).
 Qed.
 
-Let redge w : rdart := sub (edge (val w)) (embr_edge_subproof w).
-Let rnode w : rdart := sub (embr_node (val w)) (embr_node_subproof w).
-Let rface w : rdart := sub (embr_face (val w)) (embr_face_subproof w).
+Let redge w : rdart := Sub (edge (val w)) (embr_edge_subproof w).
+Let rnode w : rdart := Sub (embr_node (val w)) (embr_node_subproof w).
+Let rface w : rdart := Sub (embr_face (val w)) (embr_face_subproof w).
 
 Fact embed_rem_subproof : cancel3 redge rnode rface.
 Proof.
@@ -1244,7 +1244,7 @@ Lemma embr_inj : injective embr. Proof. exact: val_inj. Qed.
 Lemma codom_embr : codom embr =i [predC rdom'].
 Proof.
 move=> x; apply/imageP/idP=> [[w _ ->] | bG'x]; first exact: (valP w).
-by exists (sub x bG'x).
+by exists (Sub x bG'x).
 Qed.
 
 Definition embr_ring : seq Gr := preim_seq embr (rev (map embdd embd_ring)).
