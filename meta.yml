@@ -52,8 +52,6 @@ tested_coq_opam_versions:
   repo: 'mathcomp/mathcomp'
 - version: '2.2.0-coq-dev'
   repo: 'mathcomp/mathcomp'
-- version: 'coq-8.17'
-  repo: 'mathcomp/mathcomp-dev'
 - version: 'coq-8.19'
   repo: 'mathcomp/mathcomp-dev'
 - version: 'coq-dev'
