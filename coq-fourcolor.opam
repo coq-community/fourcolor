@@ -21,7 +21,7 @@ build: [make "-j%{jobs}%"]
 install: [make "install"]
 depends: [
   "coq" {(>= "8.16" & < "8.20~") | (= "dev")}
-  "coq-mathcomp-ssreflect" {(>= "2.0.0" & < "2.3~") | (= "dev")}
+  "coq-mathcomp-ssreflect" {(>= "2.1.0" & < "2.3~") | (= "dev")}
   "coq-mathcomp-algebra" 
 ]
 

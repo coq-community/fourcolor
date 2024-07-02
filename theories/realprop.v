@@ -1,7 +1,7 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat div order.
-From mathcomp Require Import ssralg ssrnum ssrint rat intdiv.
+From mathcomp Require Import ssralg ssrnum ssrint archimedean rat intdiv.
 From Coq Require Import Morphisms Setoid.
 From fourcolor Require Import real realsyntax.
 
@@ -46,7 +46,7 @@ Definition max x y : R := IF x >= y then x else y.
 Definition intR m : R := match m with Posz n => n%:R | Negz n => - n.+1%:R end.
 
 Definition ratR (a : rat) :=
-  if a \is a Qint then intR (numq a) else intR (numq a) / intR (denq a).
+  if a \is a Num.int then intR (numq a) else intR (numq a) / intR (denq a).
 
 Inductive floor_set x : Real.set R :=
   FloorSet m of intR m <= x : floor_set x (intR m).
