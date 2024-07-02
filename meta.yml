@@ -16,6 +16,8 @@ description: |-
 publications:
 - pub_url: https://www.ams.org/notices/200811/tx081101382p.pdf
   pub_title: Formal Proof—The Four-Color Theorem
+- pub_url: https://inria.hal.science/hal-04034866/document
+  pub_title: A computer-checked proof of the Four Color Theorem
 
 authors:
 - name: Georges Gonthier

@@ -42,6 +42,7 @@ basic plane topology definitions, and a theory of combinatorial hypermaps.
 - Coq namespace: `fourcolor`
 - Related publication(s):
   - [Formal Proof—The Four-Color Theorem](https://www.ams.org/notices/200811/tx081101382p.pdf) 
+  - [A computer-checked proof of the Four Color Theorem](https://inria.hal.science/hal-04034866/document) 
 
 ## Building and installation instructions
 
