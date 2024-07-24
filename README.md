@@ -37,8 +37,9 @@ basic plane topology definitions, and a theory of combinatorial hypermaps.
 - License: [CeCILL-B](LICENSE)
 - Compatible Coq versions: 8.16 or later
 - Additional dependencies:
-  - [MathComp ssreflect 2.1 or later](https://math-comp.github.io)
+  - [MathComp ssreflect 2.1.0 or later](https://math-comp.github.io)
   - [MathComp algebra](https://math-comp.github.io)
+  - [Hierarchy Builder](https://github.com/math-comp/hierarchy-builder) 1.5.0 or later
 - Coq namespace: `fourcolor`
 - Related publication(s):
   - [Formal Proof—The Four-Color Theorem](https://www.ams.org/notices/200811/tx081101382p.pdf) 
