@@ -20,9 +20,10 @@ basic plane topology definitions, and a theory of combinatorial hypermaps."""
 build: [make "-j%{jobs}%"]
 install: [make "install"]
 depends: [
-  "coq" {(>= "8.16" & < "8.20~") | (= "dev")}
-  "coq-mathcomp-ssreflect" {(>= "2.1.0" & < "2.3~") | (= "dev")}
+  "coq" {>= "8.16"}
+  "coq-mathcomp-ssreflect" {>= "2.1.0"}
   "coq-mathcomp-algebra" 
+  "coq-hierarchy-builder" {>= "1.5.0"}
 ]
 
 tags: [

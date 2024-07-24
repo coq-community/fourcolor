@@ -37,7 +37,7 @@ license:
 
 supported_coq_versions:
   text: 8.16 or later
-  opam: '{(>= "8.16" & < "8.20~") | (= "dev")}'
+  opam: '{>= "8.16"}'
 
 tested_coq_opam_versions:
 - version: '2.1.0-coq-8.16'
@@ -55,20 +55,25 @@ tested_coq_opam_versions:
 - version: 'coq-dev'
   repo: 'mathcomp/mathcomp-dev'
 
-# test master every day at 05:00 UTC
+# test master every Sunday at 05:00 UTC
 # (mathcomp/mathcomp-dev is rebuilt every day at 04:00 Paris time)
-ci_cron_schedule: '0 5 * * *'
+ci_cron_schedule: '0 5 * * 0'
 
 dependencies:
 - opam:
     name: coq-mathcomp-ssreflect
-    version: '{(>= "2.1.0" & < "2.3~") | (= "dev")}'
+    version: '{>= "2.1.0"}'
   description: |-
-    [MathComp ssreflect 2.1 or later](https://math-comp.github.io)
+    [MathComp ssreflect 2.1.0 or later](https://math-comp.github.io)
 - opam:
     name: coq-mathcomp-algebra
   description: |-
     [MathComp algebra](https://math-comp.github.io)
+- opam:
+    name: coq-hierarchy-builder
+    version: '{>= "1.5.0"}'
+  description: |-
+    [Hierarchy Builder](https://github.com/math-comp/hierarchy-builder) 1.5.0 or later
 
 namespace: fourcolor
 
