@@ -421,7 +421,7 @@ have [ltin | ?] := ltnP i nhub; last by rewrite Dvi nth_default ?Ev in vj_gt0.
 have [ltjn | ?] := ltnP j nhub; last by rewrite [vj]nth_default ?Ev in vj_gt0.
 rewrite !{}db2_inc -?Dvi {vb_hcij vb_hcj}//= addrA -lerBrDl -opprD -/vj.
 apply: {IHhc v_hc p_hc vb_hc}(le_trans (IHhc _ v_hc p_hc vb_hc)).
-rewrite lerN2 addrC lerD2r -mulrnDl ler_pMn2r //.
+rewrite lerN2 [leLHS]addrC lerD2r -mulrnDl ler_pMn2r //.
 rewrite addrC -(iter_hub_subn i ltjn) //.
 apply: check_2dbound2P p_b1; rewrite ?arity_iter_face ?hub_subn_hub //.
 by rewrite fit_hubcap_rot.

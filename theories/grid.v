@@ -355,7 +355,7 @@ Proof.
 rewrite -[xmax in RHS](subrK xmin) -ltrBlDr -subr_ge0 /zspan /zwidth.
 case: {xmax}(xmax - xmin) => n; last by case: (x - xmin).
 elim: n xmin => [|n IHn] x0; first by rewrite ltNge andbN.
-rewrite inE -subr_eq0 {}IHn opprD addrA lerBrDl ltrBlDl.
+rewrite inE -subr_eq0 {}IHn opprD addrA lerBrDl [in LHS]ltrBlDl.
 by rewrite orb_andr eq_sym -le_eqVlt; case: eqP => // <-.
 Qed.
 

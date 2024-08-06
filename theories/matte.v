@@ -245,7 +245,8 @@ case=> -> Dd; last rewrite -addrA subrK in Dd.
 suff Dd0: oddg d0 = oddg d by move: Dd; rewrite Dd0 => /addIr->; apply: map_f.
 have:= congr1 oddg Dd; rewrite oddg_add [RHS]oddg_add.
 have{r'E r_d0}: gedge d0 != d := hasPn r'E d0 r_d0.
-by rewrite /gedge 2!addrA -Dd -!addrA -subr_eq0 addrC addKr; do 2!case: oddgP.
+rewrite /gedge 2!addrA -Dd -!addrA -subr_eq0 [d + _ - d]addrC addKr.
+by do 2!case: oddgP.
 Qed.
 
 Lemma refine_mring_def : refine_mring (mring m) =i gborder (refine_mdisk m).
