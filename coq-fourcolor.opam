@@ -1,6 +1,3 @@
-# This file was generated from `meta.yml`, please do not edit manually.
-# Follow the instructions on https://github.com/coq-community/templates to regenerate.
-
 opam-version: "2.0"
 maintainer: "palmskog@gmail.com"
 version: "dev"
@@ -17,13 +14,14 @@ along with the theories needed to support stating and then proving the Theorem.
 This includes an axiomatization of the setoid of classical real numbers,
 basic plane topology definitions, and a theory of combinatorial hypermaps."""
 
-build: [make "-j%{jobs}%"]
-install: [make "install"]
+build: [make "-C" "theories/proof" "-j%{jobs}%"]
+install: [make "-C" "theories/proof" "install"]
 depends: [
   "coq" {>= "8.16"}
   "coq-mathcomp-ssreflect" {>= "2.1.0"}
   "coq-mathcomp-algebra" 
   "coq-hierarchy-builder" {>= "1.5.0"}
+  "coq-fourcolor-reals" {= version}
 ]
 
 tags: [
@@ -31,7 +29,7 @@ tags: [
   "keyword:Four color theorem"
   "keyword:small scale reflection"
   "keyword:Mathematical Components"
-  "logpath:fourcolor"
+  "logpath:fourcolor.proof"
 ]
 authors: [
   "Georges Gonthier"
