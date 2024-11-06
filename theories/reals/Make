@@ -1,0 +1,12 @@
+-Q . fourcolor.reals
+
+-arg -w -arg -notation-overridden
+-arg -w -arg -ambiguous-paths
+-arg -w -arg -redundant-canonical-projection
+-arg -w -arg -deprecated-hint-without-locality
+-arg -w -arg -deprecated-instance-without-locality
+
+real.v
+realsyntax.v
+realprop.v
+realcategorical.v
