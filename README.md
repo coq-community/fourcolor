@@ -48,14 +48,22 @@ basic plane topology definitions, and a theory of combinatorial hypermaps.
 ## Building and installation instructions
 
 The easiest way to install the latest released version of The Four Color Theorem
-is via [OPAM](https://opam.ocaml.org/doc/Install.html):
+is via [opam](https://opam.ocaml.org/doc/Install.html):
 
 ```shell
 opam repo add coq-released https://coq.inria.fr/opam/released
 opam install coq-fourcolor
 ```
 
-To instead build and install manually, do:
+If you are only interested in the formalization of real numbers, you can install
+it separately:
+
+```shell
+opam repo add coq-released https://coq.inria.fr/opam/released
+opam install coq-fourcolor-reals
+```
+
+To instead build and install the whole project manually from the repository, do:
 
 ``` shell
 git clone https://github.com/coq-community/fourcolor.git
@@ -63,7 +71,6 @@ cd fourcolor
 make   # or make -j <number-of-cores-on-your-machine> 
 make install
 ```
-
 
 ## Documentation
 
