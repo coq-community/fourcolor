@@ -1,0 +1,13 @@
+(coq.theory
+ (name fourcolor)
+ (package coq-fourcolor)
+ (theories mathcomp.ssreflect mathcomp.algebra)
+ (flags
+   -w -ambiguous-paths
+   -w -redundant-canonical-projection
+   ; -w -deprecated-syntactic-definition
+   -w -primitive-token-modifier
+   -w -deprecated-hint-without-locality
+   -w -deprecated-instance-without-locality
+   -w -notation-overridden))
+
