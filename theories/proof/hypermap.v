@@ -430,6 +430,8 @@ Qed.
 
 End DerivedMaps.
 
+Arguments cface_mirror [G] x y.
+
 Section EqualHypermap.
 
 Variable G : hypermap.
