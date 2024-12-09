@@ -429,6 +429,8 @@ by rewrite -(mem2_last x) !rev_cons last_cat !last_rcons mem2_cat => ->.
 Qed.
 
 End DerivedMaps.
+Arguments cface_mirror [G].
+Arguments cnode_mirror [G].
 
 Section EqualHypermap.
 
