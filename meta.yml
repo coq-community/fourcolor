@@ -48,11 +48,9 @@ tested_coq_opam_versions:
   repo: 'mathcomp/mathcomp'
 - version: '2.2.0-coq-8.19'
   repo: 'mathcomp/mathcomp'
-- version: '2.2.0-coq-dev'
+- version: '2.3.0-coq-8.20'
   repo: 'mathcomp/mathcomp'
-- version: 'coq-8.19'
-  repo: 'mathcomp/mathcomp-dev'
-- version: 'coq-dev'
+- version: 'rocq-prover-dev'
   repo: 'mathcomp/mathcomp-dev'
 
 # test master every Sunday at 05:00 UTC
