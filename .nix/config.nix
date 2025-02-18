@@ -30,22 +30,37 @@
 
   ## select an entry to build in the following `bundles` set
   ## defaults to "default"
-  default-bundle = "8.18+2.0";
+  default-bundle = "8.20+2.3";
 
   ## write one `bundles.name` attribute set per
   ## alternative configuration, the can be used to
   ## compute several ci jobs as well
   bundles = let 
     mc21 = {
-      mathcomp.override.version = "mathcomp-2.1.0";
+      mathcomp.override.version = "2.1.0";
       mathcomp.job = false;
       mathcomp-finmap.override.version = "2.0.0";
       graph-theory.override.version = "v0.9.3";
     };
+    mc22 = {
+      mathcomp.override.version = "2.2.0";
+      mathcomp.job = false;
+      mathcomp-finmap.override.version = "2.1.0";
+      graph-theory.override.version = "v0.9.4";
+    };
+    mc23 = {
+      mathcomp.override.version = "2.3.0";
+      mathcomp.job = false;
+      mathcomp-finmap.override.version = "2.1.0";
+      graph-theory.override.version = "v0.9.5";
+    };
   in {
-    "8.16+2.0".coqPackages = { coq.override.version = "8.16"; } // mc21;
-    "8.17+2.0".coqPackages = { coq.override.version = "8.17"; } // mc21;
-    "8.18+2.0".coqPackages = { coq.override.version = "8.18"; } // mc21;
+    "8.16+2.1".coqPackages = { coq.override.version = "8.16"; } // mc21;
+    "8.17+2.1".coqPackages = { coq.override.version = "8.17"; } // mc21;
+    "8.18+2.1".coqPackages = { coq.override.version = "8.18"; } // mc21;
+    "8.19+2.2".coqPackages = { coq.override.version = "8.19"; } // mc22;
+    "8.20+2.3".coqPackages = { coq.override.version = "8.20"; } // mc23;
+    "9.0+2.3".coqPackages = { coq.override.version = "9.0"; } // mc23;
 
   ## you may mark a package as a CI job as follows
   #  coqPackages.<another-pkg>.ci.job = "test";
