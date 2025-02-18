@@ -1,11 +1,11 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From Corelib Require Import Setoid Morphisms.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq choice.
 From mathcomp Require Import fintype tuple path fingraph bigop order ssralg.
 From mathcomp Require Import ssrnum ssrint div intdiv.
 From fourcolor Require Import hypermap geometry coloring grid matte.
 From fourcolor Require Import real realplane.
-From Coq Require Import Setoid Morphisms.
 From fourcolor Require Import realsyntax realprop.
 
 (******************************************************************************)
