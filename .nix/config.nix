@@ -30,37 +30,37 @@
 
   ## select an entry to build in the following `bundles` set
   ## defaults to "default"
-  default-bundle = "8.20+2.3";
+  default-bundle = "8.20";
 
   ## write one `bundles.name` attribute set per
   ## alternative configuration, the can be used to
   ## compute several ci jobs as well
-  bundles = let 
-    mc21 = {
-      mathcomp.override.version = "2.1.0";
-      mathcomp.job = false;
-      mathcomp-finmap.override.version = "2.0.0";
-      graph-theory.override.version = "v0.9.3";
+  bundles = {
+    "8.18".coqPackages = {
+      coq.override.version = "8.18";
     };
-    mc22 = {
-      mathcomp.override.version = "2.2.0";
-      mathcomp.job = false;
-      mathcomp-finmap.override.version = "2.1.0";
-      graph-theory.override.version = "v0.9.4";
+    "8.19".coqPackages = {
+      coq.override.version = "8.19";
     };
-    mc23 = {
-      mathcomp.override.version = "2.3.0";
-      mathcomp.job = false;
-      mathcomp-finmap.override.version = "2.1.0";
-      graph-theory.override.version = "v0.9.5";
+    "8.20".coqPackages = {
+      coq.override.version = "8.20";
     };
-  in {
-    "8.16+2.1".coqPackages = { coq.override.version = "8.16"; } // mc21;
-    "8.17+2.1".coqPackages = { coq.override.version = "8.17"; } // mc21;
-    "8.18+2.1".coqPackages = { coq.override.version = "8.18"; } // mc21;
-    "8.19+2.2".coqPackages = { coq.override.version = "8.19"; } // mc22;
-    "8.20+2.3".coqPackages = { coq.override.version = "8.20"; } // mc23;
-    "9.0+2.3".coqPackages = { coq.override.version = "9.0"; } // mc23;
+    "9.0".coqPackages = {
+      coq.override.version = "9.0";
+    };
+    "master" = { rocqPackages = {
+      rocq-core.override.version = "master";
+      rocq-elpi.override.version = "master";
+      rocq-elpi.override.elpi-version = "2.0.7";
+      stdlib.override.version = "master";
+    }; coqPackages = {
+      coq.override.version = "master";
+      coq-elpi.override.version = "master";
+      coq-elpi.override.elpi-version = "2.0.7";
+      hierarchy-builder.override.version = "master";
+      mathcomp.override.version = "master";
+      stdlib.override.version = "master";
+    }; };
 
   ## you may mark a package as a CI job as follows
   #  coqPackages.<another-pkg>.ci.job = "test";
