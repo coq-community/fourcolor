@@ -55,8 +55,6 @@
       graph-theory.override.version = "v0.9.5";
     };
   in {
-    "8.16+2.1".coqPackages = { coq.override.version = "8.16"; } // mc21;
-    "8.17+2.1".coqPackages = { coq.override.version = "8.17"; } // mc21;
     "8.18+2.1".coqPackages = { coq.override.version = "8.18"; } // mc21;
     "8.19+2.2".coqPackages = { coq.override.version = "8.19"; } // mc22;
     "8.20+2.3".coqPackages = { coq.override.version = "8.20"; } // mc23;
