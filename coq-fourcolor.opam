@@ -17,7 +17,7 @@ basic plane topology definitions, and a theory of combinatorial hypermaps."""
 build: [make "-C" "theories/proof" "-j%{jobs}%"]
 install: [make "-C" "theories/proof" "install"]
 depends: [
-  "coq" {>= "8.16"}
+  "coq" {>= "8.18"}
   "coq-mathcomp-ssreflect" {>= "2.1.0"}
   "coq-mathcomp-algebra" 
   "coq-hierarchy-builder" {>= "1.5.0"}
