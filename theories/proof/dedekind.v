@@ -1,9 +1,9 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From Corelib Require Import Setoid Morphisms.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat seq order.
 From mathcomp Require Import ssralg ssrnum ssrint rat.
 From fourcolor Require Import real.
-From Coq Require Import Setoid Morphisms.
 
 (******************************************************************************)
 (*   Construcion of the real numbers as a complete totally ordered field.     *)

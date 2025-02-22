@@ -1,8 +1,8 @@
 (* (c) Copyright 2006-2018 Microsoft Corporation and Inria.                  *)
 (* Distributed under the terms of CeCILL-B.                                  *)
+From Corelib Require Import Morphisms Setoid.
 From mathcomp Require Import ssreflect ssrfun ssrbool eqtype ssrnat div order.
 From mathcomp Require Import ssralg ssrnum ssrint archimedean rat intdiv.
-From Coq Require Import Morphisms Setoid.
 From fourcolor Require Import real realsyntax.
 
 (******************************************************************************)
