@@ -15,9 +15,11 @@ with proofs of properties such as categoricity."""
 build: [make "-C" "theories/reals" "-j%{jobs}%"]
 install: [make "-C" "theories/reals" "install"]
 depends: [
-  "coq" {>= "8.18"}
+  ("coq" {>= "8.18" & < "8.21~"}
+  | "rocq-core" { (>= "9.0" & < "9.1~") | (= "dev") })
   "coq-mathcomp-ssreflect" {>= "2.1.0"}
-  "coq-mathcomp-algebra" 
+  "coq-mathcomp-algebra"
+  "coq-hierarchy-builder" {>= "1.5.0"}
 ]
 
 tags: [
